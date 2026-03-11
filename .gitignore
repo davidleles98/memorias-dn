@@ -1,0 +1,17 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.Python
+venv/
+env/
+.venv/
+
+# Env — NUNCA commitar!
+.env
+.env.*
+
+# Misc
+.DS_Store
+*.log
+instance/

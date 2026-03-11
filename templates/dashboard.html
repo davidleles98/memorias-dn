@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+{% block title %}Seus Álbuns — memórias{% endblock %}
+
+{% block extra_style %}
+.main { padding: 48px; }
+.section-header { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 36px; }
+.section-title { font-family: 'Cormorant Garamond', serif; font-size: 40px; font-weight: 300; color: var(--brown); }
+.section-count { font-size: 13px; color: var(--brown-light); letter-spacing: 1px; text-transform: uppercase; }
+.albums-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 24px; }
+.album-card {
+  border-radius: 3px; overflow: hidden; cursor: pointer;
+  background: white; box-shadow: 0 2px 16px var(--shadow);
+  transition: transform 0.3s, box-shadow 0.3s; position: relative;
+}
+.album-card:hover { transform: translateY(-4px); box-shadow: 0 8px 32px var(--shadow); }
+.album-cover { width: 100%; height: 200px; object-fit: cover; display: block; }
+.album-cover-placeholder { width: 100%; height: 200px; background: linear-gradient(135deg, var(--warm), var(--cream)); display: flex; align-items: center; justify-content: center; font-size: 48px; opacity: 0.4; }
+.album-info { padding: 18px 20px; }
+.album-name { font-family: 'Cormorant Garamond', serif; font-size: 20px; color: var(--brown); margin-bottom: 4px; }
+.album-meta { font-size: 12px; color: var(--brown-light); }
+.album-badge { position: absolute; top: 12px; right: 12px; background: var(--gold); color: var(--dark); font-size: 11px; font-weight: 500; padding: 3px 8px; border-radius: 2px; }
+.add-card { display: flex; align-items: center; justify-content: center; min-height: 280px; background: transparent !important; border: 1.5px dashed var(--gold) !important; box-shadow: none !important; }
+.add-card:hover { background: rgba(201,169,110,0.06) !important; transform: none !important; }
+.add-card-inner { text-align: center; color: var(--brown-light); }
+.add-card-icon { font-size: 32px; margin-bottom: 8px; opacity: 0.5; }
+.add-card-text { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-style: italic; }
+.empty-state { text-align: center; padding: 80px 20px; }
+.empty-icon { font-size: 64px; margin-bottom: 16px; opacity: 0.3; }
+.empty-title { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-style: italic; color: var(--brown-light); margin-bottom: 8px; }
+.empty-sub { font-size: 14px; color: var(--brown-light); margin-bottom: 28px; }
+{% endblock %}
+
+{% block content %}
+<!-- Header -->
+<header class="header">
+  <a href="/dashboard" class="logo">memória<span>s</span></a>
+  <div class="header-right">
+    <span class="header-user">olá, {{ user.name }}</span>
+    <a href="/logout" class="btn btn-outline">Sair</a>
+  </div>
+</header>
+
+<main class="main">
+  <div class="section-header">
+    <h1 class="section-title">Seus Álbuns</h1>
+    <span class="section-count">{{ albums|length }} álbum{{ 's' if albums|length != 1 }}</span>
+  </div>
+
+  {% if albums|length == 0 %}
+  <div class="empty-state">
+    <div class="empty-icon">📷</div>
+    <h2 class="empty-title">Nenhum álbum ainda</h2>
+    <p class="empty-sub">Crie seu primeiro álbum para começar a guardar memórias</p>
+    <button class="btn btn-primary" onclick="document.getElementById('modal-album').classList.add('open')">
+      Criar primeiro álbum
+    </button>
+  </div>
+  {% else %}
+  <div class="albums-grid">
+    {% for album in albums %}
+    <a href="/albums/{{ album.id }}" class="album-card">
+      {% if album.cover_url %}
+        <img class="album-cover" src="{{ album.cover_url }}" alt="{{ album.name }}" loading="lazy" />
+      {% else %}
+        <div class="album-cover-placeholder">📷</div>
+      {% endif %}
+      {% if album.photo_count > 0 %}
+        <div class="album-badge">{{ album.photo_count }}</div>
+      {% endif %}
+      <div class="album-info">
+        <div class="album-name">{{ album.name }}</div>
+        <div class="album-meta">
+          {% if album.description %}{{ album.description }} · {% endif %}
+          {{ album.created_at[:10] }}
+        </div>
+      </div>
+    </a>
+    {% endfor %}
+
+    <!-- Card de adicionar -->
+    <div class="album-card add-card" onclick="document.getElementById('modal-album').classList.add('open')">
+      <div class="add-card-inner">
+        <div class="add-card-icon">+</div>
+        <div class="add-card-text">Novo álbum</div>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+</main>
+
+<!-- Botão flutuante -->
+{% if albums|length > 0 %}
+<button class="btn btn-primary"
+  style="position:fixed;bottom:32px;right:32px;box-shadow:0 4px 20px rgba(0,0,0,0.2)"
+  onclick="document.getElementById('modal-album').classList.add('open')">
+  + Novo Álbum
+</button>
+{% endif %}
+
+<!-- Modal novo álbum -->
+<div class="modal-overlay" id="modal-album" onclick="if(event.target===this) this.classList.remove('open')">
+  <div class="modal">
+    <h2 class="modal-title">Novo Álbum</h2>
+    <p class="modal-sub">Dê um nome especial para esta coleção de memórias.</p>
+    <form action="/albums/create" method="POST">
+      <label class="form-label">Nome do álbum</label>
+      <input class="form-input" name="name" placeholder="ex: Férias em família, Casamento da Ana..." required autofocus />
+      <label class="form-label">Descrição (opcional)</label>
+      <textarea class="form-textarea" name="description" placeholder="Uma frase sobre este momento..."></textarea>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-outline" onclick="document.getElementById('modal-album').classList.remove('open')">Cancelar</button>
+        <button type="submit" class="btn btn-primary">Criar Álbum</button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

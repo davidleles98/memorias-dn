@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{% block title %}memórias{% endblock %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --cream: #F5F0E8; --warm: #E8DFD0; --brown: #5C4A3A;
+      --brown-light: #8B7355; --gold: #C9A96E; --dark: #2A1F17;
+      --shadow: rgba(42,31,23,0.12);
+    }
+    body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--dark); min-height: 100vh; }
+    a { text-decoration: none; color: inherit; }
+
+    /* ── Header ── */
+    .header {
+      padding: 22px 48px; display: flex; align-items: center;
+      justify-content: space-between; border-bottom: 1px solid var(--warm);
+      background: var(--cream); position: sticky; top: 0; z-index: 100;
+    }
+    .logo { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 300; color: var(--brown); letter-spacing: 2px; }
+    .logo span { color: var(--gold); font-style: italic; }
+    .header-right { display: flex; align-items: center; gap: 16px; }
+    .header-user { font-size: 13px; color: var(--brown-light); }
+
+    /* ── Buttons ── */
+    .btn { padding: 9px 22px; border-radius: 2px; border: none; cursor: pointer;
+      font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 500;
+      letter-spacing: 1px; text-transform: uppercase; transition: all 0.2s; display: inline-block; }
+    .btn-primary { background: var(--brown); color: var(--cream); }
+    .btn-primary:hover { background: var(--dark); }
+    .btn-outline { background: transparent; border: 1px solid var(--warm); color: var(--brown-light); }
+    .btn-outline:hover { background: var(--warm); }
+    .btn-gold { background: var(--gold); color: var(--dark); }
+    .btn-gold:hover { background: #d4b07e; }
+
+    /* ── Flash messages ── */
+    .flash { padding: 12px 20px; border-radius: 3px; margin: 16px 48px 0; font-size: 13px; }
+    .flash.error { background: #fde8e8; color: #c0392b; border: 1px solid #f5c6c6; }
+    .flash.success { background: #e8f5e9; color: #2e7d32; border: 1px solid #c8e6c9; }
+
+    /* ── Modal ── */
+    .modal-overlay {
+      position: fixed; inset: 0; background: rgba(42,31,23,0.6);
+      display: none; align-items: center; justify-content: center;
+      z-index: 1000; backdrop-filter: blur(4px);
+    }
+    .modal-overlay.open { display: flex; }
+    .modal {
+      background: var(--cream); padding: 48px; width: 480px; border-radius: 3px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3); animation: slideUp 0.3s ease;
+    }
+    @keyframes slideUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+    .modal-title { font-family: 'Cormorant Garamond', serif; font-size: 32px; font-weight: 300; color: var(--brown); margin-bottom: 6px; }
+    .modal-sub { font-size: 13px; color: var(--brown-light); margin-bottom: 28px; }
+    .form-label { display: block; font-size: 11px; font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase; color: var(--brown-light); margin-bottom: 8px; }
+    .form-input, .form-textarea {
+      width: 100%; padding: 12px 16px; border: 1px solid var(--warm); background: white;
+      border-radius: 2px; font-family: 'DM Sans', sans-serif; font-size: 14px;
+      color: var(--dark); margin-bottom: 16px; outline: none; display: block;
+    }
+    .form-input:focus, .form-textarea:focus { border-color: var(--gold); }
+    .form-textarea { resize: vertical; min-height: 80px; }
+    .modal-actions { display: flex; gap: 12px; justify-content: flex-end; margin-top: 12px; }
+
+    /* ── Toast ── */
+    #toast {
+      position: fixed; bottom: 32px; right: 32px; background: var(--brown);
+      color: var(--cream); padding: 14px 24px; border-radius: 3px; font-size: 13px;
+      letter-spacing: 0.5px; box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      transform: translateY(20px); opacity: 0; transition: all 0.3s; pointer-events: none; z-index: 9999;
+    }
+    #toast.show { transform: translateY(0); opacity: 1; }
+
+    /* ── Lightbox ── */
+    #lightbox {
+      position: fixed; inset: 0; background: rgba(14,10,7,0.96);
+      display: none; align-items: center; justify-content: center; z-index: 2000;
+    }
+    #lightbox.open { display: flex; }
+    #lightbox img { max-width: 85vw; max-height: 85vh; object-fit: contain; border-radius: 2px; }
+    .lb-close { position: absolute; top: 24px; right: 32px; background: none; border: none; color: rgba(255,255,255,0.6); font-size: 36px; cursor: pointer; line-height: 1; }
+    .lb-close:hover { color: white; }
+    .lb-nav { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.1); border: none; color: white; font-size: 32px; cursor: pointer; padding: 16px 20px; border-radius: 2px; }
+    .lb-nav:hover { background: rgba(255,255,255,0.2); }
+    .lb-info { position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%); text-align: center; color: white; }
+    .lb-caption { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-style: italic; margin-bottom: 4px; }
+    .lb-meta { font-size: 12px; opacity: 0.5; letter-spacing: 1px; }
+
+    {% block extra_style %}{% endblock %}
+  </style>
+</head>
+<body>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% for category, message in messages %}
+    <div class="flash {{ category }}">{{ message }}</div>
+  {% endfor %}
+{% endwith %}
+
+{% block content %}{% endblock %}
+
+<div id="toast"></div>
+
+<script>
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+</script>
+{% block scripts %}{% endblock %}
+</body>
+</html>
