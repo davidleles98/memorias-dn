@@ -44,18 +44,28 @@ def upload_photo(album_id):
         url = result["secure_url"]
         public_id = result["public_id"]
 
-        # 2. Salva metadados no Supabase
-        photo = supabase.table("photos").insert({
+        # 2. Insere no Supabase (sem encadear .select())
+        supabase.table("photos").insert({
             "album_id": album_id,
             "user_id": current_user.id,
             "url": url,
             "cloudinary_id": public_id,
             "caption": caption,
-        }).select().single().execute().data
+        }).execute()
 
+        # 3. Busca o registro recém-inserido para retornar ao frontend
+        photo_result = (
+            supabase.table("photos")
+            .select("*")
+            .eq("album_id", album_id)
+            .eq("cloudinary_id", public_id)
+            .single()
+            .execute()
+        )
+        photo = photo_result.data
         uploaded.append(photo)
 
-    # 3. Atualiza capa do álbum se ainda não tiver
+    # 4. Atualiza capa do álbum se ainda não tiver
     album = supabase.table("albums").select("cover_url").eq("id", album_id).single().execute().data
     if album and not album.get("cover_url") and uploaded:
         supabase.table("albums").update({"cover_url": uploaded[0]["url"]}).eq("id", album_id).execute()

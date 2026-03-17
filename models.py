@@ -1,11 +1,10 @@
-# models.py — modelo de usuário para o Flask-Login
+# models.py
+from flask import session
 from flask_login import UserMixin
 from extensions import login_manager, supabase
 
 
 class User(UserMixin):
-    """Representa o usuário logado na sessão."""
-
     def __init__(self, id: str, email: str, name: str = ""):
         self.id = id
         self.email = email
@@ -17,14 +16,22 @@ class User(UserMixin):
 
 @login_manager.user_loader
 def load_user(user_id: str):
-    """Flask-Login chama isso para recarregar o usuário a cada request."""
+    # Tenta via API admin primeiro
     try:
-        # Busca o usuário pelo ID na sessão do Supabase
-        response = supabase.auth.admin.get_user_by_id(user_id)
-        u = response.user
-        if not u:
-            return None
-        meta = u.user_metadata or {}
-        return User(id=u.id, email=u.email, name=meta.get("full_name", ""))
+        result = supabase.auth.admin.get_user_by_id(user_id)
+        u = result.user
+        if u:
+            meta = u.user_metadata or {}
+            return User(id=u.id, email=u.email, name=meta.get("full_name", ""))
     except Exception:
-        return None
+        pass
+
+    # Fallback: reconstrói a partir da sessão Flask (salva no login)
+    if session.get("user_id") == user_id:
+        return User(
+            id=user_id,
+            email=session.get("user_email", ""),
+            name=session.get("user_name", ""),
+        )
+
+    return None

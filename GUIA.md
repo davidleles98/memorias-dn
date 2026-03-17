@@ -32,6 +32,9 @@ cd memorias-python
 # Cria o ambiente virtual (boa prática em todo projeto Python)
 python -m venv venv
 
+# Configuracao apolice
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process
+
 # Ativa o ambiente
 source venv/bin/activate      # Linux/Mac
 venv\Scripts\activate         # Windows
@@ -42,7 +45,7 @@ pip install -r requirements.txt
 
 ---
 
-## PASSO 2 — Configurar o Supabase
+## PASSO 2 — Configurar o Supabase #davidleles_project khQtK7fVGQbekk2p 
 
 ### 2.1 — Criar conta e projeto
 
@@ -92,8 +95,8 @@ Clique em **Run** ✅
 ### 2.3 — Pegar as chaves
 
 **Settings → API** no painel do Supabase:
-- **Project URL** → `SUPABASE_URL`
-- **service_role** (não o anon!) → `SUPABASE_KEY`
+- **Project URL** → `SUPABASE_URL` **https://atfjivbykgyuqrlxxlyn.supabase.co**
+- **service_role** (não o anon!) → `SUPABASE_KEY` **sb_publishable_VTVriMgU2aCxbC8bBwPHiA_gGAAYIXJ**
   > ⚠️ Use a chave `service_role` no backend Flask porque ele roda no servidor,
   > não no browser. Ela tem permissão total — por isso nunca exponha no frontend.
 
@@ -103,9 +106,9 @@ Clique em **Run** ✅
 
 1. Acesse **cloudinary.com** → crie uma conta gratuita (25 GB grátis)
 2. No dashboard você verá as 3 credenciais:
-   - **Cloud Name** → `CLOUDINARY_CLOUD_NAME`
-   - **API Key** → `CLOUDINARY_API_KEY`
-   - **API Secret** → `CLOUDINARY_API_SECRET`
+   - **Cloud Name** → `CLOUDINARY_CLOUD_NAME` **dghcmfgdy**
+   - **API Key** → `CLOUDINARY_API_KEY` **958862988454923**
+   - **API Secret** → `CLOUDINARY_API_SECRET` **c1GTtWg_AWGv98u2NTVfN93mg1E**
 
 ---
 
