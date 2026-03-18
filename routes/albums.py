@@ -6,6 +6,21 @@ from extensions import supabase
 albums_bp = Blueprint("albums", __name__)
 
 
+def _get_love_note(user_id: str) -> str:
+    """Busca o texto da página inicial do usuário."""
+    try:
+        result = (
+            supabase.table("settings")
+            .select("love_note")
+            .eq("user_id", user_id)
+            .single()
+            .execute()
+        )
+        return result.data.get("love_note") or ""
+    except Exception:
+        return ""
+
+
 @albums_bp.route("/dashboard")
 @login_required
 def dashboard():
@@ -22,7 +37,25 @@ def dashboard():
             **a,
             "photo_count": a.get("photos", [{}])[0].get("count", 0) if a.get("photos") else 0,
         })
-    return render_template("dashboard.html", albums=albums, user=current_user)
+    love_note = _get_love_note(current_user.id)
+    return render_template("dashboard.html", albums=albums, user=current_user, love_note=love_note)
+
+
+@albums_bp.route("/settings/love-note", methods=["POST"])
+@login_required
+def save_love_note():
+    """Salva (ou atualiza) o texto da página inicial."""
+    data = request.get_json()
+    text = (data.get("text") or "").strip()
+
+    # Upsert: insere se não existir, atualiza se existir
+    supabase.table("settings").upsert({
+        "user_id": current_user.id,
+        "love_note": text or None,
+        "updated_at": "now()",
+    }, on_conflict="user_id").execute()
+
+    return jsonify({"ok": True})
 
 
 @albums_bp.route("/albums/create", methods=["POST"])
@@ -58,13 +91,10 @@ def edit_album(album_id):
 @albums_bp.route("/albums/<album_id>/set-cover", methods=["POST"])
 @login_required
 def set_cover(album_id):
-    """Define qual foto é a capa do álbum."""
     data = request.get_json()
     photo_url = (data.get("url") or "").strip()
     if not photo_url:
         return jsonify({"error": "URL obrigatória"}), 400
-
-    # Garante que a foto pertence a este álbum e a este usuário
     photo = (
         supabase.table("photos")
         .select("id, url")
@@ -77,7 +107,6 @@ def set_cover(album_id):
     )
     if not photo:
         return jsonify({"error": "Foto não encontrada"}), 404
-
     supabase.table("albums").update({"cover_url": photo["url"]}).eq("id", album_id).execute()
     return jsonify({"ok": True, "cover_url": photo["url"]})
 

@@ -3,11 +3,10 @@
 
 {% block extra_style %}
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&family=Lato:wght@300;400&family=Dancing+Script:wght@500;600&display=swap');
-:root { --blush:#F9EEE8; --rose:#E8C4B8; --dusty:#C9897A; --deep:#7A3F35; --dark:#3A1F1A; --cream:#FDF8F4; --warm:#F0E4DC; --shadow:rgba(122,63,53,0.12); }
+:root { --blush:#F9EEE8; --rose:#E8C4B8; --dusty:#C9897A; --deep:#7A3F35; --dark:#3A1F1A; --cream:#FDF8F4; --warm:#F0E4DC; --gold:#C9A96E; --shadow:rgba(122,63,53,0.12); }
 body { background:var(--blush); font-family:'Lato',sans-serif; }
-body::before { content:''; position:fixed; inset:0; z-index:0; pointer-events:none; background: radial-gradient(circle at 15% 15%, rgba(232,196,184,0.5) 0%, transparent 55%), radial-gradient(circle at 85% 85%, rgba(201,137,122,0.2) 0%, transparent 55%); }
+body::before { content:''; position:fixed; inset:0; z-index:0; pointer-events:none; background:radial-gradient(circle at 15% 15%, rgba(232,196,184,0.5) 0%, transparent 55%), radial-gradient(circle at 85% 85%, rgba(201,137,122,0.2) 0%, transparent 55%); }
 
-/* Header */
 .header { padding:20px 48px; display:flex; align-items:center; justify-content:space-between; background:rgba(253,248,244,0.9); backdrop-filter:blur(8px); border-bottom:1px solid var(--rose); position:sticky; top:0; z-index:100; }
 .logo { font-family:'Dancing Script',cursive; font-size:28px; font-weight:600; color:var(--deep); }
 .logo .amp { color:var(--dusty); }
@@ -16,86 +15,221 @@ body::before { content:''; position:fixed; inset:0; z-index:0; pointer-events:no
 .btn-logout { background:none; border:1px solid var(--rose); border-radius:20px; padding:7px 18px; font-size:11px; letter-spacing:1px; text-transform:uppercase; color:var(--dusty); cursor:pointer; font-family:'Lato',sans-serif; transition:all 0.2s; text-decoration:none; display:inline-block; }
 .btn-logout:hover { background:var(--rose); color:var(--deep); }
 
-/* Main */
 .main { padding:48px; position:relative; z-index:1; }
 
-/* Banner top */
-.dashboard-banner { text-align:center; margin-bottom:48px; }
-.banner-hearts { font-size:28px; letter-spacing:8px; margin-bottom:8px; animation:heartbeat 3s ease-in-out infinite; display:block; }
-@keyframes heartbeat { 0%,100%{transform:scale(1)} 20%{transform:scale(1.08)} 40%{transform:scale(1)} 60%{transform:scale(1.05)} }
-.banner-title { font-family:'Dancing Script',cursive; font-size:48px; font-weight:600; color:var(--deep); line-height:1.1; }
-.banner-sub { font-family:'Playfair Display',serif; font-size:15px; font-style:italic; color:var(--dusty); margin-top:8px; }
+/* ── Seção da carta de amor ── */
+.love-section {
+  max-width: 720px;
+  margin: 0 auto 56px;
+  position: relative;
+}
 
-/* Section header */
+/* Papel de carta */
+.love-paper {
+  background: white;
+  border-radius: 3px 3px 3px 3px;
+  padding: 48px 56px 40px;
+  position: relative;
+  box-shadow:
+    0 2px 0 var(--rose),
+    0 4px 0 rgba(201,137,122,0.3),
+    0 12px 40px var(--shadow);
+  /* Dobra no canto superior direito */
+  clip-path: polygon(0 0, calc(100% - 32px) 0, 100% 32px, 100% 100%, 0 100%);
+}
+
+/* Triângulo da dobra */
+.love-paper::before {
+  content: '';
+  position: absolute;
+  top: 0; right: 0;
+  width: 32px; height: 32px;
+  background: linear-gradient(225deg, var(--warm) 50%, transparent 50%);
+  border-bottom-left-radius: 3px;
+}
+
+/* Linhas do papel */
+.love-paper::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0px, transparent 31px,
+    rgba(201,137,122,0.08) 31px, rgba(201,137,122,0.08) 32px
+  );
+  border-radius: 3px;
+}
+
+/* Cabeçalho da carta */
+.love-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  position: relative;
+  z-index: 1;
+}
+.love-title-wrap {}
+.love-label {
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--dusty);
+  opacity: 0.7;
+  margin-bottom: 4px;
+}
+.love-title {
+  font-family: 'Dancing Script', cursive;
+  font-size: 30px;
+  font-weight: 600;
+  color: var(--deep);
+  line-height: 1;
+}
+.love-deco { font-size: 22px; opacity: 0.5; margin-top: 4px; }
+
+/* Botão editar */
+.love-edit-btn {
+  background: none;
+  border: 1px solid var(--rose);
+  border-radius: 20px;
+  padding: 6px 16px;
+  font-size: 11px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--dusty);
+  cursor: pointer;
+  font-family: 'Lato', sans-serif;
+  transition: all 0.2s;
+  white-space: nowrap;
+  flex-shrink: 0;
+  margin-top: 4px;
+}
+.love-edit-btn:hover { background: var(--rose); color: var(--deep); }
+
+/* Separador */
+.love-divider {
+  border: none;
+  border-top: 1px dashed rgba(201,137,122,0.3);
+  margin: 0 0 24px;
+  position: relative;
+  z-index: 1;
+}
+
+/* Texto da carta — modo leitura */
+.love-text {
+  font-family: 'Playfair Display', serif;
+  font-size: 16px;
+  line-height: 2;
+  color: var(--dark);
+  white-space: pre-wrap;
+  position: relative;
+  z-index: 1;
+  min-height: 48px;
+}
+.love-text.empty {
+  color: rgba(122,63,53,0.3);
+  font-style: italic;
+  font-size: 15px;
+}
+
+/* Modo edição */
+.love-editor { display: none; position: relative; z-index: 1; }
+.love-editor.open { display: block; }
+.love-textarea {
+  width: 100%;
+  min-height: 180px;
+  border: none;
+  border-bottom: 1.5px solid var(--rose);
+  background: transparent;
+  font-family: 'Playfair Display', serif;
+  font-size: 16px;
+  line-height: 2;
+  color: var(--dark);
+  outline: none;
+  resize: none;
+  transition: border-color 0.2s;
+  padding: 4px 0;
+}
+.love-textarea:focus { border-bottom-color: var(--dusty); }
+.love-textarea::placeholder { color: rgba(122,63,53,0.25); font-style: italic; }
+.love-editor-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 16px; }
+.btn-love-cancel { background: none; border: 1px solid var(--rose); border-radius: 20px; padding: 8px 20px; color: var(--dusty); cursor: pointer; font-family: 'Lato', sans-serif; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; }
+.btn-love-save { background: var(--deep); color: var(--cream); border: none; border-radius: 20px; padding: 8px 24px; cursor: pointer; font-family: 'Dancing Script', cursive; font-size: 17px; box-shadow: 0 3px 12px rgba(122,63,53,0.2); transition: all 0.2s; }
+.btn-love-save:hover { background: var(--dark); }
+
+/* Rodapé da carta */
+.love-footer {
+  margin-top: 24px;
+  text-align: right;
+  position: relative;
+  z-index: 1;
+}
+.love-signature {
+  font-family: 'Dancing Script', cursive;
+  font-size: 20px;
+  color: var(--dusty);
+  opacity: 0.6;
+}
+
+/* ── Banner ── */
+.dashboard-banner { text-align:center; margin-bottom:40px; }
+.banner-hearts { font-size:26px; letter-spacing:8px; margin-bottom:8px; animation:heartbeat 3s ease-in-out infinite; display:block; }
+@keyframes heartbeat { 0%,100%{transform:scale(1)} 20%{transform:scale(1.08)} 40%{transform:scale(1)} 60%{transform:scale(1.05)} }
+.banner-title { font-family:'Dancing Script',cursive; font-size:44px; font-weight:600; color:var(--deep); line-height:1.1; }
+.banner-sub { font-family:'Playfair Display',serif; font-size:14px; font-style:italic; color:var(--dusty); margin-top:8px; }
+
+/* ── Álbuns ── */
 .section-header { display:flex; align-items:baseline; justify-content:space-between; margin-bottom:28px; }
 .section-title { font-family:'Dancing Script',cursive; font-size:32px; color:var(--deep); }
 .section-count { font-size:12px; color:var(--dusty); letter-spacing:1px; font-style:italic; }
-
-/* Albums grid */
-.albums-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(240px, 1fr)); gap:28px; }
-
-/* Album card — parece uma foto polaroid */
-.album-card {
-  background:white;
-  border-radius:3px;
-  box-shadow: 0 3px 0 var(--rose), 0 6px 0 rgba(201,137,122,0.3), 0 12px 32px var(--shadow);
-  transition:transform 0.35s cubic-bezier(.34,1.56,.64,1), box-shadow 0.35s;
-  position:relative; overflow:hidden;
-  transform: rotate(var(--rot, 0deg));
-}
-.album-card:nth-child(odd)  { --rot: -0.8deg; }
-.album-card:nth-child(even) { --rot:  0.8deg; }
-.album-card:hover { transform:translateY(-8px) rotate(0deg) scale(1.02); box-shadow:0 3px 0 var(--rose), 0 6px 0 rgba(201,137,122,0.3), 0 24px 48px var(--shadow); z-index:10; }
-
+.albums-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:28px; }
+.album-card { background:white; border-radius:3px; box-shadow:0 3px 0 var(--rose),0 6px 0 rgba(201,137,122,0.3),0 12px 32px var(--shadow); transition:transform 0.35s cubic-bezier(.34,1.56,.64,1),box-shadow 0.35s; position:relative; overflow:hidden; transform:rotate(var(--rot,0deg)); }
+.album-card:nth-child(odd) { --rot:-0.8deg; }
+.album-card:nth-child(even) { --rot:0.8deg; }
+.album-card:hover { transform:translateY(-8px) rotate(0deg) scale(1.02); box-shadow:0 3px 0 var(--rose),0 6px 0 rgba(201,137,122,0.3),0 24px 48px var(--shadow); z-index:10; }
 .album-card-link { display:block; text-decoration:none; color:inherit; }
 .album-cover { width:100%; height:200px; object-fit:cover; display:block; }
-.album-cover-placeholder { width:100%; height:200px; background:linear-gradient(135deg, var(--warm), var(--blush)); display:flex; align-items:center; justify-content:center; font-size:52px; }
-.album-badge { position:absolute; top:12px; right:12px; background:var(--deep); color:white; font-size:11px; padding:3px 9px; border-radius:20px; font-family:'Lato',sans-serif; }
-
-/* Polaroid bottom */
+.album-cover-placeholder { width:100%; height:200px; background:linear-gradient(135deg,var(--warm),var(--blush)); display:flex; align-items:center; justify-content:center; font-size:52px; }
+.album-badge { position:absolute; top:12px; right:12px; background:var(--deep); color:white; font-size:11px; padding:3px 9px; border-radius:20px; }
 .album-info { padding:14px 16px 10px; }
 .album-name { font-family:'Dancing Script',cursive; font-size:22px; color:var(--deep); margin-bottom:2px; }
 .album-meta { font-size:11px; color:var(--dusty); font-style:italic; }
 .album-actions { display:flex; gap:8px; padding:0 12px 14px; }
 .album-action-btn { flex:1; padding:6px; border:1px solid var(--rose); background:transparent; border-radius:20px; font-size:11px; letter-spacing:0.5px; color:var(--dusty); cursor:pointer; font-family:'Lato',sans-serif; transition:all 0.2s; }
-.album-action-btn:hover { background:var(--rose); color:var(--deep); border-color:var(--rose); }
+.album-action-btn:hover { background:var(--rose); color:var(--deep); }
 .album-action-btn.danger:hover { background:#fde8e8; color:#c0392b; border-color:#f5c6c6; }
-
-/* Add card */
-.add-card { display:flex; align-items:center; justify-content:center; min-height:290px; background:rgba(253,248,244,0.7) !important; border:2px dashed var(--rose) !important; box-shadow:none !important; cursor:pointer; transform:none !important; }
-.add-card:hover { background:rgba(232,196,184,0.15) !important; border-color:var(--dusty) !important; }
+.add-card { display:flex; align-items:center; justify-content:center; min-height:290px; background:rgba(253,248,244,0.7)!important; border:2px dashed var(--rose)!important; box-shadow:none!important; cursor:pointer; transform:none!important; }
+.add-card:hover { background:rgba(232,196,184,0.15)!important; border-color:var(--dusty)!important; }
 .add-card-inner { text-align:center; color:var(--dusty); }
 .add-card-icon { font-size:36px; margin-bottom:10px; }
 .add-card-text { font-family:'Dancing Script',cursive; font-size:20px; }
-
-/* Empty state */
 .empty-state { text-align:center; padding:80px 20px; }
-.empty-icon { font-size:72px; margin-bottom:16px; animation:heartbeat 3s ease-in-out infinite; display:block; }
+.empty-icon { font-size:72px; margin-bottom:16px; display:block; }
 .empty-title { font-family:'Dancing Script',cursive; font-size:36px; color:var(--deep); margin-bottom:8px; }
 .empty-sub { font-family:'Playfair Display',serif; font-size:14px; font-style:italic; color:var(--dusty); margin-bottom:28px; line-height:1.8; max-width:400px; margin-left:auto; margin-right:auto; }
-
-/* FAB */
 .fab { position:fixed; bottom:32px; right:32px; background:var(--deep); color:white; border:none; border-radius:50px; padding:14px 28px; font-family:'Dancing Script',cursive; font-size:18px; cursor:pointer; box-shadow:0 6px 24px rgba(122,63,53,0.35); transition:all 0.3s; z-index:50; }
 .fab:hover { transform:translateY(-2px); box-shadow:0 10px 32px rgba(122,63,53,0.45); }
 
-/* Modal */
+/* Modais */
 .modal-overlay { position:fixed; inset:0; background:rgba(58,31,26,0.55); display:none; align-items:center; justify-content:center; z-index:1000; backdrop-filter:blur(6px); }
 .modal-overlay.open { display:flex; }
 .modal { background:var(--cream); padding:48px 44px; width:460px; border-radius:16px; box-shadow:0 24px 64px var(--shadow); animation:slideUp 0.3s ease; position:relative; }
-.modal::before { content:''; position:absolute; inset:0; border-radius:16px; pointer-events:none; background:repeating-linear-gradient(to bottom, transparent 0px, transparent 31px, rgba(201,137,122,0.06) 31px, rgba(201,137,122,0.06) 32px); }
 @keyframes slideUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
-.modal-title { font-family:'Dancing Script',cursive; font-size:32px; color:var(--deep); margin-bottom:6px; position:relative; }
-.modal-sub { font-family:'Playfair Display',serif; font-size:13px; font-style:italic; color:var(--dusty); margin-bottom:28px; position:relative; }
-.form-label { display:block; font-size:11px; font-weight:400; letter-spacing:1.5px; text-transform:uppercase; color:var(--dusty); margin-bottom:8px; position:relative; }
-.form-input, .form-textarea { width:100%; padding:11px 0; border:none; border-bottom:1.5px solid var(--rose); background:transparent; font-family:'Lato',sans-serif; font-size:14px; color:var(--dark); margin-bottom:20px; outline:none; transition:border-color 0.2s; display:block; position:relative; }
-.form-input:focus, .form-textarea:focus { border-bottom-color:var(--dusty); }
+.modal-title { font-family:'Dancing Script',cursive; font-size:32px; color:var(--deep); margin-bottom:6px; }
+.modal-sub { font-family:'Playfair Display',serif; font-size:13px; font-style:italic; color:var(--dusty); margin-bottom:28px; }
+.form-label { display:block; font-size:11px; letter-spacing:1.5px; text-transform:uppercase; color:var(--dusty); margin-bottom:8px; }
+.form-input,.form-textarea { width:100%; padding:11px 0; border:none; border-bottom:1.5px solid var(--rose); background:transparent; font-family:'Lato',sans-serif; font-size:14px; color:var(--dark); margin-bottom:20px; outline:none; transition:border-color 0.2s; display:block; }
+.form-input:focus,.form-textarea:focus { border-bottom-color:var(--dusty); }
 .form-textarea { resize:vertical; min-height:72px; }
-.modal-actions { display:flex; gap:12px; justify-content:flex-end; margin-top:8px; position:relative; }
-.btn-cancel { padding:10px 22px; background:transparent; border:1px solid var(--rose); border-radius:20px; color:var(--dusty); cursor:pointer; font-family:'Lato',sans-serif; font-size:12px; letter-spacing:1px; text-transform:uppercase; transition:all 0.2s; }
-.btn-cancel:hover { background:var(--rose); }
-.btn-confirm { padding:10px 26px; background:var(--deep); color:var(--cream); border:none; border-radius:20px; cursor:pointer; font-family:'Dancing Script',cursive; font-size:17px; transition:all 0.2s; box-shadow:0 3px 12px rgba(122,63,53,0.25); }
-.btn-confirm:hover { background:var(--dark); }
-.btn-danger { background:#c0392b; }
+.modal-actions { display:flex; gap:12px; justify-content:flex-end; margin-top:8px; }
+.btn-cancel { padding:10px 22px; background:transparent; border:1px solid var(--rose); border-radius:20px; color:var(--dusty); cursor:pointer; font-family:'Lato',sans-serif; font-size:12px; letter-spacing:1px; text-transform:uppercase; }
+.btn-confirm { padding:10px 26px; background:var(--deep); color:var(--cream); border:none; border-radius:20px; cursor:pointer; font-family:'Dancing Script',cursive; font-size:17px; box-shadow:0 3px 12px rgba(122,63,53,0.25); }
+.btn-danger { background:#c0392b!important; }
+
+#toast { position:fixed; bottom:32px; left:50%; transform:translateX(-50%) translateY(20px); background:var(--deep); color:var(--cream); padding:12px 28px; border-radius:30px; font-family:'Dancing Script',cursive; font-size:17px; opacity:0; transition:all 0.3s; pointer-events:none; z-index:9999; box-shadow:0 4px 20px rgba(0,0,0,0.25); }
+#toast.show { transform:translateX(-50%) translateY(0); opacity:1; }
 {% endblock %}
 
 {% block content %}
@@ -108,17 +242,63 @@ body::before { content:''; position:fixed; inset:0; z-index:0; pointer-events:no
 </header>
 
 <main class="main">
+
+  <!-- Banner -->
   <div class="dashboard-banner">
     <span class="banner-hearts">🤍 🌸 🤍</span>
     <div class="banner-title">nossas memórias</div>
     <p class="banner-sub">cada álbum, um capítulo da nossa história</p>
   </div>
 
+  <!-- ── Seção da carta ── -->
+  <div class="love-section">
+    <div class="love-paper">
+
+      <div class="love-header">
+        <div class="love-title-wrap">
+          <div class="love-label">nossa história</div>
+          <div class="love-title">sobre nós 🌸</div>
+        </div>
+        <button class="love-edit-btn" id="btn-edit-note" onclick="openEditor()">✏️ editar</button>
+      </div>
+
+      <hr class="love-divider" />
+
+      <!-- Modo leitura -->
+      <div id="love-display">
+        {% if love_note %}
+          <p class="love-text" id="love-text">{{ love_note }}</p>
+        {% else %}
+          <p class="love-text empty" id="love-text">Clique em "editar" para escrever sobre vocês dois — o que essa história representa, como se conheceram, o que esse álbum significa... ♡</p>
+        {% endif %}
+      </div>
+
+      <!-- Modo edição -->
+      <div class="love-editor" id="love-editor">
+        <textarea
+          class="love-textarea"
+          id="love-textarea"
+          placeholder="Escreva sobre vocês dois... quando se conheceram, o que essa história representa, momentos especiais, o que esse álbum significa para vocês ♡"
+        >{{ love_note or '' }}</textarea>
+        <div class="love-editor-actions">
+          <button class="btn-love-cancel" onclick="closeEditor()">cancelar</button>
+          <button class="btn-love-save" onclick="saveNote()">salvar ♡</button>
+        </div>
+      </div>
+
+      <div class="love-footer">
+        <div class="love-signature">David & Nayara ♡</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Álbuns -->
   {% if albums|length == 0 %}
   <div class="empty-state">
     <span class="empty-icon">📸</span>
     <h2 class="empty-title">comecem aqui</h2>
-    <p class="empty-sub">Criem o primeiro álbum e comecem a guardar os momentos mais lindos de vocês dois 🌸</p>
+    <p class="empty-sub">Criem o primeiro álbum e guardem os momentos mais lindos de vocês dois 🌸</p>
     <button class="fab" style="position:relative;bottom:auto;right:auto;display:inline-block" onclick="openModal('modal-album')">+ criar álbum ♡</button>
   </div>
   {% else %}
@@ -181,7 +361,7 @@ body::before { content:''; position:fixed; inset:0; z-index:0; pointer-events:no
   </div>
 </div>
 
-<!-- Modal editar -->
+<!-- Modal editar álbum -->
 <div class="modal-overlay" id="modal-edit" onclick="if(event.target===this)closeModal('modal-edit')">
   <div class="modal">
     <div class="modal-title">renomear álbum ✏️</div>
@@ -202,8 +382,7 @@ body::before { content:''; position:fixed; inset:0; z-index:0; pointer-events:no
 <div class="modal-overlay" id="modal-delete" onclick="if(event.target===this)closeModal('modal-delete')">
   <div class="modal">
     <div class="modal-title">excluir álbum 🗑</div>
-    <p class="modal-sub">Tem certeza? Todas as fotos serão removidas permanentemente. Essa ação não pode ser desfeita.</p>
-    <input type="hidden" id="delete-id" />
+    <p class="modal-sub">Tem certeza? Todas as fotos serão removidas permanentemente.</p>
     <div class="modal-actions">
       <button class="btn-cancel" onclick="closeModal('modal-delete')">cancelar</button>
       <form id="delete-form" method="POST" style="display:inline">
@@ -213,32 +392,78 @@ body::before { content:''; position:fixed; inset:0; z-index:0; pointer-events:no
   </div>
 </div>
 
+<div id="toast"></div>
+
 <script>
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
 function openModal(id){document.getElementById(id).classList.add('open');}
 function closeModal(id){document.getElementById(id).classList.remove('open');}
-function openEditAlbum(id,name,desc){
-  document.getElementById('edit-id').value=id;
-  document.getElementById('edit-name').value=name;
-  document.getElementById('edit-desc').value=desc;
+
+// ── Carta de amor ─────────────────────────────────────────
+function openEditor() {
+  const currentText = document.getElementById('love-text').textContent.trim();
+  // Não copia o placeholder
+  const isEmpty = document.getElementById('love-text').classList.contains('empty');
+  document.getElementById('love-textarea').value = isEmpty ? '' : currentText;
+  document.getElementById('love-display').style.display = 'none';
+  document.getElementById('love-editor').classList.add('open');
+  document.getElementById('btn-edit-note').style.display = 'none';
+  document.getElementById('love-textarea').focus();
+}
+function closeEditor() {
+  document.getElementById('love-editor').classList.remove('open');
+  document.getElementById('love-display').style.display = 'block';
+  document.getElementById('btn-edit-note').style.display = 'inline-block';
+}
+async function saveNote() {
+  const text = document.getElementById('love-textarea').value.trim();
+  const res = await fetch('/settings/love-note', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({ text }),
+  });
+  const data = await res.json();
+  if (data.ok) {
+    const el = document.getElementById('love-text');
+    if (text) {
+      el.textContent = text;
+      el.classList.remove('empty');
+    } else {
+      el.textContent = 'Clique em "editar" para escrever sobre vocês dois — o que essa história representa, como se conheceram, o que esse álbum significa... ♡';
+      el.classList.add('empty');
+    }
+    closeEditor();
+    showToast('guardado com amor 🌸');
+  }
+}
+
+// ── Álbuns ────────────────────────────────────────────────
+function openEditAlbum(id, name, desc) {
+  document.getElementById('edit-id').value = id;
+  document.getElementById('edit-name').value = name;
+  document.getElementById('edit-desc').value = desc;
   openModal('modal-edit');
 }
-async function saveEdit(){
-  const id=document.getElementById('edit-id').value;
-  const name=document.getElementById('edit-name').value.trim();
-  const desc=document.getElementById('edit-desc').value.trim();
-  if(!name)return;
-  const res=await fetch(`/albums/${id}/edit`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,description:desc})});
-  const data=await res.json();
-  if(data.ok){
-    document.getElementById('album-name-'+id).textContent=name;
-    document.getElementById('album-desc-'+id).textContent=desc?desc+' · ':'';
+async function saveEdit() {
+  const id = document.getElementById('edit-id').value;
+  const name = document.getElementById('edit-name').value.trim();
+  const desc = document.getElementById('edit-desc').value.trim();
+  if (!name) return;
+  const res = await fetch(`/albums/${id}/edit`, {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,description:desc})});
+  const data = await res.json();
+  if (data.ok) {
+    document.getElementById('album-name-'+id).textContent = name;
+    document.getElementById('album-desc-'+id).textContent = desc ? desc+' · ' : '';
     closeModal('modal-edit');
     showToast('álbum renomeado 🌸');
   }
 }
-function deleteAlbum(id){
-  document.getElementById('delete-id').value=id;
-  document.getElementById('delete-form').action=`/albums/${id}/delete`;
+function deleteAlbum(id) {
+  document.getElementById('delete-form').action = `/albums/${id}/delete`;
   openModal('modal-delete');
 }
 </script>
