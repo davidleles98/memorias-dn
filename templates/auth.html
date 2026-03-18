@@ -1,94 +1,108 @@
 {% extends "base.html" %}
-{% block title %}David & Nayara 🤍{% endblock %}
+{% block title %}nosso cantinho 🎞️{% endblock %}
 
 {% block extra_style %}
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&family=Lato:wght@300;400&family=Dancing+Script:wght@500;600&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400&family=Homemade+Apple&display=swap');
 :root {
-  --blush:  #F9EEE8;
-  --rose:   #E8C4B8;
-  --dusty:  #C9897A;
-  --deep:   #7A3F35;
-  --dark:   #3A1F1A;
-  --cream:  #FDF8F4;
-  --warm:   #F0E4DC;
-  --shadow: rgba(122,63,53,0.12);
+  --paper:   #F2EBD9;
+  --aged:    #E0D5BE;
+  --ink:     #3B2F1E;
+  --faded:   #7A6A52;
+  --rust:    #8B4513;
+  --sepia:   #C4A882;
+  --dark:    #1C140D;
+  --shadow:  rgba(59,47,30,0.18);
 }
-body { background: var(--blush); font-family: 'Lato', sans-serif; }
+body { background: var(--aged); font-family: 'Lato', sans-serif; color: var(--ink); }
+
+/* Textura de papel */
 body::before {
   content: ''; position: fixed; inset: 0; z-index: 0; pointer-events: none;
-  background-image:
-    radial-gradient(circle at 20% 20%, rgba(232,196,184,0.5) 0%, transparent 55%),
-    radial-gradient(circle at 80% 80%, rgba(201,137,122,0.25) 0%, transparent 55%);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  opacity: 0.6;
 }
-.petal { position: fixed; font-size: 22px; opacity: 0.18; pointer-events: none; animation: floatpetal 7s ease-in-out infinite; }
-.petal:nth-child(1) { top: 8%; left: 6%; animation-delay: 0s; }
-.petal:nth-child(2) { top: 18%; right: 8%; animation-delay: 1.8s; font-size: 17px; }
-.petal:nth-child(3) { bottom: 22%; left: 4%; animation-delay: 3.5s; }
-.petal:nth-child(4) { bottom: 8%; right: 6%; animation-delay: 5s; font-size: 16px; }
-@keyframes floatpetal { 0%,100%{transform:translateY(0) rotate(0deg)} 50%{transform:translateY(-14px) rotate(10deg)} }
 
 .auth-page { min-height:100vh; display:flex; align-items:center; justify-content:center; padding:40px 20px; position:relative; z-index:1; }
 
 .auth-book {
-  background: var(--cream); width: 100%; max-width: 430px;
-  border-radius: 3px 18px 18px 3px;
-  box-shadow: -5px 0 0 var(--rose), -9px 0 0 var(--dusty), 0 24px 64px var(--shadow), 0 4px 16px rgba(0,0,0,0.07);
+  background: var(--paper);
+  width: 100%; max-width: 420px;
+  border-radius: 2px 12px 12px 2px;
+  box-shadow: -4px 0 0 var(--sepia), -8px 0 0 var(--rust), 0 20px 60px var(--shadow);
   position: relative; overflow: hidden;
 }
 .auth-book::before {
   content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 5px;
-  background: repeating-linear-gradient(to bottom, var(--dusty) 0px, var(--dusty) 16px, transparent 16px, transparent 30px);
+  background: repeating-linear-gradient(to bottom, var(--rust) 0px, var(--rust) 14px, transparent 14px, transparent 26px);
   z-index: 10;
 }
 .auth-book::after {
   content: ''; position: absolute; inset: 0; pointer-events: none;
-  background: repeating-linear-gradient(to bottom, transparent 0px, transparent 31px, rgba(201,137,122,0.07) 31px, rgba(201,137,122,0.07) 32px);
+  background: repeating-linear-gradient(to bottom, transparent 0px, transparent 31px, rgba(139,69,19,0.06) 31px, rgba(139,69,19,0.06) 32px);
 }
 .auth-inner { padding: 48px 44px 40px 52px; position: relative; z-index: 1; }
 
-.auth-heart { text-align:center; margin-bottom:28px; }
-.auth-heart-icon { font-size:38px; display:block; margin-bottom:10px; animation:heartbeat 2.5s ease-in-out infinite; }
-@keyframes heartbeat { 0%,100%{transform:scale(1)} 15%{transform:scale(1.18)} 30%{transform:scale(1)} 45%{transform:scale(1.1)} 60%{transform:scale(1)} }
-.auth-names { font-family:'Dancing Script',cursive; font-size:34px; font-weight:600; color:var(--deep); }
-.auth-names .amp { color:var(--dusty); font-size:28px; margin:0 8px; }
-.auth-tagline { font-family:'Playfair Display',serif; font-size:13px; font-style:italic; color:var(--dusty); margin-top:6px; }
+.auth-top { text-align: center; margin-bottom: 32px; }
+.auth-stamp {
+  display: inline-block;
+  border: 2px solid var(--rust);
+  padding: 8px 16px;
+  font-family: 'Libre Baskerville', serif;
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--rust);
+  opacity: 0.7;
+  margin-bottom: 14px;
+  transform: rotate(-1deg);
+}
+.auth-title {
+  font-family: 'Homemade Apple', cursive;
+  font-size: 28px;
+  color: var(--ink);
+  line-height: 1.4;
+  margin-bottom: 6px;
+}
+.auth-tagline {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 12px;
+  font-style: italic;
+  color: var(--faded);
+  letter-spacing: 0.5px;
+}
 
-.auth-tabs { display:flex; margin-bottom:22px; border-bottom:1.5px solid var(--rose); }
-.auth-tab { flex:1; padding:10px; text-align:center; cursor:pointer; font-size:11px; letter-spacing:1.5px; text-transform:uppercase; color:var(--dusty); border-bottom:2px solid transparent; margin-bottom:-1.5px; background:none; border-top:none; border-left:none; border-right:none; font-family:'Lato',sans-serif; transition:all 0.2s; }
-.auth-tab.active { color:var(--deep); border-bottom-color:var(--deep); }
+.auth-tabs { display:flex; margin-bottom:22px; border-bottom:1px solid var(--sepia); }
+.auth-tab { flex:1; padding:10px; text-align:center; cursor:pointer; font-size:11px; letter-spacing:1.5px; text-transform:uppercase; color:var(--faded); border-bottom:2px solid transparent; margin-bottom:-1px; background:none; border-top:none; border-left:none; border-right:none; font-family:'Lato',sans-serif; transition:all 0.2s; }
+.auth-tab.active { color:var(--ink); border-bottom-color:var(--rust); }
 .auth-form { display:none; }
 .auth-form.active { display:block; }
-
-.auth-input { width:100%; padding:11px 0; border:none; border-bottom:1.5px solid var(--rose); background:transparent; font-family:'Lato',sans-serif; font-size:14px; color:var(--dark); margin-bottom:16px; outline:none; transition:border-color 0.2s; }
-.auth-input:focus { border-bottom-color:var(--dusty); }
-.auth-input::placeholder { color:rgba(122,63,53,0.35); font-style:italic; }
-.auth-submit { width:100%; padding:13px; margin-top:10px; background:var(--deep); color:var(--cream); border:none; border-radius:40px; font-family:'Dancing Script',cursive; font-size:19px; font-weight:600; cursor:pointer; transition:all 0.3s; box-shadow:0 4px 16px rgba(122,63,53,0.28); }
-.auth-submit:hover { background:var(--dark); transform:translateY(-1px); }
+.auth-input { width:100%; padding:11px 0; border:none; border-bottom:1px solid var(--sepia); background:transparent; font-family:'Lato',sans-serif; font-size:14px; color:var(--ink); margin-bottom:16px; outline:none; transition:border-color 0.2s; }
+.auth-input:focus { border-bottom-color:var(--rust); }
+.auth-input::placeholder { color:rgba(59,47,30,0.3); font-style:italic; }
+.auth-submit { width:100%; padding:12px; margin-top:8px; background:var(--ink); color:var(--paper); border:none; border-radius:2px; font-family:'Libre Baskerville',serif; font-size:14px; cursor:pointer; transition:all 0.2s; letter-spacing:1px; }
+.auth-submit:hover { background:var(--dark); }
 .auth-forgot { text-align:right; margin-top:10px; }
-.auth-forgot button { background:none; border:none; color:var(--dusty); font-size:12px; cursor:pointer; font-family:'Lato',sans-serif; font-style:italic; }
-.auth-forgot button:hover { color:var(--deep); text-decoration:underline; }
-.msg-error { font-size:13px; color:#b85450; background:#fdf0ef; border-radius:8px; padding:10px 14px; margin-bottom:16px; text-align:center; }
-.msg-success { font-size:13px; color:#5a7a5a; background:#f0f7f0; border-radius:8px; padding:10px 14px; margin-bottom:16px; text-align:center; }
+.auth-forgot button { background:none; border:none; color:var(--faded); font-size:12px; cursor:pointer; font-family:'Lato',sans-serif; font-style:italic; }
+.auth-forgot button:hover { color:var(--rust); text-decoration:underline; }
+.msg-error { font-size:13px; color:#8B1A1A; background:rgba(139,26,26,0.07); border-left:3px solid #8B1A1A; padding:10px 14px; margin-bottom:16px; }
+.msg-success { font-size:13px; color:#3B6B3B; background:rgba(59,107,59,0.07); border-left:3px solid #3B6B3B; padding:10px 14px; margin-bottom:16px; }
 .forgot-panel { display:none; }
 .forgot-panel.active { display:block; }
-.forgot-back { background:none; border:none; color:var(--dusty); font-size:12px; cursor:pointer; font-family:'Lato',sans-serif; margin-bottom:16px; padding:0; font-style:italic; }
-.forgot-back:hover { color:var(--deep); }
-.forgot-title { font-family:'Dancing Script',cursive; font-size:26px; color:var(--deep); margin-bottom:8px; }
-.forgot-sub { font-size:13px; color:var(--dusty); margin-bottom:20px; line-height:1.8; font-style:italic; }
-.auth-footer { text-align:center; margin-top:24px; padding-top:18px; border-top:1px dashed var(--rose); }
-.auth-footer p { font-family:'Dancing Script',cursive; font-size:15px; color:var(--dusty); opacity:0.7; }
+.forgot-back { background:none; border:none; color:var(--faded); font-size:12px; cursor:pointer; font-family:'Lato',sans-serif; margin-bottom:16px; padding:0; font-style:italic; }
+.forgot-title { font-family:'Libre Baskerville',serif; font-size:20px; color:var(--ink); margin-bottom:6px; font-style:italic; }
+.forgot-sub { font-size:13px; color:var(--faded); margin-bottom:20px; line-height:1.8; font-style:italic; }
+.auth-footer { text-align:center; margin-top:24px; padding-top:16px; border-top:1px dashed var(--sepia); }
+.auth-footer p { font-family:'Homemade Apple',cursive; font-size:14px; color:var(--faded); }
 {% endblock %}
 
 {% block content %}
-<span class="petal">🌸</span><span class="petal">🌷</span><span class="petal">🌹</span><span class="petal">🌸</span>
 <div class="auth-page">
   <div class="auth-book">
     <div class="auth-inner">
-      <div class="auth-heart">
-        <span class="auth-heart-icon">🤍</span>
-        <div class="auth-names">David <span class="amp">&</span> Nayara</div>
-        <p class="auth-tagline">nosso álbum de memórias</p>
+      <div class="auth-top">
+        <div class="auth-stamp">arquivo pessoal</div>
+        <div class="auth-title">nosso cantinho</div>
+        <p class="auth-tagline">guardando o que não queremos esquecer</p>
       </div>
       {% with messages = get_flashed_messages(with_categories=true) %}
         {% for category, message in messages %}
@@ -97,31 +111,31 @@ body::before {
       {% endwith %}
       <div id="login-signup-area">
         <div class="auth-tabs">
-          <button class="auth-tab active" onclick="switchTab('login',this)">Entrar</button>
-          <button class="auth-tab" onclick="switchTab('signup',this)">Criar conta</button>
+          <button class="auth-tab active" onclick="switchTab('login',this)">entrar</button>
+          <button class="auth-tab" onclick="switchTab('signup',this)">criar conta</button>
         </div>
         <form class="auth-form active" id="form-login" action="/login" method="POST">
           <input class="auth-input" type="email" name="email" placeholder="seu e-mail..." required autofocus />
           <input class="auth-input" type="password" name="password" placeholder="sua senha..." required />
-          <button class="auth-submit" type="submit">entrar ♡</button>
+          <button class="auth-submit" type="submit">entrar</button>
           <div class="auth-forgot"><button type="button" onclick="showForgot()">esqueci minha senha</button></div>
         </form>
         <form class="auth-form" id="form-signup" action="/signup" method="POST">
           <input class="auth-input" type="email" name="email" placeholder="seu e-mail..." required />
           <input class="auth-input" type="password" name="password" placeholder="crie uma senha..." minlength="6" required />
-          <button class="auth-submit" type="submit">criar conta ♡</button>
+          <button class="auth-submit" type="submit">criar conta</button>
         </form>
       </div>
       <div class="forgot-panel" id="forgot-panel">
         <button class="forgot-back" onclick="hideForgot()">← voltar</button>
         <div class="forgot-title">Redefinir senha</div>
-        <p class="forgot-sub">Sem problema! Digite seu e-mail e a gente te manda um link 🌸</p>
+        <p class="forgot-sub">Informe seu e-mail e enviaremos um link para redefinir.</p>
         <form action="/forgot-password" method="POST">
           <input class="auth-input" type="email" name="email" placeholder="seu e-mail..." required />
-          <button class="auth-submit" type="submit">enviar link ♡</button>
+          <button class="auth-submit" type="submit">enviar link</button>
         </form>
       </div>
-      <div class="auth-footer"><p>feito com amor 🤍</p></div>
+      <div class="auth-footer"><p>só nós dois</p></div>
     </div>
   </div>
 </div>
