@@ -1,6 +1,6 @@
-# routes/photos.py — upload de fotos para Cloudinary + salvar no Supabase
+# routes/photos.py
 import cloudinary.uploader
-from flask import Blueprint, request, redirect, url_for, jsonify
+from flask import Blueprint, request, jsonify
 from flask_login import login_required, current_user
 from extensions import supabase
 
@@ -16,13 +16,7 @@ def allowed_file(filename: str) -> bool:
 @photos_bp.route("/albums/<album_id>/upload", methods=["POST"])
 @login_required
 def upload_photo(album_id):
-    """
-    Recebe uma ou mais fotos, faz upload para o Cloudinary
-    e salva os metadados no Supabase.
-    """
     files = request.files.getlist("photos")
-    caption = request.form.get("caption", "").strip() or None
-
     if not files:
         return jsonify({"error": "Nenhum arquivo enviado"}), 400
 
@@ -31,7 +25,6 @@ def upload_photo(album_id):
         if not file or not allowed_file(file.filename):
             continue
 
-        # 1. Envia para o Cloudinary com otimização automática
         result = cloudinary.uploader.upload(
             file,
             folder=f"memorias/{current_user.id}",
@@ -40,20 +33,17 @@ def upload_photo(album_id):
                 {"width": 2000, "crop": "limit"},
             ],
         )
-
         url = result["secure_url"]
         public_id = result["public_id"]
 
-        # 2. Insere no Supabase (sem encadear .select())
         supabase.table("photos").insert({
             "album_id": album_id,
             "user_id": current_user.id,
             "url": url,
             "cloudinary_id": public_id,
-            "caption": caption,
+            "caption": None,
         }).execute()
 
-        # 3. Busca o registro recém-inserido para retornar ao frontend
         photo_result = (
             supabase.table("photos")
             .select("*")
@@ -65,19 +55,27 @@ def upload_photo(album_id):
         photo = photo_result.data
         uploaded.append(photo)
 
-    # 4. Atualiza capa do álbum se ainda não tiver
-    album = supabase.table("albums").select("cover_url").eq("id", album_id).single().execute().data
-    if album and not album.get("cover_url") and uploaded:
-        supabase.table("albums").update({"cover_url": uploaded[0]["url"]}).eq("id", album_id).execute()
+    if uploaded:
+        album = supabase.table("albums").select("cover_url").eq("id", album_id).single().execute().data
+        if album and not album.get("cover_url"):
+            supabase.table("albums").update({"cover_url": uploaded[0]["url"]}).eq("id", album_id).execute()
 
-    # Retorna JSON (o frontend faz o upload via fetch/AJAX)
     return jsonify({"photos": uploaded})
+
+
+@photos_bp.route("/photos/<photo_id>/caption", methods=["POST"])
+@login_required
+def update_caption(photo_id):
+    """Atualiza a legenda de uma foto via AJAX."""
+    data = request.get_json()
+    caption = (data.get("caption") or "").strip() or None
+    supabase.table("photos").update({"caption": caption}).eq("id", photo_id).eq("user_id", current_user.id).execute()
+    return jsonify({"ok": True, "caption": caption})
 
 
 @photos_bp.route("/photos/<photo_id>/delete", methods=["POST"])
 @login_required
 def delete_photo(photo_id):
-    """Deleta foto do Supabase (e opcionalmente do Cloudinary)."""
     photo = (
         supabase.table("photos")
         .select("*")
@@ -89,14 +87,9 @@ def delete_photo(photo_id):
     )
     if not photo:
         return jsonify({"error": "Foto não encontrada"}), 404
-
-    # Remove do Cloudinary
     try:
         cloudinary.uploader.destroy(photo["cloudinary_id"])
     except Exception:
-        pass  # continua mesmo se falhar no Cloudinary
-
-    # Remove do Supabase
+        pass
     supabase.table("photos").delete().eq("id", photo_id).execute()
-
     return jsonify({"ok": True})

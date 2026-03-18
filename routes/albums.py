@@ -1,4 +1,4 @@
-# routes/albums.py — dashboard e CRUD de álbuns
+# routes/albums.py
 from flask import Blueprint, render_template, request, redirect, url_for, jsonify
 from flask_login import login_required, current_user
 from extensions import supabase
@@ -9,7 +9,6 @@ albums_bp = Blueprint("albums", __name__)
 @albums_bp.route("/dashboard")
 @login_required
 def dashboard():
-    """Página principal com todos os álbuns do usuário."""
     result = (
         supabase.table("albums")
         .select("*, photos(count)")
@@ -33,31 +32,43 @@ def create_album():
     description = request.form.get("description", "").strip()
     if not name:
         return redirect(url_for("albums.dashboard"))
-
     supabase.table("albums").insert({
         "user_id": current_user.id,
         "name": name,
         "description": description or None,
     }).execute()
-
     return redirect(url_for("albums.dashboard"))
+
+
+@albums_bp.route("/albums/<album_id>/edit", methods=["POST"])
+@login_required
+def edit_album(album_id):
+    """Renomeia o álbum e atualiza a descrição via AJAX."""
+    data = request.get_json()
+    name = (data.get("name") or "").strip()
+    description = (data.get("description") or "").strip()
+    if not name:
+        return jsonify({"error": "Nome obrigatório"}), 400
+    supabase.table("albums").update({
+        "name": name,
+        "description": description or None,
+    }).eq("id", album_id).eq("user_id", current_user.id).execute()
+    return jsonify({"ok": True, "name": name, "description": description})
 
 
 @albums_bp.route("/albums/<album_id>")
 @login_required
 def album_detail(album_id):
-    """Página de galeria de um álbum."""
     album_result = (
         supabase.table("albums")
         .select("*")
         .eq("id", album_id)
-        .eq("user_id", current_user.id)  # garante que é do usuário
+        .eq("user_id", current_user.id)
         .single()
         .execute()
     )
     if not album_result.data:
         return redirect(url_for("albums.dashboard"))
-
     photos_result = (
         supabase.table("photos")
         .select("*")

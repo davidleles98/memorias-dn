@@ -8,22 +8,38 @@
 .section-count { font-size: 13px; color: var(--brown-light); letter-spacing: 1px; text-transform: uppercase; }
 .albums-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 24px; }
 .album-card {
-  border-radius: 3px; overflow: hidden; cursor: pointer;
+  border-radius: 3px; overflow: hidden;
   background: white; box-shadow: 0 2px 16px var(--shadow);
   transition: transform 0.3s, box-shadow 0.3s; position: relative;
 }
 .album-card:hover { transform: translateY(-4px); box-shadow: 0 8px 32px var(--shadow); }
+.album-card-link { display: block; text-decoration: none; color: inherit; cursor: pointer; }
 .album-cover { width: 100%; height: 200px; object-fit: cover; display: block; }
 .album-cover-placeholder { width: 100%; height: 200px; background: linear-gradient(135deg, var(--warm), var(--cream)); display: flex; align-items: center; justify-content: center; font-size: 48px; opacity: 0.4; }
-.album-info { padding: 18px 20px; }
+.album-info { padding: 16px 20px 12px; }
 .album-name { font-family: 'Cormorant Garamond', serif; font-size: 20px; color: var(--brown); margin-bottom: 4px; }
 .album-meta { font-size: 12px; color: var(--brown-light); }
 .album-badge { position: absolute; top: 12px; right: 12px; background: var(--gold); color: var(--dark); font-size: 11px; font-weight: 500; padding: 3px 8px; border-radius: 2px; }
-.add-card { display: flex; align-items: center; justify-content: center; min-height: 280px; background: transparent !important; border: 1.5px dashed var(--gold) !important; box-shadow: none !important; }
-.add-card:hover { background: rgba(201,169,110,0.06) !important; transform: none !important; }
+
+/* Ações do álbum */
+.album-actions { display: flex; gap: 8px; padding: 0 16px 14px; }
+.album-action-btn {
+  flex: 1; padding: 7px; border: 1px solid var(--warm); background: transparent;
+  border-radius: 2px; font-size: 11px; letter-spacing: 0.8px; text-transform: uppercase;
+  color: var(--brown-light); cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.2s;
+  text-align: center; text-decoration: none; display: block;
+}
+.album-action-btn:hover { background: var(--warm); color: var(--brown); }
+.album-action-btn.danger:hover { background: #fde8e8; color: #c0392b; border-color: #f5c6c6; }
+
+/* Add card */
+.add-card { display: flex; align-items: center; justify-content: center; min-height: 300px; background: transparent !important; border: 1.5px dashed var(--gold) !important; box-shadow: none !important; cursor: pointer; }
+.add-card:hover { background: rgba(201,169,110,0.05) !important; transform: none !important; box-shadow: none !important; }
 .add-card-inner { text-align: center; color: var(--brown-light); }
 .add-card-icon { font-size: 32px; margin-bottom: 8px; opacity: 0.5; }
 .add-card-text { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-style: italic; }
+
+/* Empty state */
 .empty-state { text-align: center; padding: 80px 20px; }
 .empty-icon { font-size: 64px; margin-bottom: 16px; opacity: 0.3; }
 .empty-title { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-style: italic; color: var(--brown-light); margin-bottom: 8px; }
@@ -31,7 +47,6 @@
 {% endblock %}
 
 {% block content %}
-<!-- Header -->
 <header class="header">
   <a href="/dashboard" class="logo">memória<span>s</span></a>
   <div class="header-right">
@@ -51,34 +66,43 @@
     <div class="empty-icon">📷</div>
     <h2 class="empty-title">Nenhum álbum ainda</h2>
     <p class="empty-sub">Crie seu primeiro álbum para começar a guardar memórias</p>
-    <button class="btn btn-primary" onclick="document.getElementById('modal-album').classList.add('open')">
-      Criar primeiro álbum
-    </button>
+    <button class="btn btn-primary" onclick="openModal('modal-album')">Criar primeiro álbum</button>
   </div>
   {% else %}
   <div class="albums-grid">
     {% for album in albums %}
-    <a href="/albums/{{ album.id }}" class="album-card">
-      {% if album.cover_url %}
-        <img class="album-cover" src="{{ album.cover_url }}" alt="{{ album.name }}" loading="lazy" />
-      {% else %}
-        <div class="album-cover-placeholder">📷</div>
-      {% endif %}
-      {% if album.photo_count > 0 %}
-        <div class="album-badge">{{ album.photo_count }}</div>
-      {% endif %}
-      <div class="album-info">
-        <div class="album-name">{{ album.name }}</div>
-        <div class="album-meta">
-          {% if album.description %}{{ album.description }} · {% endif %}
-          {{ album.created_at[:10] }}
+    <div class="album-card" id="album-card-{{ album.id }}">
+      <a href="/albums/{{ album.id }}" class="album-card-link">
+        {% if album.cover_url %}
+          <img class="album-cover" src="{{ album.cover_url }}" alt="{{ album.name }}" loading="lazy" />
+        {% else %}
+          <div class="album-cover-placeholder">📷</div>
+        {% endif %}
+        {% if album.photo_count > 0 %}
+          <div class="album-badge">{{ album.photo_count }}</div>
+        {% endif %}
+        <div class="album-info">
+          <div class="album-name" id="album-name-{{ album.id }}">{{ album.name }}</div>
+          <div class="album-meta">
+            <span id="album-desc-{{ album.id }}">{% if album.description %}{{ album.description }} · {% endif %}</span>
+            {{ album.created_at[:10] }}
+          </div>
         </div>
+      </a>
+      <div class="album-actions">
+        <button class="album-action-btn"
+          onclick="openEditAlbum('{{ album.id }}', `{{ album.name }}`, `{{ album.description or '' }}`)">
+          ✏️ Renomear
+        </button>
+        <button class="album-action-btn danger"
+          onclick="deleteAlbum('{{ album.id }}')">
+          🗑 Excluir
+        </button>
       </div>
-    </a>
+    </div>
     {% endfor %}
 
-    <!-- Card de adicionar -->
-    <div class="album-card add-card" onclick="document.getElementById('modal-album').classList.add('open')">
+    <div class="album-card add-card" onclick="openModal('modal-album')">
       <div class="add-card-inner">
         <div class="add-card-icon">+</div>
         <div class="add-card-text">Novo álbum</div>
@@ -88,30 +112,98 @@
   {% endif %}
 </main>
 
-<!-- Botão flutuante -->
 {% if albums|length > 0 %}
 <button class="btn btn-primary"
   style="position:fixed;bottom:32px;right:32px;box-shadow:0 4px 20px rgba(0,0,0,0.2)"
-  onclick="document.getElementById('modal-album').classList.add('open')">
+  onclick="openModal('modal-album')">
   + Novo Álbum
 </button>
 {% endif %}
 
 <!-- Modal novo álbum -->
-<div class="modal-overlay" id="modal-album" onclick="if(event.target===this) this.classList.remove('open')">
+<div class="modal-overlay" id="modal-album" onclick="if(event.target===this) closeModal('modal-album')">
   <div class="modal">
     <h2 class="modal-title">Novo Álbum</h2>
     <p class="modal-sub">Dê um nome especial para esta coleção de memórias.</p>
     <form action="/albums/create" method="POST">
       <label class="form-label">Nome do álbum</label>
-      <input class="form-input" name="name" placeholder="ex: Férias em família, Casamento da Ana..." required autofocus />
+      <input class="form-input" name="name" placeholder="ex: Férias em família, Casamento da Ana..." required />
       <label class="form-label">Descrição (opcional)</label>
       <textarea class="form-textarea" name="description" placeholder="Uma frase sobre este momento..."></textarea>
       <div class="modal-actions">
-        <button type="button" class="btn btn-outline" onclick="document.getElementById('modal-album').classList.remove('open')">Cancelar</button>
+        <button type="button" class="btn btn-outline" onclick="closeModal('modal-album')">Cancelar</button>
         <button type="submit" class="btn btn-primary">Criar Álbum</button>
       </div>
     </form>
   </div>
 </div>
+
+<!-- Modal editar álbum -->
+<div class="modal-overlay" id="modal-edit-album" onclick="if(event.target===this) closeModal('modal-edit-album')">
+  <div class="modal">
+    <h2 class="modal-title">Renomear Álbum</h2>
+    <p class="modal-sub">Edite o nome e a descrição deste álbum.</p>
+    <input type="hidden" id="edit-album-id" />
+    <label class="form-label">Nome do álbum</label>
+    <input class="form-input" id="edit-album-name" placeholder="Nome do álbum" required />
+    <label class="form-label">Descrição (opcional)</label>
+    <textarea class="form-textarea" id="edit-album-desc" placeholder="Uma frase sobre este momento..."></textarea>
+    <div class="modal-actions">
+      <button class="btn btn-outline" onclick="closeModal('modal-edit-album')">Cancelar</button>
+      <button class="btn btn-primary" onclick="saveEditAlbum()">Salvar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal confirmar exclusão -->
+<div class="modal-overlay" id="modal-delete-album" onclick="if(event.target===this) closeModal('modal-delete-album')">
+  <div class="modal">
+    <h2 class="modal-title">Excluir Álbum</h2>
+    <p class="modal-sub">Tem certeza? Todas as fotos do álbum serão removidas permanentemente.</p>
+    <input type="hidden" id="delete-album-id" />
+    <div class="modal-actions">
+      <button class="btn btn-outline" onclick="closeModal('modal-delete-album')">Cancelar</button>
+      <form id="delete-album-form" method="POST" style="display:inline">
+        <button type="submit" class="btn btn-primary" style="background:#c0392b">Excluir</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+function openModal(id) { document.getElementById(id).classList.add('open'); }
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+
+function openEditAlbum(id, name, desc) {
+  document.getElementById('edit-album-id').value = id;
+  document.getElementById('edit-album-name').value = name;
+  document.getElementById('edit-album-desc').value = desc;
+  openModal('modal-edit-album');
+}
+
+async function saveEditAlbum() {
+  const id = document.getElementById('edit-album-id').value;
+  const name = document.getElementById('edit-album-name').value.trim();
+  const desc = document.getElementById('edit-album-desc').value.trim();
+  if (!name) return;
+  const res = await fetch(`/albums/${id}/edit`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name, description: desc }),
+  });
+  const data = await res.json();
+  if (data.ok) {
+    document.getElementById('album-name-' + id).textContent = name;
+    document.getElementById('album-desc-' + id).textContent = desc ? desc + ' · ' : '';
+    closeModal('modal-edit-album');
+    showToast('Álbum renomeado ✦');
+  }
+}
+
+function deleteAlbum(id) {
+  document.getElementById('delete-album-id').value = id;
+  document.getElementById('delete-album-form').action = `/albums/${id}/delete`;
+  openModal('modal-delete-album');
+}
+</script>
 {% endblock %}

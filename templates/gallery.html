@@ -8,7 +8,51 @@
 .back-btn:hover { background: var(--warm); color: var(--brown); }
 .gallery-title { font-family: 'Cormorant Garamond', serif; font-size: 36px; font-weight: 300; color: var(--brown); }
 .gallery-sub { font-size: 14px; color: var(--brown-light); font-style: italic; margin-top: 4px; }
-.gallery-actions { margin-left: auto; display: flex; gap: 12px; }
+.gallery-actions { margin-left: auto; display: flex; gap: 12px; align-items: center; }
+
+/* ── Grade estilo álbum físico ── */
+.album-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+}
+@media (max-width: 1100px) { .album-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 700px)  { .album-grid { grid-template-columns: repeat(2, 1fr); } }
+
+.photo-cell {
+  position: relative;
+  aspect-ratio: 1 / 1;   /* quadrado perfeito */
+  overflow: hidden;
+  cursor: pointer;
+  background: var(--warm);
+}
+.photo-cell img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+}
+.photo-cell:hover img { transform: scale(1.06); }
+
+/* Overlay ao passar o mouse */
+.photo-cell-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(42,31,23,0.75) 0%, transparent 50%);
+  opacity: 0; transition: opacity 0.3s;
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding: 12px;
+}
+.photo-cell:hover .photo-cell-overlay { opacity: 1; }
+.cell-caption { font-family: 'Cormorant Garamond', serif; font-size: 13px; font-style: italic; color: white; line-height: 1.3; }
+.cell-actions { display: flex; gap: 6px; margin-top: 8px; }
+.cell-btn {
+  background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3);
+  color: white; font-size: 11px; padding: 4px 10px; border-radius: 2px;
+  cursor: pointer; font-family: 'DM Sans', sans-serif; backdrop-filter: blur(4px);
+  letter-spacing: 0.5px; transition: background 0.2s;
+}
+.cell-btn:hover { background: rgba(255,255,255,0.3); }
+.cell-btn.danger:hover { background: rgba(192,57,43,0.7); border-color: rgba(192,57,43,0.5); }
 
 /* Drop zone */
 .drop-zone {
@@ -20,27 +64,44 @@
 .drop-title { font-family: 'Cormorant Garamond', serif; font-size: 22px; color: var(--brown); margin-bottom: 8px; font-style: italic; }
 .drop-hint { font-size: 12px; color: var(--brown-light); }
 
-/* Masonry */
-.masonry { columns: 4; column-gap: 16px; }
-@media (max-width: 1100px) { .masonry { columns: 3; } }
-@media (max-width: 700px) { .masonry { columns: 2; } }
-.photo-item { break-inside: avoid; margin-bottom: 16px; border-radius: 3px; overflow: hidden; cursor: pointer; position: relative; box-shadow: 0 2px 12px var(--shadow); transition: transform 0.3s; }
-.photo-item:hover { transform: scale(1.02); }
-.photo-item img { width: 100%; display: block; }
-.photo-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(42,31,23,0.7) 0%, transparent 55%); opacity: 0; transition: opacity 0.3s; display: flex; flex-direction: column; justify-content: flex-end; padding: 16px; color: white; }
-.photo-item:hover .photo-overlay { opacity: 1; }
-.photo-caption-text { font-family: 'Cormorant Garamond', serif; font-size: 15px; font-style: italic; margin-bottom: 2px; }
-.photo-date-text { font-size: 11px; opacity: 0.7; }
-.photo-delete { position: absolute; top: 8px; right: 8px; background: rgba(0,0,0,0.5); border: none; color: white; width: 28px; height: 28px; border-radius: 50%; cursor: pointer; font-size: 14px; display: none; align-items: center; justify-content: center; }
-.photo-item:hover .photo-delete { display: flex; }
-
 /* Upload progress */
-.upload-bar { background: var(--warm); border-radius: 3px; height: 4px; margin-bottom: 16px; display: none; }
+.upload-bar { background: var(--warm); border-radius: 3px; height: 4px; margin-bottom: 20px; display: none; }
 .upload-bar-fill { background: var(--gold); height: 100%; border-radius: 3px; transition: width 0.3s; }
 
-/* Drop overlay */
+/* Drop overlay global */
 #drop-overlay { position: fixed; inset: 0; background: rgba(201,169,110,0.15); border: 3px dashed var(--gold); display: none; align-items: center; justify-content: center; z-index: 500; pointer-events: none; color: var(--brown); font-family: 'Cormorant Garamond', serif; font-size: 28px; font-style: italic; }
 #drop-overlay.show { display: flex; }
+
+/* ── Lightbox ── */
+#lightbox { position: fixed; inset: 0; background: rgba(14,10,7,0.97); display: none; flex-direction: column; align-items: center; justify-content: center; z-index: 2000; }
+#lightbox.open { display: flex; }
+#lightbox img { max-width: 80vw; max-height: 75vh; object-fit: contain; border-radius: 2px; }
+.lb-close { position: absolute; top: 24px; right: 32px; background: none; border: none; color: rgba(255,255,255,0.5); font-size: 36px; cursor: pointer; line-height: 1; }
+.lb-close:hover { color: white; }
+.lb-nav { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.08); border: none; color: white; font-size: 32px; cursor: pointer; padding: 16px 20px; border-radius: 2px; }
+.lb-nav:hover { background: rgba(255,255,255,0.18); }
+
+/* Painel inferior do lightbox */
+.lb-bottom {
+  width: 100%; max-width: 700px; margin-top: 20px; padding: 0 16px;
+  display: flex; align-items: center; gap: 12px;
+}
+.lb-caption-area { flex: 1; }
+.lb-caption-display {
+  font-family: 'Cormorant Garamond', serif; font-size: 18px; font-style: italic;
+  color: rgba(255,255,255,0.85); min-height: 24px; cursor: pointer;
+  border-bottom: 1px solid transparent; transition: border-color 0.2s; padding: 2px 0;
+}
+.lb-caption-display:hover { border-bottom-color: rgba(255,255,255,0.3); }
+.lb-caption-display.empty { color: rgba(255,255,255,0.3); font-style: italic; }
+.lb-caption-input {
+  width: 100%; background: rgba(255,255,255,0.08); border: none; border-bottom: 1px solid var(--gold);
+  color: white; font-family: 'Cormorant Garamond', serif; font-size: 18px; font-style: italic;
+  padding: 4px 0; outline: none; display: none;
+}
+.lb-meta-text { font-size: 12px; color: rgba(255,255,255,0.35); letter-spacing: 1px; margin-top: 4px; }
+.lb-save-btn { background: var(--gold); border: none; color: var(--dark); padding: 8px 18px; border-radius: 2px; font-size: 12px; cursor: pointer; font-family: 'DM Sans', sans-serif; letter-spacing: 0.5px; display: none; }
+.lb-save-btn:hover { background: #d4b07e; }
 {% endblock %}
 
 {% block content %}
@@ -62,6 +123,7 @@
       {% endif %}
     </div>
     <div class="gallery-actions">
+      <span style="font-size:13px;color:var(--brown-light)">{{ photos|length }} foto{{ 's' if photos|length != 1 }}</span>
       <label class="btn btn-gold" style="cursor:pointer">
         + Adicionar Fotos
         <input id="file-input" type="file" multiple accept="image/*" style="display:none" onchange="uploadFiles(this.files)" />
@@ -75,7 +137,6 @@
   </div>
 
   {% if photos|length == 0 %}
-  <!-- Drop zone (álbum vazio) -->
   <label class="drop-zone" id="drop-zone">
     <div class="drop-icon">🌿</div>
     <div class="drop-title">Arraste suas fotos aqui</div>
@@ -84,16 +145,21 @@
   </label>
   {% endif %}
 
-  <!-- Grade de fotos -->
-  <div class="masonry" id="masonry">
+  <!-- Grade estilo álbum -->
+  <div class="album-grid" id="album-grid">
     {% for photo in photos %}
-    <div class="photo-item" id="photo-{{ photo.id }}" onclick="openLightbox({{ loop.index0 }})">
-      <img src="{{ photo.url }}" alt="{{ photo.caption or 'foto' }}" loading="lazy" />
-      <div class="photo-overlay">
-        {% if photo.caption %}<div class="photo-caption-text">{{ photo.caption }}</div>{% endif %}
-        <div class="photo-date-text">{{ photo.created_at[:10] }}</div>
+    <div class="photo-cell" id="cell-{{ photo.id }}">
+      <img src="{{ photo.url }}" alt="{{ photo.caption or 'foto' }}" loading="lazy"
+           onclick="openLightbox({{ loop.index0 }})" />
+      <div class="photo-cell-overlay" onclick="openLightbox({{ loop.index0 }})">
+        {% if photo.caption %}
+          <div class="cell-caption">{{ photo.caption }}</div>
+        {% endif %}
+        <div class="cell-actions" onclick="event.stopPropagation()">
+          <button class="cell-btn" onclick="openLightbox({{ loop.index0 }})">🔍 Ver</button>
+          <button class="cell-btn danger" onclick="deletePhoto('{{ photo.id }}')">🗑</button>
+        </div>
       </div>
-      <button class="photo-delete" onclick="deletePhoto(event, '{{ photo.id }}')">×</button>
     </div>
     {% endfor %}
   </div>
@@ -103,45 +169,126 @@
 <div id="drop-overlay">Solte para adicionar ✦</div>
 
 <!-- Lightbox -->
-<div id="lightbox" onclick="closeLightbox()">
+<div id="lightbox" onclick="handleLbClick(event)">
   <button class="lb-close" onclick="closeLightbox()">×</button>
   <button class="lb-nav" style="left:24px" onclick="lbNav(event,-1)">‹</button>
   <button class="lb-nav" style="right:24px" onclick="lbNav(event,1)">›</button>
-  <img id="lb-img" src="" alt="" onclick="event.stopPropagation()" />
-  <div class="lb-info">
-    <div class="lb-caption" id="lb-caption"></div>
-    <div class="lb-meta" id="lb-meta"></div>
+
+  <img id="lb-img" src="" alt="" />
+
+  <div class="lb-bottom">
+    <div class="lb-caption-area">
+      <!-- Modo exibição -->
+      <div id="lb-caption-display" class="lb-caption-display empty" onclick="startEditCaption()">
+        Clique para adicionar legenda...
+      </div>
+      <!-- Modo edição -->
+      <input id="lb-caption-input" class="lb-caption-input" placeholder="Adicione uma legenda..."
+        onkeydown="if(event.key==='Enter') saveCaption(); if(event.key==='Escape') cancelCaption();" />
+      <div class="lb-meta-text" id="lb-meta"></div>
+    </div>
+    <button id="lb-save-btn" class="lb-save-btn" onclick="saveCaption()">Salvar</button>
   </div>
 </div>
 
 <script>
-// ── Dados das fotos para o lightbox ──────────────────────
+// ── Dados das fotos ───────────────────────────────────────
 const PHOTOS = [
   {% for photo in photos %}
-  { id: "{{ photo.id }}", url: "{{ photo.url }}", caption: "{{ photo.caption or '' }}", date: "{{ photo.created_at[:10] }}" },
+  { id: "{{ photo.id }}", url: "{{ photo.url }}", caption: {{ photo.caption | tojson }}, date: "{{ photo.created_at[:10] }}" },
   {% endfor %}
 ];
 let lbIndex = 0;
+let editingCaption = false;
 
+// ── Lightbox ──────────────────────────────────────────────
 function openLightbox(idx) {
   lbIndex = idx;
   renderLightbox();
   document.getElementById('lightbox').classList.add('open');
 }
-function closeLightbox() { document.getElementById('lightbox').classList.remove('open'); }
+function closeLightbox() {
+  if (editingCaption) cancelCaption();
+  document.getElementById('lightbox').classList.remove('open');
+}
+function handleLbClick(e) {
+  if (e.target === document.getElementById('lightbox')) closeLightbox();
+}
 function lbNav(e, dir) {
   e.stopPropagation();
+  if (editingCaption) cancelCaption();
   lbIndex = (lbIndex + dir + PHOTOS.length) % PHOTOS.length;
   renderLightbox();
 }
 function renderLightbox() {
   const p = PHOTOS[lbIndex];
   document.getElementById('lb-img').src = p.url;
-  document.getElementById('lb-caption').textContent = p.caption;
-  document.getElementById('lb-meta').textContent = `${lbIndex + 1} / ${PHOTOS.length} · ${p.date}`;
+  document.getElementById('lb-meta').textContent = `${lbIndex + 1} / ${PHOTOS.length}  ·  ${p.date}`;
+  const display = document.getElementById('lb-caption-display');
+  if (p.caption) {
+    display.textContent = p.caption;
+    display.classList.remove('empty');
+  } else {
+    display.textContent = 'Clique para adicionar legenda...';
+    display.classList.add('empty');
+  }
+  document.getElementById('lb-caption-input').value = p.caption || '';
 }
+
+// ── Edição de legenda ─────────────────────────────────────
+function startEditCaption() {
+  editingCaption = true;
+  const p = PHOTOS[lbIndex];
+  const input = document.getElementById('lb-caption-input');
+  input.value = p.caption || '';
+  input.style.display = 'block';
+  document.getElementById('lb-caption-display').style.display = 'none';
+  document.getElementById('lb-save-btn').style.display = 'block';
+  input.focus();
+}
+function cancelCaption() {
+  editingCaption = false;
+  document.getElementById('lb-caption-input').style.display = 'none';
+  document.getElementById('lb-caption-display').style.display = 'block';
+  document.getElementById('lb-save-btn').style.display = 'none';
+}
+async function saveCaption() {
+  const caption = document.getElementById('lb-caption-input').value.trim();
+  const photo = PHOTOS[lbIndex];
+  const res = await fetch(`/photos/${photo.id}/caption`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ caption }),
+  });
+  const data = await res.json();
+  if (data.ok) {
+    photo.caption = caption || null;
+    // Atualiza a célula na grade
+    const cell = document.getElementById('cell-' + photo.id);
+    if (cell) {
+      const cellCaption = cell.querySelector('.cell-caption');
+      if (caption) {
+        if (cellCaption) { cellCaption.textContent = caption; }
+        else {
+          const overlay = cell.querySelector('.photo-cell-overlay');
+          const div = document.createElement('div');
+          div.className = 'cell-caption';
+          div.textContent = caption;
+          overlay.insertBefore(div, overlay.firstChild);
+        }
+      } else if (cellCaption) {
+        cellCaption.remove();
+      }
+    }
+    cancelCaption();
+    renderLightbox();
+    showToast('Legenda salva ✦');
+  }
+}
+
 document.addEventListener('keydown', e => {
   if (!document.getElementById('lightbox').classList.contains('open')) return;
+  if (editingCaption) return;
   if (e.key === 'ArrowLeft') lbNav(e, -1);
   if (e.key === 'ArrowRight') lbNav(e, 1);
   if (e.key === 'Escape') closeLightbox();
@@ -163,51 +310,47 @@ async function uploadFiles(files) {
     fd.append('photos', file);
     const res = await fetch('/albums/{{ album.id }}/upload', { method: 'POST', body: fd });
     const data = await res.json();
-
     if (data.photos) {
       data.photos.forEach(photo => {
-        PHOTOS.push({ id: photo.id, url: photo.url, caption: photo.caption || '', date: photo.created_at.slice(0,10) });
-        addPhotoToGrid(photo);
+        PHOTOS.push({ id: photo.id, url: photo.url, caption: photo.caption || null, date: photo.created_at.slice(0,10) });
+        addCellToGrid(photo, PHOTOS.length - 1);
       });
-      // Esconde drop zone se existir
       const dz = document.getElementById('drop-zone');
       if (dz) dz.style.display = 'none';
     }
     done++;
     fill.style.width = `${(done / arr.length) * 100}%`;
   }
-
   showToast(`${arr.length} foto${arr.length > 1 ? 's' : ''} adicionada${arr.length > 1 ? 's' : ''} ✦`);
   setTimeout(() => { bar.style.display = 'none'; fill.style.width = '0%'; }, 800);
 }
 
-function addPhotoToGrid(photo) {
-  const idx = PHOTOS.length - 1;
-  const div = document.createElement('div');
-  div.className = 'photo-item';
-  div.id = 'photo-' + photo.id;
-  div.onclick = () => openLightbox(idx);
-  div.innerHTML = `
-    <img src="${photo.url}" alt="${photo.caption || 'foto'}" loading="lazy" />
-    <div class="photo-overlay">
-      ${photo.caption ? `<div class="photo-caption-text">${photo.caption}</div>` : ''}
-      <div class="photo-date-text">${photo.created_at.slice(0,10)}</div>
-    </div>
-    <button class="photo-delete" onclick="deletePhoto(event, '${photo.id}')">×</button>
-  `;
-  document.getElementById('masonry').appendChild(div);
+function addCellToGrid(photo, idx) {
+  const grid = document.getElementById('album-grid');
+  const cell = document.createElement('div');
+  cell.className = 'photo-cell';
+  cell.id = 'cell-' + photo.id;
+  cell.innerHTML = `
+    <img src="${photo.url}" alt="" loading="lazy" onclick="openLightbox(${idx})" />
+    <div class="photo-cell-overlay" onclick="openLightbox(${idx})">
+      <div class="cell-actions" onclick="event.stopPropagation()">
+        <button class="cell-btn" onclick="openLightbox(${idx})">🔍 Ver</button>
+        <button class="cell-btn danger" onclick="deletePhoto('${photo.id}')">🗑</button>
+      </div>
+    </div>`;
+  grid.appendChild(cell);
 }
 
 // ── Deletar foto ─────────────────────────────────────────
-async function deletePhoto(e, photoId) {
-  e.stopPropagation();
+async function deletePhoto(photoId) {
   if (!confirm('Remover esta foto?')) return;
   const res = await fetch(`/photos/${photoId}/delete`, { method: 'POST' });
   const data = await res.json();
   if (data.ok) {
-    document.getElementById('photo-' + photoId)?.remove();
+    document.getElementById('cell-' + photoId)?.remove();
     const idx = PHOTOS.findIndex(p => p.id === photoId);
     if (idx > -1) PHOTOS.splice(idx, 1);
+    if (document.getElementById('lightbox').classList.contains('open')) closeLightbox();
     showToast('Foto removida');
   }
 }
@@ -218,8 +361,7 @@ document.addEventListener('dragenter', () => { dragCounter++; document.getElemen
 document.addEventListener('dragleave', () => { dragCounter--; if (dragCounter === 0) document.getElementById('drop-overlay').classList.remove('show'); });
 document.addEventListener('dragover', e => e.preventDefault());
 document.addEventListener('drop', e => {
-  e.preventDefault();
-  dragCounter = 0;
+  e.preventDefault(); dragCounter = 0;
   document.getElementById('drop-overlay').classList.remove('show');
   uploadFiles(e.dataTransfer.files);
 });
