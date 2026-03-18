@@ -7,7 +7,6 @@
 body { background:var(--blush); font-family:'Lato',sans-serif; }
 body::before { content:''; position:fixed; inset:0; z-index:0; pointer-events:none; background:radial-gradient(circle at 15% 15%, rgba(232,196,184,0.5) 0%, transparent 55%), radial-gradient(circle at 85% 85%, rgba(201,137,122,0.2) 0%, transparent 55%); }
 
-/* Header */
 .header { padding:18px 40px; display:flex; align-items:center; justify-content:space-between; background:rgba(253,248,244,0.92); backdrop-filter:blur(8px); border-bottom:1px solid var(--rose); position:sticky; top:0; z-index:100; }
 .logo { font-family:'Dancing Script',cursive; font-size:26px; font-weight:600; color:var(--deep); text-decoration:none; }
 .logo .amp { color:var(--dusty); }
@@ -15,138 +14,95 @@ body::before { content:''; position:fixed; inset:0; z-index:0; pointer-events:no
 .btn-logout { background:none; border:1px solid var(--rose); border-radius:20px; padding:6px 16px; font-size:11px; letter-spacing:1px; text-transform:uppercase; color:var(--dusty); cursor:pointer; font-family:'Lato',sans-serif; text-decoration:none; display:inline-block; transition:all 0.2s; }
 .btn-logout:hover { background:var(--rose); }
 
-/* ══ ÁLBUM FÍSICO ══ */
+/* Álbum */
 .album-wrap { position:relative; z-index:1; padding:32px 24px 64px; max-width:960px; margin:0 auto; }
 
-/* Capa do álbum */
 .album-cover-page {
-  background:var(--deep);
-  border-radius:8px 16px 16px 8px;
-  padding:40px 48px 32px;
-  margin-bottom:8px;
-  position:relative; overflow:hidden;
-  box-shadow: -4px 0 0 #5a2e26, -8px 0 0 #3a1e18, 0 16px 48px rgba(58,31,26,0.5);
+  background:var(--deep); border-radius:8px 16px 16px 8px; padding:40px 48px 32px;
+  margin-bottom:8px; position:relative; overflow:hidden;
+  box-shadow:-4px 0 0 #5a2e26,-8px 0 0 #3a1e18,0 16px 48px rgba(58,31,26,0.5);
 }
-.album-cover-page::before {
-  content:''; position:absolute; left:0; top:0; bottom:0; width:4px;
-  background:repeating-linear-gradient(to bottom, rgba(255,255,255,0.15) 0px, rgba(255,255,255,0.15) 14px, transparent 14px, transparent 26px);
-}
-.album-cover-page::after {
-  content:''; position:absolute; inset:0; pointer-events:none;
-  background:radial-gradient(circle at 70% 50%, rgba(232,196,184,0.08) 0%, transparent 60%);
-}
+.album-cover-page::before { content:''; position:absolute; left:0; top:0; bottom:0; width:4px; background:repeating-linear-gradient(to bottom,rgba(255,255,255,0.15) 0px,rgba(255,255,255,0.15) 14px,transparent 14px,transparent 26px); }
+.album-cover-page::after { content:''; position:absolute; inset:0; pointer-events:none; background:radial-gradient(circle at 70% 50%,rgba(232,196,184,0.08) 0%,transparent 60%); }
 .cover-hearts { font-size:22px; letter-spacing:6px; opacity:0.6; margin-bottom:12px; display:block; }
 .cover-title { font-family:'Dancing Script',cursive; font-size:42px; font-weight:600; color:white; line-height:1.1; }
 .cover-sub { font-family:'Playfair Display',serif; font-size:14px; font-style:italic; color:rgba(232,196,184,0.75); margin-top:8px; }
 .cover-meta { font-size:12px; color:rgba(232,196,184,0.5); margin-top:16px; letter-spacing:0.5px; }
 .cover-actions { position:absolute; top:20px; right:24px; display:flex; gap:8px; z-index:10; }
-.cover-btn { background:rgba(255,255,255,0.12); border:1px solid rgba(255,255,255,0.2); color:rgba(255,255,255,0.8); border-radius:20px; padding:7px 16px; font-size:11px; letter-spacing:0.5px; cursor:pointer; font-family:'Lato',sans-serif; transition:all 0.2s; backdrop-filter:blur(4px); }
+.cover-btn { background:rgba(255,255,255,0.12); border:1px solid rgba(255,255,255,0.2); color:rgba(255,255,255,0.8); border-radius:20px; padding:7px 16px; font-size:11px; letter-spacing:0.5px; cursor:pointer; font-family:'Lato',sans-serif; transition:all 0.2s; backdrop-filter:blur(4px); text-decoration:none; display:inline-block; }
 .cover-btn:hover { background:rgba(255,255,255,0.22); color:white; }
 .cover-btn.gold { background:var(--dusty); border-color:var(--dusty); color:white; }
-.cover-btn.gold:hover { background:var(--deep); }
+.cover-btn.gold:hover { background:var(--deep); border-color:var(--deep); }
 
-/* Páginas do álbum */
+/* Páginas */
 .album-pages { display:flex; flex-direction:column; gap:0; }
-
-/* Cada "página" — folha de papel */
-.page {
-  background:var(--cream);
-  position:relative;
-  padding:32px 40px 28px;
-  box-shadow: 0 2px 8px var(--shadow), 0 1px 0 rgba(255,255,255,0.8) inset;
-  border-bottom:1px solid rgba(201,137,122,0.1);
-}
-/* Linhas sutis na página */
-.page::before {
-  content:''; position:absolute; inset:0; pointer-events:none;
-  background:repeating-linear-gradient(to bottom, transparent 0px, transparent 39px, rgba(201,137,122,0.07) 39px, rgba(201,137,122,0.07) 40px);
-}
-/* Margem esquerda */
-.page::after {
-  content:''; position:absolute; left:52px; top:0; bottom:0; width:1px;
-  background:rgba(201,137,122,0.15);
-}
-.page:last-child { border-radius:0 0 8px 16px; box-shadow:0 8px 32px var(--shadow), 0 1px 0 rgba(255,255,255,0.8) inset; }
-
-/* Cabeçalho da página */
+.page { background:var(--cream); position:relative; padding:32px 40px 28px; box-shadow:0 2px 8px var(--shadow),0 1px 0 rgba(255,255,255,0.8) inset; border-bottom:1px solid rgba(201,137,122,0.1); }
+.page::before { content:''; position:absolute; inset:0; pointer-events:none; background:repeating-linear-gradient(to bottom,transparent 0px,transparent 39px,rgba(201,137,122,0.07) 39px,rgba(201,137,122,0.07) 40px); }
+.page::after { content:''; position:absolute; left:52px; top:0; bottom:0; width:1px; background:rgba(201,137,122,0.15); }
+.page:last-child { border-radius:0 0 8px 16px; box-shadow:0 8px 32px var(--shadow),0 1px 0 rgba(255,255,255,0.8) inset; }
 .page-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:20px; padding-left:32px; position:relative; z-index:1; }
 .page-date { font-family:'Dancing Script',cursive; font-size:20px; color:var(--dusty); }
 .page-num { font-size:11px; color:rgba(201,137,122,0.5); font-style:italic; }
-
-/* Grid de fotos dentro da página — estilo scrapbook */
-.page-photos {
-  display:grid;
-  grid-template-columns:repeat(3, 1fr);
-  gap:14px;
-  padding-left:32px;
-  position:relative; z-index:1;
-}
+.page-photos { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; padding-left:32px; position:relative; z-index:1; }
 .page-photos.cols-1 { grid-template-columns:1fr; max-width:380px; }
 .page-photos.cols-2 { grid-template-columns:repeat(2,1fr); }
-.page-photos.cols-4 { grid-template-columns:repeat(4,1fr); }
-
-/* Foto individual — estilo polaroid */
-.polaroid {
-  background:white;
-  padding:8px 8px 32px;
-  box-shadow:0 3px 10px rgba(122,63,53,0.15), 0 1px 3px rgba(0,0,0,0.1);
-  cursor:pointer;
-  transition:transform 0.35s cubic-bezier(.34,1.56,.64,1), box-shadow 0.3s;
-  position:relative;
-  transform:rotate(var(--tilt, 0deg));
-}
-.polaroid:nth-child(3n+1) { --tilt: -1.2deg; }
-.polaroid:nth-child(3n+2) { --tilt:  1.4deg; }
-.polaroid:nth-child(3n+3) { --tilt: -0.6deg; }
-.polaroid:nth-child(4n+1) { --tilt:  0.8deg; }
-.polaroid:hover { transform:translateY(-6px) rotate(0deg) scale(1.04); box-shadow:0 12px 32px rgba(122,63,53,0.25); z-index:20; }
-
-.polaroid img { width:100%; aspect-ratio:1/1; object-fit:cover; display:block; }
-.polaroid-caption {
-  position:absolute; bottom:0; left:0; right:0; height:32px;
-  display:flex; align-items:center; justify-content:center; padding:0 6px;
-}
-.polaroid-caption-text { font-family:'Dancing Script',cursive; font-size:13px; color:var(--dusty); text-align:center; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:100%; }
-.polaroid-caption-empty { font-size:11px; color:rgba(201,137,122,0.35); font-style:italic; }
-
-/* Botão deletar na polaroid */
-.polaroid-delete { position:absolute; top:-8px; right:-8px; width:22px; height:22px; background:var(--deep); border:none; color:white; border-radius:50%; font-size:12px; cursor:pointer; display:none; align-items:center; justify-content:center; box-shadow:0 2px 6px rgba(0,0,0,0.2); z-index:30; }
-.polaroid:hover .polaroid-delete { display:flex; }
-
-/* Rodapé da página — separador decorativo */
 .page-footer { text-align:center; margin-top:20px; padding-left:32px; position:relative; z-index:1; }
 .page-footer-deco { font-size:14px; color:rgba(201,137,122,0.3); letter-spacing:8px; }
 
+/* Polaroid */
+.polaroid { background:white; padding:8px 8px 32px; box-shadow:0 3px 10px rgba(122,63,53,0.15),0 1px 3px rgba(0,0,0,0.1); cursor:pointer; transition:transform 0.35s cubic-bezier(.34,1.56,.64,1),box-shadow 0.3s; position:relative; transform:rotate(var(--tilt,0deg)); }
+.polaroid:nth-child(3n+1) { --tilt:-1.2deg; }
+.polaroid:nth-child(3n+2) { --tilt:1.4deg; }
+.polaroid:nth-child(3n+3) { --tilt:-0.6deg; }
+.polaroid:nth-child(4n+1) { --tilt:0.8deg; }
+.polaroid:hover { transform:translateY(-6px) rotate(0deg) scale(1.04); box-shadow:0 12px 32px rgba(122,63,53,0.25); z-index:20; }
+.polaroid img { width:100%; aspect-ratio:1/1; object-fit:cover; display:block; }
+.polaroid-caption { position:absolute; bottom:0; left:0; right:0; height:32px; display:flex; align-items:center; justify-content:center; padding:0 6px; }
+.polaroid-caption-text { font-family:'Dancing Script',cursive; font-size:13px; color:var(--dusty); text-align:center; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:100%; }
+.polaroid-caption-empty { font-size:11px; color:rgba(201,137,122,0.3); font-style:italic; }
+
+/* Botões flutuantes na polaroid */
+.polaroid-actions { position:absolute; top:4px; right:4px; display:none; flex-direction:column; gap:4px; z-index:30; }
+.polaroid:hover .polaroid-actions { display:flex; }
+.pol-btn { width:24px; height:24px; border:none; border-radius:50%; font-size:11px; cursor:pointer; display:flex; align-items:center; justify-content:center; box-shadow:0 2px 6px rgba(0,0,0,0.2); transition:transform 0.2s; }
+.pol-btn:hover { transform:scale(1.15); }
+.pol-btn-cover { background:var(--gold,#C9A96E); color:white; }
+.pol-btn-delete { background:var(--deep); color:white; }
+
+/* Estrela de capa */
+.cover-star { position:absolute; top:6px; left:6px; background:var(--gold,#C9A96E); color:white; font-size:10px; padding:2px 7px; border-radius:20px; font-family:'Lato',sans-serif; letter-spacing:0.5px; z-index:25; display:none; }
+.polaroid.is-cover .cover-star { display:block; }
+
 /* Drop zone */
-.drop-zone {
-  border:2px dashed var(--rose); border-radius:12px; padding:48px;
-  text-align:center; cursor:pointer; transition:all 0.3s; margin:24px 0;
-  background:rgba(253,248,244,0.5);
-}
+.drop-zone { border:2px dashed var(--rose); border-radius:12px; padding:48px; text-align:center; cursor:pointer; transition:all 0.3s; margin:24px 0; background:rgba(253,248,244,0.5); }
 .drop-zone:hover { background:rgba(232,196,184,0.15); border-color:var(--dusty); }
 .drop-icon { font-size:36px; margin-bottom:10px; }
 .drop-title { font-family:'Dancing Script',cursive; font-size:24px; color:var(--deep); margin-bottom:6px; }
 .drop-hint { font-size:12px; color:var(--dusty); font-style:italic; }
 
-/* Progresso */
 .upload-bar { background:var(--warm); border-radius:4px; height:4px; margin:0 0 20px; display:none; }
 .upload-bar-fill { background:var(--dusty); height:100%; border-radius:4px; transition:width 0.3s; }
 
-/* Drop overlay */
 #drop-overlay { position:fixed; inset:0; background:rgba(232,196,184,0.2); border:3px dashed var(--dusty); display:none; align-items:center; justify-content:center; z-index:500; pointer-events:none; font-family:'Dancing Script',cursive; font-size:32px; color:var(--deep); }
 #drop-overlay.show { display:flex; }
 
-/* ══ LIGHTBOX ══ */
+/* Lightbox */
 #lightbox { position:fixed; inset:0; background:rgba(26,12,10,0.97); display:none; flex-direction:column; align-items:center; justify-content:center; z-index:2000; }
 #lightbox.open { display:flex; }
-#lightbox img { max-width:82vw; max-height:74vh; object-fit:contain; border-radius:2px; box-shadow:0 0 80px rgba(0,0,0,0.5); }
-
+#lightbox img { max-width:82vw; max-height:70vh; object-fit:contain; border-radius:2px; box-shadow:0 0 80px rgba(0,0,0,0.5); }
 .lb-close { position:absolute; top:24px; right:32px; background:none; border:none; color:rgba(255,255,255,0.45); font-size:36px; cursor:pointer; line-height:1; z-index:10; }
 .lb-close:hover { color:white; }
 .lb-nav { position:absolute; top:50%; transform:translateY(-50%); background:rgba(255,255,255,0.07); border:none; color:white; font-size:32px; cursor:pointer; padding:18px 22px; border-radius:3px; transition:background 0.2s; }
 .lb-nav:hover { background:rgba(255,255,255,0.16); }
 
-.lb-bottom { width:100%; max-width:680px; margin-top:20px; padding:0 20px; display:flex; flex-direction:column; align-items:center; gap:8px; }
+.lb-bottom { width:100%; max-width:720px; margin-top:18px; padding:0 20px; display:flex; flex-direction:column; align-items:center; gap:10px; }
+
+/* Ações do lightbox */
+.lb-actions { display:flex; gap:10px; }
+.lb-action-btn { background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.15); color:rgba(255,255,255,0.7); border-radius:20px; padding:7px 18px; font-size:12px; cursor:pointer; font-family:'Lato',sans-serif; letter-spacing:0.5px; transition:all 0.2s; }
+.lb-action-btn:hover { background:rgba(255,255,255,0.16); color:white; }
+.lb-action-btn.active-cover { background:rgba(201,169,110,0.3); border-color:rgba(201,169,110,0.6); color:#e8c98a; }
+
 .lb-caption-wrap { width:100%; text-align:center; }
 .lb-caption-display { font-family:'Dancing Script',cursive; font-size:22px; color:rgba(255,255,255,0.8); cursor:pointer; display:inline-block; border-bottom:1px solid transparent; transition:border-color 0.2s; padding:2px 8px; }
 .lb-caption-display:hover { border-bottom-color:rgba(255,255,255,0.3); }
@@ -156,7 +112,7 @@ body::before { content:''; position:fixed; inset:0; z-index:0; pointer-events:no
 .lb-caption-input::placeholder { color:rgba(255,255,255,0.25); font-style:italic; }
 .lb-save { background:var(--dusty); border:none; color:white; padding:8px 20px; border-radius:20px; font-family:'Dancing Script',cursive; font-size:16px; cursor:pointer; transition:background 0.2s; white-space:nowrap; }
 .lb-save:hover { background:var(--deep); }
-.lb-meta { font-size:11px; color:rgba(255,255,255,0.3); letter-spacing:1px; }
+.lb-meta { font-size:11px; color:rgba(255,255,255,0.28); letter-spacing:1px; }
 
 /* Modais */
 .modal-overlay { position:fixed; inset:0; background:rgba(58,31,26,0.55); display:none; align-items:center; justify-content:center; z-index:3000; backdrop-filter:blur(6px); }
@@ -173,7 +129,6 @@ body::before { content:''; position:fixed; inset:0; z-index:0; pointer-events:no
 .btn-cancel { padding:10px 20px; background:transparent; border:1px solid var(--rose); border-radius:20px; color:var(--dusty); cursor:pointer; font-family:'Lato',sans-serif; font-size:12px; letter-spacing:1px; text-transform:uppercase; }
 .btn-confirm { padding:10px 24px; background:var(--deep); color:var(--cream); border:none; border-radius:20px; cursor:pointer; font-family:'Dancing Script',cursive; font-size:17px; box-shadow:0 3px 12px rgba(122,63,53,0.25); }
 
-/* Toast */
 #toast { position:fixed; bottom:32px; left:50%; transform:translateX(-50%) translateY(20px); background:var(--deep); color:var(--cream); padding:12px 28px; border-radius:30px; font-family:'Dancing Script',cursive; font-size:17px; opacity:0; transition:all 0.3s; pointer-events:none; z-index:9999; box-shadow:0 4px 20px rgba(0,0,0,0.25); }
 #toast.show { transform:translateX(-50%) translateY(0); opacity:1; }
 {% endblock %}
@@ -188,7 +143,7 @@ body::before { content:''; position:fixed; inset:0; z-index:0; pointer-events:no
 </header>
 
 <div class="album-wrap">
-  <!-- Capa do álbum -->
+  <!-- Capa -->
   <div class="album-cover-page">
     <div class="cover-actions">
       <label class="cover-btn gold" style="cursor:pointer">
@@ -196,7 +151,7 @@ body::before { content:''; position:fixed; inset:0; z-index:0; pointer-events:no
         <input id="file-input" type="file" multiple accept="image/*" style="display:none" onchange="uploadFiles(this.files)" />
       </label>
       <button class="cover-btn" onclick="openModal('modal-edit')">✏️ editar</button>
-      <a href="/dashboard" class="cover-btn" style="text-decoration:none">← voltar</a>
+      <a href="/dashboard" class="cover-btn">← voltar</a>
     </div>
     <span class="cover-hearts">🤍 🌸 🤍</span>
     <div class="cover-title" id="cover-title">{{ album.name }}</div>
@@ -204,10 +159,9 @@ body::before { content:''; position:fixed; inset:0; z-index:0; pointer-events:no
     <p class="cover-meta">{{ photos|length }} foto{{ 's' if photos|length != 1 }} · criado em {{ album.created_at[:10] }}</p>
   </div>
 
-  <!-- Barra de progresso -->
   <div class="upload-bar" id="upload-bar"><div class="upload-bar-fill" id="upload-bar-fill" style="width:0%"></div></div>
 
-  <!-- Páginas do álbum -->
+  <!-- Páginas -->
   <div class="album-pages" id="album-pages">
     {% if photos|length == 0 %}
     <div class="page" id="empty-page">
@@ -222,7 +176,6 @@ body::before { content:''; position:fixed; inset:0; z-index:0; pointer-events:no
       </label>
     </div>
     {% else %}
-      {# Divide as fotos em páginas de 6 #}
       {% set page_size = 6 %}
       {% for page_start in range(0, photos|length, page_size) %}
         {% set page_photos = photos[page_start:page_start+page_size] %}
@@ -232,24 +185,15 @@ body::before { content:''; position:fixed; inset:0; z-index:0; pointer-events:no
             <span class="page-date">{{ page_photos[0].created_at[:10] }}</span>
             <span class="page-num">página {{ page_num }}</span>
           </div>
-
-          {# Escolhe o layout baseado na quantidade de fotos #}
           {% set n = page_photos|length %}
-          {% if n == 1 %}
-            {% set cols = "cols-1" %}
-          {% elif n == 2 %}
-            {% set cols = "cols-2" %}
-          {% elif n <= 4 %}
-            {% set cols = "cols-2" %}
-          {% else %}
-            {% set cols = "" %}
-          {% endif %}
-
+          {% if n == 1 %}{% set cols="cols-1" %}{% elif n <= 2 %}{% set cols="cols-2" %}{% elif n <= 4 %}{% set cols="cols-2" %}{% else %}{% set cols="" %}{% endif %}
           <div class="page-photos {{ cols }}">
             {% for photo in page_photos %}
             {% set global_idx = page_start + loop.index0 %}
-            <div class="polaroid" id="pol-{{ photo.id }}" onclick="openLightbox({{ global_idx }})">
-              <img src="{{ photo.url }}" alt="{{ photo.caption or '' }}" loading="lazy" />
+            {% set is_cover = photo.url == album.cover_url %}
+            <div class="polaroid {{ 'is-cover' if is_cover }}" id="pol-{{ photo.id }}" data-url="{{ photo.url }}">
+              <span class="cover-star">⭐ capa</span>
+              <img src="{{ photo.url }}" alt="{{ photo.caption or '' }}" loading="lazy" onclick="openLightbox({{ global_idx }})" />
               <div class="polaroid-caption">
                 {% if photo.caption %}
                   <span class="polaroid-caption-text">{{ photo.caption }}</span>
@@ -257,11 +201,13 @@ body::before { content:''; position:fixed; inset:0; z-index:0; pointer-events:no
                   <span class="polaroid-caption-empty">clique para legendar</span>
                 {% endif %}
               </div>
-              <button class="polaroid-delete" onclick="deletePhoto(event,'{{ photo.id }}')">×</button>
+              <div class="polaroid-actions">
+                <button class="pol-btn pol-btn-cover" title="Definir como capa" onclick="setCover(event,'{{ photo.url }}','{{ photo.id }}')">⭐</button>
+                <button class="pol-btn pol-btn-delete" title="Remover foto" onclick="deletePhoto(event,'{{ photo.id }}')">×</button>
+              </div>
             </div>
             {% endfor %}
           </div>
-
           <div class="page-footer"><span class="page-footer-deco">· · · ♡ · · ·</span></div>
         </div>
       {% endfor %}
@@ -269,7 +215,6 @@ body::before { content:''; position:fixed; inset:0; z-index:0; pointer-events:no
   </div>
 </div>
 
-<!-- Drop overlay -->
 <div id="drop-overlay">solte aqui para adicionar 🌸</div>
 
 <!-- Lightbox -->
@@ -279,6 +224,12 @@ body::before { content:''; position:fixed; inset:0; z-index:0; pointer-events:no
   <button class="lb-nav" style="right:20px" onclick="lbNav(event,1)">›</button>
   <img id="lb-img" src="" alt="" />
   <div class="lb-bottom">
+    <!-- Botões de ação -->
+    <div class="lb-actions">
+      <button id="lb-cover-btn" class="lb-action-btn" onclick="setCoverFromLb()">⭐ definir como capa</button>
+      <button class="lb-action-btn" onclick="deleteFromLb()" style="color:rgba(255,120,100,0.7)">🗑 remover</button>
+    </div>
+    <!-- Legenda -->
     <div class="lb-caption-wrap">
       <div id="lb-caption-display" class="lb-caption-display empty" onclick="startEdit()">clique para adicionar legenda...</div>
       <div class="lb-caption-row" id="lb-edit-row">
@@ -309,7 +260,9 @@ body::before { content:''; position:fixed; inset:0; z-index:0; pointer-events:no
 <div id="toast"></div>
 
 <script>
-// ── Dados ────────────────────────────────────────────────
+const ALBUM_ID = "{{ album.id }}";
+let COVER_URL = "{{ album.cover_url or '' }}";
+
 const PHOTOS = [
   {% for photo in photos %}
   { id:"{{ photo.id }}", url:"{{ photo.url }}", caption:{{ photo.caption|tojson }}, date:"{{ photo.created_at[:10] }}" },
@@ -317,7 +270,6 @@ const PHOTOS = [
 ];
 let lbIdx = 0, editing = false;
 
-// ── Toast ────────────────────────────────────────────────
 function showToast(msg) {
   const t = document.getElementById('toast');
   t.textContent = msg; t.classList.add('show');
@@ -329,137 +281,165 @@ function openLightbox(idx) { lbIdx=idx; renderLb(); document.getElementById('lig
 function closeLightbox() { if(editing)cancelEdit(); document.getElementById('lightbox').classList.remove('open'); }
 function handleLbClick(e) { if(e.target===document.getElementById('lightbox'))closeLightbox(); }
 function lbNav(e,dir) { e.stopPropagation(); if(editing)cancelEdit(); lbIdx=(lbIdx+dir+PHOTOS.length)%PHOTOS.length; renderLb(); }
+
 function renderLb() {
-  const p=PHOTOS[lbIdx];
-  document.getElementById('lb-img').src=p.url;
-  document.getElementById('lb-meta').textContent=`${lbIdx+1} / ${PHOTOS.length}  ·  ${p.date}`;
-  const d=document.getElementById('lb-caption-display');
-  if(p.caption){ d.textContent=p.caption; d.classList.remove('empty'); }
-  else{ d.textContent='clique para adicionar legenda...'; d.classList.add('empty'); }
-  document.getElementById('lb-caption-input').value=p.caption||'';
+  const p = PHOTOS[lbIdx];
+  document.getElementById('lb-img').src = p.url;
+  document.getElementById('lb-meta').textContent = `${lbIdx+1} / ${PHOTOS.length}  ·  ${p.date}`;
+  // Legenda
+  const d = document.getElementById('lb-caption-display');
+  if (p.caption) { d.textContent=p.caption; d.classList.remove('empty'); }
+  else { d.textContent='clique para adicionar legenda...'; d.classList.add('empty'); }
+  document.getElementById('lb-caption-input').value = p.caption || '';
+  // Botão de capa
+  const coverBtn = document.getElementById('lb-cover-btn');
+  if (p.url === COVER_URL) {
+    coverBtn.textContent = '⭐ esta é a capa';
+    coverBtn.classList.add('active-cover');
+  } else {
+    coverBtn.textContent = '⭐ definir como capa';
+    coverBtn.classList.remove('active-cover');
+  }
 }
-document.addEventListener('keydown',e=>{
-  if(!document.getElementById('lightbox').classList.contains('open'))return;
-  if(editing)return;
-  if(e.key==='ArrowLeft')lbNav(e,-1);
-  if(e.key==='ArrowRight')lbNav(e,1);
-  if(e.key==='Escape')closeLightbox();
+
+document.addEventListener('keydown', e => {
+  if (!document.getElementById('lightbox').classList.contains('open')) return;
+  if (editing) return;
+  if (e.key==='ArrowLeft') lbNav(e,-1);
+  if (e.key==='ArrowRight') lbNav(e,1);
+  if (e.key==='Escape') closeLightbox();
 });
 
-// ── Edição de legenda ────────────────────────────────────
-function startEdit() {
-  editing=true;
-  document.getElementById('lb-caption-input').value=PHOTOS[lbIdx].caption||'';
-  document.getElementById('lb-caption-display').style.display='none';
-  document.getElementById('lb-edit-row').style.display='flex';
-  document.getElementById('lb-caption-input').focus();
-}
-function cancelEdit() {
-  editing=false;
-  document.getElementById('lb-caption-display').style.display='inline-block';
-  document.getElementById('lb-edit-row').style.display='none';
-}
+// ── Legenda ───────────────────────────────────────────────
+function startEdit() { editing=true; document.getElementById('lb-caption-input').value=PHOTOS[lbIdx].caption||''; document.getElementById('lb-caption-display').style.display='none'; document.getElementById('lb-edit-row').style.display='flex'; document.getElementById('lb-caption-input').focus(); }
+function cancelEdit() { editing=false; document.getElementById('lb-caption-display').style.display='inline-block'; document.getElementById('lb-edit-row').style.display='none'; }
 async function saveCaption() {
-  const caption=document.getElementById('lb-caption-input').value.trim();
-  const photo=PHOTOS[lbIdx];
-  const res=await fetch(`/photos/${photo.id}/caption`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({caption})});
-  const data=await res.json();
-  if(data.ok){
-    photo.caption=caption||null;
-    // Atualiza polaroid
-    const pol=document.getElementById('pol-'+photo.id);
-    if(pol){
-      const cap=pol.querySelector('.polaroid-caption');
-      if(cap){
-        cap.innerHTML=caption
-          ? `<span class="polaroid-caption-text">${caption}</span>`
-          : `<span class="polaroid-caption-empty">clique para legendar</span>`;
-      }
+  const caption = document.getElementById('lb-caption-input').value.trim();
+  const photo = PHOTOS[lbIdx];
+  const res = await fetch(`/photos/${photo.id}/caption`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({caption})});
+  const data = await res.json();
+  if (data.ok) {
+    photo.caption = caption || null;
+    const pol = document.getElementById('pol-'+photo.id);
+    if (pol) {
+      const cap = pol.querySelector('.polaroid-caption');
+      if (cap) cap.innerHTML = caption ? `<span class="polaroid-caption-text">${caption}</span>` : `<span class="polaroid-caption-empty">clique para legendar</span>`;
     }
     cancelEdit(); renderLb(); showToast('legenda salva 🌸');
   }
 }
 
-// ── Upload ───────────────────────────────────────────────
+// ── Definir capa ──────────────────────────────────────────
+async function setCover(e, url, photoId) {
+  e.stopPropagation();
+  await _doSetCover(url);
+}
+async function setCoverFromLb() {
+  const photo = PHOTOS[lbIdx];
+  if (photo.url === COVER_URL) return; // já é a capa
+  await _doSetCover(photo.url);
+  renderLb();
+}
+async function _doSetCover(url) {
+  const res = await fetch(`/albums/${ALBUM_ID}/set-cover`, {
+    method: 'POST',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({url}),
+  });
+  const data = await res.json();
+  if (data.ok) {
+    // Remove estrela da capa anterior
+    document.querySelectorAll('.polaroid.is-cover').forEach(p => p.classList.remove('is-cover'));
+    // Marca a nova capa
+    const pol = document.querySelector(`.polaroid[data-url="${url}"]`);
+    if (pol) pol.classList.add('is-cover');
+    COVER_URL = url;
+    showToast('foto de capa atualizada ⭐');
+  }
+}
+
+// ── Deletar ───────────────────────────────────────────────
+async function deletePhoto(e, id) {
+  e.stopPropagation();
+  if (!confirm('Remover esta foto do álbum?')) return;
+  const res = await fetch(`/photos/${id}/delete`, {method:'POST'});
+  const data = await res.json();
+  if (data.ok) {
+    document.getElementById('pol-'+id)?.remove();
+    const i = PHOTOS.findIndex(p=>p.id===id); if(i>-1) PHOTOS.splice(i,1);
+    if (document.getElementById('lightbox').classList.contains('open')) closeLightbox();
+    showToast('foto removida');
+  }
+}
+async function deleteFromLb() {
+  const photo = PHOTOS[lbIdx];
+  if (!confirm('Remover esta foto do álbum?')) return;
+  const res = await fetch(`/photos/${photo.id}/delete`, {method:'POST'});
+  const data = await res.json();
+  if (data.ok) {
+    document.getElementById('pol-'+photo.id)?.remove();
+    PHOTOS.splice(lbIdx, 1);
+    closeLightbox();
+    showToast('foto removida');
+  }
+}
+
+// ── Upload ────────────────────────────────────────────────
 async function uploadFiles(files) {
-  if(!files||files.length===0)return;
-  const arr=Array.from(files).filter(f=>f.type.startsWith('image/'));
-  if(!arr.length)return;
-  const bar=document.getElementById('upload-bar');
-  const fill=document.getElementById('upload-bar-fill');
+  if (!files||files.length===0) return;
+  const arr = Array.from(files).filter(f=>f.type.startsWith('image/'));
+  if (!arr.length) return;
+  const bar=document.getElementById('upload-bar'), fill=document.getElementById('upload-bar-fill');
   bar.style.display='block';
   let done=0;
-  for(const file of arr){
+  for (const file of arr) {
     const fd=new FormData(); fd.append('photos',file);
-    const res=await fetch('/albums/{{ album.id }}/upload',{method:'POST',body:fd});
+    const res=await fetch(`/albums/${ALBUM_ID}/upload`,{method:'POST',body:fd});
     const data=await res.json();
-    if(data.photos){ data.photos.forEach(p=>{ PHOTOS.push({id:p.id,url:p.url,caption:p.caption||null,date:p.created_at.slice(0,10)}); addPolaroidToPage(p,PHOTOS.length-1); }); }
+    if (data.photos) { data.photos.forEach(p=>{PHOTOS.push({id:p.id,url:p.url,caption:p.caption||null,date:p.created_at.slice(0,10)});addPolaroidToPage(p,PHOTOS.length-1);}); }
     done++; fill.style.width=`${(done/arr.length)*100}%`;
   }
-  // Remove página vazia se existir
   const ep=document.getElementById('empty-page'); if(ep)ep.remove();
   showToast(`${arr.length} foto${arr.length>1?'s':''} adicionada${arr.length>1?'s':''} 🌸`);
   setTimeout(()=>{bar.style.display='none';fill.style.width='0%';},800);
 }
 
-function addPolaroidToPage(photo,idx){
-  // Tenta adicionar na última página se tiver espaço (menos de 6), senão cria nova
-  const pages=document.querySelectorAll('.page:not(#empty-page)');
-  let targetGrid=null;
-  if(pages.length>0){
-    const lastPage=pages[pages.length-1];
-    const grid=lastPage.querySelector('.page-photos');
-    if(grid&&grid.children.length<6){ targetGrid=grid; }
+function addPolaroidToPage(photo, idx) {
+  const pages = document.querySelectorAll('.page:not(#empty-page)');
+  let targetGrid = null;
+  if (pages.length > 0) {
+    const lastPage = pages[pages.length-1];
+    const grid = lastPage.querySelector('.page-photos');
+    if (grid && grid.children.length < 6) targetGrid = grid;
   }
-  if(!targetGrid){
-    // Cria nova página
-    const pageNum=pages.length+1;
-    const page=document.createElement('div');
+  if (!targetGrid) {
+    const pageNum = pages.length+1;
+    const page = document.createElement('div');
     page.className='page'; page.id='page-'+pageNum;
     page.innerHTML=`<div class="page-header"><span class="page-date">${photo.created_at.slice(0,10)}</span><span class="page-num">página ${pageNum}</span></div><div class="page-photos" id="grid-new-${pageNum}"></div><div class="page-footer"><span class="page-footer-deco">· · · ♡ · · ·</span></div>`;
     document.getElementById('album-pages').appendChild(page);
-    targetGrid=page.querySelector('.page-photos');
+    targetGrid = page.querySelector('.page-photos');
   }
-  const pol=document.createElement('div');
-  pol.className='polaroid'; pol.id='pol-'+photo.id;
-  pol.onclick=()=>openLightbox(idx);
-  pol.innerHTML=`<img src="${photo.url}" alt="" loading="lazy"/><div class="polaroid-caption"><span class="polaroid-caption-empty">clique para legendar</span></div><button class="polaroid-delete" onclick="deletePhoto(event,'${photo.id}')">×</button>`;
+  const pol = document.createElement('div');
+  pol.className='polaroid'; pol.id='pol-'+photo.id; pol.dataset.url=photo.url;
+  pol.innerHTML=`<span class="cover-star">⭐ capa</span><img src="${photo.url}" alt="" loading="lazy" onclick="openLightbox(${idx})"/><div class="polaroid-caption"><span class="polaroid-caption-empty">clique para legendar</span></div><div class="polaroid-actions"><button class="pol-btn pol-btn-cover" title="Definir como capa" onclick="setCover(event,'${photo.url}','${photo.id}')">⭐</button><button class="pol-btn pol-btn-delete" onclick="deletePhoto(event,'${photo.id}')">×</button></div>`;
   targetGrid.appendChild(pol);
 }
 
-// ── Deletar ──────────────────────────────────────────────
-async function deletePhoto(e,id){
-  e.stopPropagation();
-  if(!confirm('Remover esta foto do álbum?'))return;
-  const res=await fetch(`/photos/${id}/delete`,{method:'POST'});
-  const data=await res.json();
-  if(data.ok){
-    document.getElementById('pol-'+id)?.remove();
-    const i=PHOTOS.findIndex(p=>p.id===id); if(i>-1)PHOTOS.splice(i,1);
-    if(document.getElementById('lightbox').classList.contains('open'))closeLightbox();
-    showToast('foto removida');
-  }
-}
-
-// ── Editar álbum ─────────────────────────────────────────
-async function saveAlbum(){
+// ── Editar álbum ──────────────────────────────────────────
+async function saveAlbum() {
   const name=document.getElementById('edit-name').value.trim();
   const desc=document.getElementById('edit-desc').value.trim();
   if(!name)return;
-  const res=await fetch('/albums/{{ album.id }}/edit',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,description:desc})});
+  const res=await fetch(`/albums/${ALBUM_ID}/edit`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,description:desc})});
   const data=await res.json();
-  if(data.ok){
-    document.getElementById('cover-title').textContent=name;
-    document.getElementById('cover-sub').textContent=desc||'nosso álbum especial';
-    closeModal('modal-edit'); showToast('álbum atualizado 🌸');
-  }
+  if(data.ok){document.getElementById('cover-title').textContent=name;document.getElementById('cover-sub').textContent=desc||'nosso álbum especial';closeModal('modal-edit');showToast('álbum atualizado 🌸');}
 }
 
-// ── Modais ───────────────────────────────────────────────
 function openModal(id){document.getElementById(id).classList.add('open');}
 function closeModal(id){document.getElementById(id).classList.remove('open');}
 
-// ── Drag & drop global ───────────────────────────────────
+// ── Drag & drop ───────────────────────────────────────────
 let dc=0;
 document.addEventListener('dragenter',()=>{dc++;document.getElementById('drop-overlay').classList.add('show');});
 document.addEventListener('dragleave',()=>{dc--;if(dc===0)document.getElementById('drop-overlay').classList.remove('show');});

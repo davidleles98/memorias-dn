@@ -43,7 +43,6 @@ def create_album():
 @albums_bp.route("/albums/<album_id>/edit", methods=["POST"])
 @login_required
 def edit_album(album_id):
-    """Renomeia o álbum e atualiza a descrição via AJAX."""
     data = request.get_json()
     name = (data.get("name") or "").strip()
     description = (data.get("description") or "").strip()
@@ -54,6 +53,33 @@ def edit_album(album_id):
         "description": description or None,
     }).eq("id", album_id).eq("user_id", current_user.id).execute()
     return jsonify({"ok": True, "name": name, "description": description})
+
+
+@albums_bp.route("/albums/<album_id>/set-cover", methods=["POST"])
+@login_required
+def set_cover(album_id):
+    """Define qual foto é a capa do álbum."""
+    data = request.get_json()
+    photo_url = (data.get("url") or "").strip()
+    if not photo_url:
+        return jsonify({"error": "URL obrigatória"}), 400
+
+    # Garante que a foto pertence a este álbum e a este usuário
+    photo = (
+        supabase.table("photos")
+        .select("id, url")
+        .eq("url", photo_url)
+        .eq("album_id", album_id)
+        .eq("user_id", current_user.id)
+        .single()
+        .execute()
+        .data
+    )
+    if not photo:
+        return jsonify({"error": "Foto não encontrada"}), 404
+
+    supabase.table("albums").update({"cover_url": photo["url"]}).eq("id", album_id).execute()
+    return jsonify({"ok": True, "cover_url": photo["url"]})
 
 
 @albums_bp.route("/albums/<album_id>")
