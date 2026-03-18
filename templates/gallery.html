@@ -1,369 +1,469 @@
 {% extends "base.html" %}
-{% block title %}{{ album.name }} — memórias{% endblock %}
+{% block title %}{{ album.name }} — David & Nayara{% endblock %}
 
 {% block extra_style %}
-.main { padding: 48px; }
-.gallery-header { display: flex; align-items: center; gap: 16px; margin-bottom: 36px; }
-.back-btn { background: none; border: none; cursor: pointer; font-size: 22px; color: var(--brown-light); padding: 8px 12px; border-radius: 2px; transition: all 0.2s; }
-.back-btn:hover { background: var(--warm); color: var(--brown); }
-.gallery-title { font-family: 'Cormorant Garamond', serif; font-size: 36px; font-weight: 300; color: var(--brown); }
-.gallery-sub { font-size: 14px; color: var(--brown-light); font-style: italic; margin-top: 4px; }
-.gallery-actions { margin-left: auto; display: flex; gap: 12px; align-items: center; }
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&family=Lato:wght@300;400&family=Dancing+Script:wght@500;600&display=swap');
+:root { --blush:#F9EEE8; --rose:#E8C4B8; --dusty:#C9897A; --deep:#7A3F35; --dark:#3A1F1A; --cream:#FDF8F4; --warm:#F0E4DC; --shadow:rgba(122,63,53,0.15); }
+body { background:var(--blush); font-family:'Lato',sans-serif; }
+body::before { content:''; position:fixed; inset:0; z-index:0; pointer-events:none; background:radial-gradient(circle at 15% 15%, rgba(232,196,184,0.5) 0%, transparent 55%), radial-gradient(circle at 85% 85%, rgba(201,137,122,0.2) 0%, transparent 55%); }
 
-/* ── Grade estilo álbum físico ── */
-.album-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 6px;
-}
-@media (max-width: 1100px) { .album-grid { grid-template-columns: repeat(3, 1fr); } }
-@media (max-width: 700px)  { .album-grid { grid-template-columns: repeat(2, 1fr); } }
+/* Header */
+.header { padding:18px 40px; display:flex; align-items:center; justify-content:space-between; background:rgba(253,248,244,0.92); backdrop-filter:blur(8px); border-bottom:1px solid var(--rose); position:sticky; top:0; z-index:100; }
+.logo { font-family:'Dancing Script',cursive; font-size:26px; font-weight:600; color:var(--deep); text-decoration:none; }
+.logo .amp { color:var(--dusty); }
+.header-right { display:flex; align-items:center; gap:14px; }
+.btn-logout { background:none; border:1px solid var(--rose); border-radius:20px; padding:6px 16px; font-size:11px; letter-spacing:1px; text-transform:uppercase; color:var(--dusty); cursor:pointer; font-family:'Lato',sans-serif; text-decoration:none; display:inline-block; transition:all 0.2s; }
+.btn-logout:hover { background:var(--rose); }
 
-.photo-cell {
-  position: relative;
-  aspect-ratio: 1 / 1;   /* quadrado perfeito */
-  overflow: hidden;
-  cursor: pointer;
-  background: var(--warm);
-}
-.photo-cell img {
-  width: 100%; height: 100%;
-  object-fit: cover;
-  display: block;
-  transition: transform 0.4s ease;
-}
-.photo-cell:hover img { transform: scale(1.06); }
+/* ══ ÁLBUM FÍSICO ══ */
+.album-wrap { position:relative; z-index:1; padding:32px 24px 64px; max-width:960px; margin:0 auto; }
 
-/* Overlay ao passar o mouse */
-.photo-cell-overlay {
-  position: absolute; inset: 0;
-  background: linear-gradient(to top, rgba(42,31,23,0.75) 0%, transparent 50%);
-  opacity: 0; transition: opacity 0.3s;
-  display: flex; flex-direction: column; justify-content: flex-end;
-  padding: 12px;
+/* Capa do álbum */
+.album-cover-page {
+  background:var(--deep);
+  border-radius:8px 16px 16px 8px;
+  padding:40px 48px 32px;
+  margin-bottom:8px;
+  position:relative; overflow:hidden;
+  box-shadow: -4px 0 0 #5a2e26, -8px 0 0 #3a1e18, 0 16px 48px rgba(58,31,26,0.5);
 }
-.photo-cell:hover .photo-cell-overlay { opacity: 1; }
-.cell-caption { font-family: 'Cormorant Garamond', serif; font-size: 13px; font-style: italic; color: white; line-height: 1.3; }
-.cell-actions { display: flex; gap: 6px; margin-top: 8px; }
-.cell-btn {
-  background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3);
-  color: white; font-size: 11px; padding: 4px 10px; border-radius: 2px;
-  cursor: pointer; font-family: 'DM Sans', sans-serif; backdrop-filter: blur(4px);
-  letter-spacing: 0.5px; transition: background 0.2s;
+.album-cover-page::before {
+  content:''; position:absolute; left:0; top:0; bottom:0; width:4px;
+  background:repeating-linear-gradient(to bottom, rgba(255,255,255,0.15) 0px, rgba(255,255,255,0.15) 14px, transparent 14px, transparent 26px);
 }
-.cell-btn:hover { background: rgba(255,255,255,0.3); }
-.cell-btn.danger:hover { background: rgba(192,57,43,0.7); border-color: rgba(192,57,43,0.5); }
+.album-cover-page::after {
+  content:''; position:absolute; inset:0; pointer-events:none;
+  background:radial-gradient(circle at 70% 50%, rgba(232,196,184,0.08) 0%, transparent 60%);
+}
+.cover-hearts { font-size:22px; letter-spacing:6px; opacity:0.6; margin-bottom:12px; display:block; }
+.cover-title { font-family:'Dancing Script',cursive; font-size:42px; font-weight:600; color:white; line-height:1.1; }
+.cover-sub { font-family:'Playfair Display',serif; font-size:14px; font-style:italic; color:rgba(232,196,184,0.75); margin-top:8px; }
+.cover-meta { font-size:12px; color:rgba(232,196,184,0.5); margin-top:16px; letter-spacing:0.5px; }
+.cover-actions { position:absolute; top:20px; right:24px; display:flex; gap:8px; z-index:10; }
+.cover-btn { background:rgba(255,255,255,0.12); border:1px solid rgba(255,255,255,0.2); color:rgba(255,255,255,0.8); border-radius:20px; padding:7px 16px; font-size:11px; letter-spacing:0.5px; cursor:pointer; font-family:'Lato',sans-serif; transition:all 0.2s; backdrop-filter:blur(4px); }
+.cover-btn:hover { background:rgba(255,255,255,0.22); color:white; }
+.cover-btn.gold { background:var(--dusty); border-color:var(--dusty); color:white; }
+.cover-btn.gold:hover { background:var(--deep); }
+
+/* Páginas do álbum */
+.album-pages { display:flex; flex-direction:column; gap:0; }
+
+/* Cada "página" — folha de papel */
+.page {
+  background:var(--cream);
+  position:relative;
+  padding:32px 40px 28px;
+  box-shadow: 0 2px 8px var(--shadow), 0 1px 0 rgba(255,255,255,0.8) inset;
+  border-bottom:1px solid rgba(201,137,122,0.1);
+}
+/* Linhas sutis na página */
+.page::before {
+  content:''; position:absolute; inset:0; pointer-events:none;
+  background:repeating-linear-gradient(to bottom, transparent 0px, transparent 39px, rgba(201,137,122,0.07) 39px, rgba(201,137,122,0.07) 40px);
+}
+/* Margem esquerda */
+.page::after {
+  content:''; position:absolute; left:52px; top:0; bottom:0; width:1px;
+  background:rgba(201,137,122,0.15);
+}
+.page:last-child { border-radius:0 0 8px 16px; box-shadow:0 8px 32px var(--shadow), 0 1px 0 rgba(255,255,255,0.8) inset; }
+
+/* Cabeçalho da página */
+.page-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:20px; padding-left:32px; position:relative; z-index:1; }
+.page-date { font-family:'Dancing Script',cursive; font-size:20px; color:var(--dusty); }
+.page-num { font-size:11px; color:rgba(201,137,122,0.5); font-style:italic; }
+
+/* Grid de fotos dentro da página — estilo scrapbook */
+.page-photos {
+  display:grid;
+  grid-template-columns:repeat(3, 1fr);
+  gap:14px;
+  padding-left:32px;
+  position:relative; z-index:1;
+}
+.page-photos.cols-1 { grid-template-columns:1fr; max-width:380px; }
+.page-photos.cols-2 { grid-template-columns:repeat(2,1fr); }
+.page-photos.cols-4 { grid-template-columns:repeat(4,1fr); }
+
+/* Foto individual — estilo polaroid */
+.polaroid {
+  background:white;
+  padding:8px 8px 32px;
+  box-shadow:0 3px 10px rgba(122,63,53,0.15), 0 1px 3px rgba(0,0,0,0.1);
+  cursor:pointer;
+  transition:transform 0.35s cubic-bezier(.34,1.56,.64,1), box-shadow 0.3s;
+  position:relative;
+  transform:rotate(var(--tilt, 0deg));
+}
+.polaroid:nth-child(3n+1) { --tilt: -1.2deg; }
+.polaroid:nth-child(3n+2) { --tilt:  1.4deg; }
+.polaroid:nth-child(3n+3) { --tilt: -0.6deg; }
+.polaroid:nth-child(4n+1) { --tilt:  0.8deg; }
+.polaroid:hover { transform:translateY(-6px) rotate(0deg) scale(1.04); box-shadow:0 12px 32px rgba(122,63,53,0.25); z-index:20; }
+
+.polaroid img { width:100%; aspect-ratio:1/1; object-fit:cover; display:block; }
+.polaroid-caption {
+  position:absolute; bottom:0; left:0; right:0; height:32px;
+  display:flex; align-items:center; justify-content:center; padding:0 6px;
+}
+.polaroid-caption-text { font-family:'Dancing Script',cursive; font-size:13px; color:var(--dusty); text-align:center; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:100%; }
+.polaroid-caption-empty { font-size:11px; color:rgba(201,137,122,0.35); font-style:italic; }
+
+/* Botão deletar na polaroid */
+.polaroid-delete { position:absolute; top:-8px; right:-8px; width:22px; height:22px; background:var(--deep); border:none; color:white; border-radius:50%; font-size:12px; cursor:pointer; display:none; align-items:center; justify-content:center; box-shadow:0 2px 6px rgba(0,0,0,0.2); z-index:30; }
+.polaroid:hover .polaroid-delete { display:flex; }
+
+/* Rodapé da página — separador decorativo */
+.page-footer { text-align:center; margin-top:20px; padding-left:32px; position:relative; z-index:1; }
+.page-footer-deco { font-size:14px; color:rgba(201,137,122,0.3); letter-spacing:8px; }
 
 /* Drop zone */
 .drop-zone {
-  border: 1.5px dashed var(--gold); border-radius: 4px; padding: 60px;
-  text-align: center; cursor: pointer; transition: all 0.3s; margin-bottom: 32px;
+  border:2px dashed var(--rose); border-radius:12px; padding:48px;
+  text-align:center; cursor:pointer; transition:all 0.3s; margin:24px 0;
+  background:rgba(253,248,244,0.5);
 }
-.drop-zone:hover, .drop-zone.drag-over { background: rgba(201,169,110,0.08); border-color: var(--brown); }
-.drop-icon { font-size: 40px; margin-bottom: 12px; opacity: 0.5; }
-.drop-title { font-family: 'Cormorant Garamond', serif; font-size: 22px; color: var(--brown); margin-bottom: 8px; font-style: italic; }
-.drop-hint { font-size: 12px; color: var(--brown-light); }
+.drop-zone:hover { background:rgba(232,196,184,0.15); border-color:var(--dusty); }
+.drop-icon { font-size:36px; margin-bottom:10px; }
+.drop-title { font-family:'Dancing Script',cursive; font-size:24px; color:var(--deep); margin-bottom:6px; }
+.drop-hint { font-size:12px; color:var(--dusty); font-style:italic; }
 
-/* Upload progress */
-.upload-bar { background: var(--warm); border-radius: 3px; height: 4px; margin-bottom: 20px; display: none; }
-.upload-bar-fill { background: var(--gold); height: 100%; border-radius: 3px; transition: width 0.3s; }
+/* Progresso */
+.upload-bar { background:var(--warm); border-radius:4px; height:4px; margin:0 0 20px; display:none; }
+.upload-bar-fill { background:var(--dusty); height:100%; border-radius:4px; transition:width 0.3s; }
 
-/* Drop overlay global */
-#drop-overlay { position: fixed; inset: 0; background: rgba(201,169,110,0.15); border: 3px dashed var(--gold); display: none; align-items: center; justify-content: center; z-index: 500; pointer-events: none; color: var(--brown); font-family: 'Cormorant Garamond', serif; font-size: 28px; font-style: italic; }
-#drop-overlay.show { display: flex; }
+/* Drop overlay */
+#drop-overlay { position:fixed; inset:0; background:rgba(232,196,184,0.2); border:3px dashed var(--dusty); display:none; align-items:center; justify-content:center; z-index:500; pointer-events:none; font-family:'Dancing Script',cursive; font-size:32px; color:var(--deep); }
+#drop-overlay.show { display:flex; }
 
-/* ── Lightbox ── */
-#lightbox { position: fixed; inset: 0; background: rgba(14,10,7,0.97); display: none; flex-direction: column; align-items: center; justify-content: center; z-index: 2000; }
-#lightbox.open { display: flex; }
-#lightbox img { max-width: 80vw; max-height: 75vh; object-fit: contain; border-radius: 2px; }
-.lb-close { position: absolute; top: 24px; right: 32px; background: none; border: none; color: rgba(255,255,255,0.5); font-size: 36px; cursor: pointer; line-height: 1; }
-.lb-close:hover { color: white; }
-.lb-nav { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.08); border: none; color: white; font-size: 32px; cursor: pointer; padding: 16px 20px; border-radius: 2px; }
-.lb-nav:hover { background: rgba(255,255,255,0.18); }
+/* ══ LIGHTBOX ══ */
+#lightbox { position:fixed; inset:0; background:rgba(26,12,10,0.97); display:none; flex-direction:column; align-items:center; justify-content:center; z-index:2000; }
+#lightbox.open { display:flex; }
+#lightbox img { max-width:82vw; max-height:74vh; object-fit:contain; border-radius:2px; box-shadow:0 0 80px rgba(0,0,0,0.5); }
 
-/* Painel inferior do lightbox */
-.lb-bottom {
-  width: 100%; max-width: 700px; margin-top: 20px; padding: 0 16px;
-  display: flex; align-items: center; gap: 12px;
-}
-.lb-caption-area { flex: 1; }
-.lb-caption-display {
-  font-family: 'Cormorant Garamond', serif; font-size: 18px; font-style: italic;
-  color: rgba(255,255,255,0.85); min-height: 24px; cursor: pointer;
-  border-bottom: 1px solid transparent; transition: border-color 0.2s; padding: 2px 0;
-}
-.lb-caption-display:hover { border-bottom-color: rgba(255,255,255,0.3); }
-.lb-caption-display.empty { color: rgba(255,255,255,0.3); font-style: italic; }
-.lb-caption-input {
-  width: 100%; background: rgba(255,255,255,0.08); border: none; border-bottom: 1px solid var(--gold);
-  color: white; font-family: 'Cormorant Garamond', serif; font-size: 18px; font-style: italic;
-  padding: 4px 0; outline: none; display: none;
-}
-.lb-meta-text { font-size: 12px; color: rgba(255,255,255,0.35); letter-spacing: 1px; margin-top: 4px; }
-.lb-save-btn { background: var(--gold); border: none; color: var(--dark); padding: 8px 18px; border-radius: 2px; font-size: 12px; cursor: pointer; font-family: 'DM Sans', sans-serif; letter-spacing: 0.5px; display: none; }
-.lb-save-btn:hover { background: #d4b07e; }
+.lb-close { position:absolute; top:24px; right:32px; background:none; border:none; color:rgba(255,255,255,0.45); font-size:36px; cursor:pointer; line-height:1; z-index:10; }
+.lb-close:hover { color:white; }
+.lb-nav { position:absolute; top:50%; transform:translateY(-50%); background:rgba(255,255,255,0.07); border:none; color:white; font-size:32px; cursor:pointer; padding:18px 22px; border-radius:3px; transition:background 0.2s; }
+.lb-nav:hover { background:rgba(255,255,255,0.16); }
+
+.lb-bottom { width:100%; max-width:680px; margin-top:20px; padding:0 20px; display:flex; flex-direction:column; align-items:center; gap:8px; }
+.lb-caption-wrap { width:100%; text-align:center; }
+.lb-caption-display { font-family:'Dancing Script',cursive; font-size:22px; color:rgba(255,255,255,0.8); cursor:pointer; display:inline-block; border-bottom:1px solid transparent; transition:border-color 0.2s; padding:2px 8px; }
+.lb-caption-display:hover { border-bottom-color:rgba(255,255,255,0.3); }
+.lb-caption-display.empty { font-size:14px; color:rgba(255,255,255,0.25); font-style:italic; font-family:'Lato',sans-serif; }
+.lb-caption-row { display:flex; gap:8px; align-items:center; width:100%; display:none; }
+.lb-caption-input { flex:1; background:rgba(255,255,255,0.08); border:none; border-bottom:1px solid var(--dusty); color:white; font-family:'Dancing Script',cursive; font-size:20px; padding:6px 8px; outline:none; text-align:center; }
+.lb-caption-input::placeholder { color:rgba(255,255,255,0.25); font-style:italic; }
+.lb-save { background:var(--dusty); border:none; color:white; padding:8px 20px; border-radius:20px; font-family:'Dancing Script',cursive; font-size:16px; cursor:pointer; transition:background 0.2s; white-space:nowrap; }
+.lb-save:hover { background:var(--deep); }
+.lb-meta { font-size:11px; color:rgba(255,255,255,0.3); letter-spacing:1px; }
+
+/* Modais */
+.modal-overlay { position:fixed; inset:0; background:rgba(58,31,26,0.55); display:none; align-items:center; justify-content:center; z-index:3000; backdrop-filter:blur(6px); }
+.modal-overlay.open { display:flex; }
+.modal { background:var(--cream); padding:40px 44px; width:440px; border-radius:16px; box-shadow:0 24px 64px var(--shadow); animation:slideUp 0.3s ease; }
+@keyframes slideUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+.modal-title { font-family:'Dancing Script',cursive; font-size:30px; color:var(--deep); margin-bottom:6px; }
+.modal-sub { font-family:'Playfair Display',serif; font-size:13px; font-style:italic; color:var(--dusty); margin-bottom:24px; }
+.form-input,.form-textarea { width:100%; padding:11px 0; border:none; border-bottom:1.5px solid var(--rose); background:transparent; font-family:'Lato',sans-serif; font-size:14px; color:var(--dark); margin-bottom:18px; outline:none; transition:border-color 0.2s; display:block; }
+.form-input:focus,.form-textarea:focus { border-bottom-color:var(--dusty); }
+.form-textarea { resize:vertical; min-height:70px; }
+.form-label { display:block; font-size:11px; letter-spacing:1.5px; text-transform:uppercase; color:var(--dusty); margin-bottom:8px; }
+.modal-actions { display:flex; gap:12px; justify-content:flex-end; margin-top:8px; }
+.btn-cancel { padding:10px 20px; background:transparent; border:1px solid var(--rose); border-radius:20px; color:var(--dusty); cursor:pointer; font-family:'Lato',sans-serif; font-size:12px; letter-spacing:1px; text-transform:uppercase; }
+.btn-confirm { padding:10px 24px; background:var(--deep); color:var(--cream); border:none; border-radius:20px; cursor:pointer; font-family:'Dancing Script',cursive; font-size:17px; box-shadow:0 3px 12px rgba(122,63,53,0.25); }
+
+/* Toast */
+#toast { position:fixed; bottom:32px; left:50%; transform:translateX(-50%) translateY(20px); background:var(--deep); color:var(--cream); padding:12px 28px; border-radius:30px; font-family:'Dancing Script',cursive; font-size:17px; opacity:0; transition:all 0.3s; pointer-events:none; z-index:9999; box-shadow:0 4px 20px rgba(0,0,0,0.25); }
+#toast.show { transform:translateX(-50%) translateY(0); opacity:1; }
 {% endblock %}
 
 {% block content %}
 <header class="header">
-  <a href="/dashboard" class="logo">memória<span>s</span></a>
+  <a href="/dashboard" class="logo">David <span class="amp">&</span> Nayara</a>
   <div class="header-right">
-    <span class="header-user">olá, {{ user.name }}</span>
-    <a href="/logout" class="btn btn-outline">Sair</a>
+    <span style="font-family:'Playfair Display',serif;font-size:13px;font-style:italic;color:var(--dusty)">olá, {{ user.name }} 🤍</span>
+    <a href="/logout" class="btn-logout">sair</a>
   </div>
 </header>
 
-<main class="main">
-  <div class="gallery-header">
-    <a href="/dashboard" class="back-btn">←</a>
-    <div>
-      <h2 class="gallery-title">{{ album.name }}</h2>
-      {% if album.description %}
-        <p class="gallery-sub">{{ album.description }}</p>
-      {% endif %}
-    </div>
-    <div class="gallery-actions">
-      <span style="font-size:13px;color:var(--brown-light)">{{ photos|length }} foto{{ 's' if photos|length != 1 }}</span>
-      <label class="btn btn-gold" style="cursor:pointer">
-        + Adicionar Fotos
+<div class="album-wrap">
+  <!-- Capa do álbum -->
+  <div class="album-cover-page">
+    <div class="cover-actions">
+      <label class="cover-btn gold" style="cursor:pointer">
+        + adicionar fotos
         <input id="file-input" type="file" multiple accept="image/*" style="display:none" onchange="uploadFiles(this.files)" />
       </label>
+      <button class="cover-btn" onclick="openModal('modal-edit')">✏️ editar</button>
+      <a href="/dashboard" class="cover-btn" style="text-decoration:none">← voltar</a>
     </div>
+    <span class="cover-hearts">🤍 🌸 🤍</span>
+    <div class="cover-title" id="cover-title">{{ album.name }}</div>
+    <p class="cover-sub" id="cover-sub">{% if album.description %}{{ album.description }}{% else %}nosso álbum especial{% endif %}</p>
+    <p class="cover-meta">{{ photos|length }} foto{{ 's' if photos|length != 1 }} · criado em {{ album.created_at[:10] }}</p>
   </div>
 
   <!-- Barra de progresso -->
-  <div class="upload-bar" id="upload-bar">
-    <div class="upload-bar-fill" id="upload-bar-fill" style="width:0%"></div>
-  </div>
+  <div class="upload-bar" id="upload-bar"><div class="upload-bar-fill" id="upload-bar-fill" style="width:0%"></div></div>
 
-  {% if photos|length == 0 %}
-  <label class="drop-zone" id="drop-zone">
-    <div class="drop-icon">🌿</div>
-    <div class="drop-title">Arraste suas fotos aqui</div>
-    <div class="drop-hint">ou clique para selecionar · JPG, PNG, WEBP</div>
-    <input type="file" multiple accept="image/*" style="display:none" onchange="uploadFiles(this.files)" />
-  </label>
-  {% endif %}
-
-  <!-- Grade estilo álbum -->
-  <div class="album-grid" id="album-grid">
-    {% for photo in photos %}
-    <div class="photo-cell" id="cell-{{ photo.id }}">
-      <img src="{{ photo.url }}" alt="{{ photo.caption or 'foto' }}" loading="lazy"
-           onclick="openLightbox({{ loop.index0 }})" />
-      <div class="photo-cell-overlay" onclick="openLightbox({{ loop.index0 }})">
-        {% if photo.caption %}
-          <div class="cell-caption">{{ photo.caption }}</div>
-        {% endif %}
-        <div class="cell-actions" onclick="event.stopPropagation()">
-          <button class="cell-btn" onclick="openLightbox({{ loop.index0 }})">🔍 Ver</button>
-          <button class="cell-btn danger" onclick="deletePhoto('{{ photo.id }}')">🗑</button>
-        </div>
+  <!-- Páginas do álbum -->
+  <div class="album-pages" id="album-pages">
+    {% if photos|length == 0 %}
+    <div class="page" id="empty-page">
+      <div class="page-header" style="padding-left:32px">
+        <span class="page-date">esperando por vocês... 🌸</span>
       </div>
+      <label class="drop-zone" style="position:relative;z-index:1">
+        <div class="drop-icon">📸</div>
+        <div class="drop-title">adicionem a primeira foto</div>
+        <div class="drop-hint">arrastem ou cliquem aqui · JPG, PNG, WEBP</div>
+        <input type="file" multiple accept="image/*" style="display:none" onchange="uploadFiles(this.files)" />
+      </label>
     </div>
-    {% endfor %}
-  </div>
-</main>
+    {% else %}
+      {# Divide as fotos em páginas de 6 #}
+      {% set page_size = 6 %}
+      {% for page_start in range(0, photos|length, page_size) %}
+        {% set page_photos = photos[page_start:page_start+page_size] %}
+        {% set page_num = loop.index %}
+        <div class="page" id="page-{{ page_num }}">
+          <div class="page-header">
+            <span class="page-date">{{ page_photos[0].created_at[:10] }}</span>
+            <span class="page-num">página {{ page_num }}</span>
+          </div>
 
-<!-- Drop overlay global -->
-<div id="drop-overlay">Solte para adicionar ✦</div>
+          {# Escolhe o layout baseado na quantidade de fotos #}
+          {% set n = page_photos|length %}
+          {% if n == 1 %}
+            {% set cols = "cols-1" %}
+          {% elif n == 2 %}
+            {% set cols = "cols-2" %}
+          {% elif n <= 4 %}
+            {% set cols = "cols-2" %}
+          {% else %}
+            {% set cols = "" %}
+          {% endif %}
+
+          <div class="page-photos {{ cols }}">
+            {% for photo in page_photos %}
+            {% set global_idx = page_start + loop.index0 %}
+            <div class="polaroid" id="pol-{{ photo.id }}" onclick="openLightbox({{ global_idx }})">
+              <img src="{{ photo.url }}" alt="{{ photo.caption or '' }}" loading="lazy" />
+              <div class="polaroid-caption">
+                {% if photo.caption %}
+                  <span class="polaroid-caption-text">{{ photo.caption }}</span>
+                {% else %}
+                  <span class="polaroid-caption-empty">clique para legendar</span>
+                {% endif %}
+              </div>
+              <button class="polaroid-delete" onclick="deletePhoto(event,'{{ photo.id }}')">×</button>
+            </div>
+            {% endfor %}
+          </div>
+
+          <div class="page-footer"><span class="page-footer-deco">· · · ♡ · · ·</span></div>
+        </div>
+      {% endfor %}
+    {% endif %}
+  </div>
+</div>
+
+<!-- Drop overlay -->
+<div id="drop-overlay">solte aqui para adicionar 🌸</div>
 
 <!-- Lightbox -->
 <div id="lightbox" onclick="handleLbClick(event)">
   <button class="lb-close" onclick="closeLightbox()">×</button>
-  <button class="lb-nav" style="left:24px" onclick="lbNav(event,-1)">‹</button>
-  <button class="lb-nav" style="right:24px" onclick="lbNav(event,1)">›</button>
-
+  <button class="lb-nav" style="left:20px" onclick="lbNav(event,-1)">‹</button>
+  <button class="lb-nav" style="right:20px" onclick="lbNav(event,1)">›</button>
   <img id="lb-img" src="" alt="" />
-
   <div class="lb-bottom">
-    <div class="lb-caption-area">
-      <!-- Modo exibição -->
-      <div id="lb-caption-display" class="lb-caption-display empty" onclick="startEditCaption()">
-        Clique para adicionar legenda...
+    <div class="lb-caption-wrap">
+      <div id="lb-caption-display" class="lb-caption-display empty" onclick="startEdit()">clique para adicionar legenda...</div>
+      <div class="lb-caption-row" id="lb-edit-row">
+        <input id="lb-caption-input" class="lb-caption-input" placeholder="escreva uma legenda especial... ♡" onkeydown="if(event.key==='Enter')saveCaption();if(event.key==='Escape')cancelEdit();" />
+        <button class="lb-save" onclick="saveCaption()">salvar ♡</button>
       </div>
-      <!-- Modo edição -->
-      <input id="lb-caption-input" class="lb-caption-input" placeholder="Adicione uma legenda..."
-        onkeydown="if(event.key==='Enter') saveCaption(); if(event.key==='Escape') cancelCaption();" />
-      <div class="lb-meta-text" id="lb-meta"></div>
     </div>
-    <button id="lb-save-btn" class="lb-save-btn" onclick="saveCaption()">Salvar</button>
+    <div class="lb-meta" id="lb-meta"></div>
   </div>
 </div>
 
+<!-- Modal editar álbum -->
+<div class="modal-overlay" id="modal-edit" onclick="if(event.target===this)closeModal('modal-edit')">
+  <div class="modal">
+    <div class="modal-title">editar álbum ✏️</div>
+    <p class="modal-sub">Mudem o nome e a descrição deste capítulo.</p>
+    <label class="form-label">nome do álbum</label>
+    <input class="form-input" id="edit-name" value="{{ album.name }}" />
+    <label class="form-label">descrição (opcional)</label>
+    <textarea class="form-textarea" id="edit-desc">{{ album.description or '' }}</textarea>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeModal('modal-edit')">cancelar</button>
+      <button class="btn-confirm" onclick="saveAlbum()">salvar ♡</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
 <script>
-// ── Dados das fotos ───────────────────────────────────────
+// ── Dados ────────────────────────────────────────────────
 const PHOTOS = [
   {% for photo in photos %}
-  { id: "{{ photo.id }}", url: "{{ photo.url }}", caption: {{ photo.caption | tojson }}, date: "{{ photo.created_at[:10] }}" },
+  { id:"{{ photo.id }}", url:"{{ photo.url }}", caption:{{ photo.caption|tojson }}, date:"{{ photo.created_at[:10] }}" },
   {% endfor %}
 ];
-let lbIndex = 0;
-let editingCaption = false;
+let lbIdx = 0, editing = false;
 
-// ── Lightbox ──────────────────────────────────────────────
-function openLightbox(idx) {
-  lbIndex = idx;
-  renderLightbox();
-  document.getElementById('lightbox').classList.add('open');
-}
-function closeLightbox() {
-  if (editingCaption) cancelCaption();
-  document.getElementById('lightbox').classList.remove('open');
-}
-function handleLbClick(e) {
-  if (e.target === document.getElementById('lightbox')) closeLightbox();
-}
-function lbNav(e, dir) {
-  e.stopPropagation();
-  if (editingCaption) cancelCaption();
-  lbIndex = (lbIndex + dir + PHOTOS.length) % PHOTOS.length;
-  renderLightbox();
-}
-function renderLightbox() {
-  const p = PHOTOS[lbIndex];
-  document.getElementById('lb-img').src = p.url;
-  document.getElementById('lb-meta').textContent = `${lbIndex + 1} / ${PHOTOS.length}  ·  ${p.date}`;
-  const display = document.getElementById('lb-caption-display');
-  if (p.caption) {
-    display.textContent = p.caption;
-    display.classList.remove('empty');
-  } else {
-    display.textContent = 'Clique para adicionar legenda...';
-    display.classList.add('empty');
-  }
-  document.getElementById('lb-caption-input').value = p.caption || '';
+// ── Toast ────────────────────────────────────────────────
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
 }
 
-// ── Edição de legenda ─────────────────────────────────────
-function startEditCaption() {
-  editingCaption = true;
-  const p = PHOTOS[lbIndex];
-  const input = document.getElementById('lb-caption-input');
-  input.value = p.caption || '';
-  input.style.display = 'block';
-  document.getElementById('lb-caption-display').style.display = 'none';
-  document.getElementById('lb-save-btn').style.display = 'block';
-  input.focus();
+// ── Lightbox ─────────────────────────────────────────────
+function openLightbox(idx) { lbIdx=idx; renderLb(); document.getElementById('lightbox').classList.add('open'); }
+function closeLightbox() { if(editing)cancelEdit(); document.getElementById('lightbox').classList.remove('open'); }
+function handleLbClick(e) { if(e.target===document.getElementById('lightbox'))closeLightbox(); }
+function lbNav(e,dir) { e.stopPropagation(); if(editing)cancelEdit(); lbIdx=(lbIdx+dir+PHOTOS.length)%PHOTOS.length; renderLb(); }
+function renderLb() {
+  const p=PHOTOS[lbIdx];
+  document.getElementById('lb-img').src=p.url;
+  document.getElementById('lb-meta').textContent=`${lbIdx+1} / ${PHOTOS.length}  ·  ${p.date}`;
+  const d=document.getElementById('lb-caption-display');
+  if(p.caption){ d.textContent=p.caption; d.classList.remove('empty'); }
+  else{ d.textContent='clique para adicionar legenda...'; d.classList.add('empty'); }
+  document.getElementById('lb-caption-input').value=p.caption||'';
 }
-function cancelCaption() {
-  editingCaption = false;
-  document.getElementById('lb-caption-input').style.display = 'none';
-  document.getElementById('lb-caption-display').style.display = 'block';
-  document.getElementById('lb-save-btn').style.display = 'none';
+document.addEventListener('keydown',e=>{
+  if(!document.getElementById('lightbox').classList.contains('open'))return;
+  if(editing)return;
+  if(e.key==='ArrowLeft')lbNav(e,-1);
+  if(e.key==='ArrowRight')lbNav(e,1);
+  if(e.key==='Escape')closeLightbox();
+});
+
+// ── Edição de legenda ────────────────────────────────────
+function startEdit() {
+  editing=true;
+  document.getElementById('lb-caption-input').value=PHOTOS[lbIdx].caption||'';
+  document.getElementById('lb-caption-display').style.display='none';
+  document.getElementById('lb-edit-row').style.display='flex';
+  document.getElementById('lb-caption-input').focus();
+}
+function cancelEdit() {
+  editing=false;
+  document.getElementById('lb-caption-display').style.display='inline-block';
+  document.getElementById('lb-edit-row').style.display='none';
 }
 async function saveCaption() {
-  const caption = document.getElementById('lb-caption-input').value.trim();
-  const photo = PHOTOS[lbIndex];
-  const res = await fetch(`/photos/${photo.id}/caption`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ caption }),
-  });
-  const data = await res.json();
-  if (data.ok) {
-    photo.caption = caption || null;
-    // Atualiza a célula na grade
-    const cell = document.getElementById('cell-' + photo.id);
-    if (cell) {
-      const cellCaption = cell.querySelector('.cell-caption');
-      if (caption) {
-        if (cellCaption) { cellCaption.textContent = caption; }
-        else {
-          const overlay = cell.querySelector('.photo-cell-overlay');
-          const div = document.createElement('div');
-          div.className = 'cell-caption';
-          div.textContent = caption;
-          overlay.insertBefore(div, overlay.firstChild);
-        }
-      } else if (cellCaption) {
-        cellCaption.remove();
+  const caption=document.getElementById('lb-caption-input').value.trim();
+  const photo=PHOTOS[lbIdx];
+  const res=await fetch(`/photos/${photo.id}/caption`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({caption})});
+  const data=await res.json();
+  if(data.ok){
+    photo.caption=caption||null;
+    // Atualiza polaroid
+    const pol=document.getElementById('pol-'+photo.id);
+    if(pol){
+      const cap=pol.querySelector('.polaroid-caption');
+      if(cap){
+        cap.innerHTML=caption
+          ? `<span class="polaroid-caption-text">${caption}</span>`
+          : `<span class="polaroid-caption-empty">clique para legendar</span>`;
       }
     }
-    cancelCaption();
-    renderLightbox();
-    showToast('Legenda salva ✦');
+    cancelEdit(); renderLb(); showToast('legenda salva 🌸');
   }
 }
 
-document.addEventListener('keydown', e => {
-  if (!document.getElementById('lightbox').classList.contains('open')) return;
-  if (editingCaption) return;
-  if (e.key === 'ArrowLeft') lbNav(e, -1);
-  if (e.key === 'ArrowRight') lbNav(e, 1);
-  if (e.key === 'Escape') closeLightbox();
-});
-
-// ── Upload AJAX ──────────────────────────────────────────
+// ── Upload ───────────────────────────────────────────────
 async function uploadFiles(files) {
-  if (!files || files.length === 0) return;
-  const arr = Array.from(files).filter(f => f.type.startsWith('image/'));
-  if (!arr.length) return;
-
-  const bar = document.getElementById('upload-bar');
-  const fill = document.getElementById('upload-bar-fill');
-  bar.style.display = 'block';
-
-  let done = 0;
-  for (const file of arr) {
-    const fd = new FormData();
-    fd.append('photos', file);
-    const res = await fetch('/albums/{{ album.id }}/upload', { method: 'POST', body: fd });
-    const data = await res.json();
-    if (data.photos) {
-      data.photos.forEach(photo => {
-        PHOTOS.push({ id: photo.id, url: photo.url, caption: photo.caption || null, date: photo.created_at.slice(0,10) });
-        addCellToGrid(photo, PHOTOS.length - 1);
-      });
-      const dz = document.getElementById('drop-zone');
-      if (dz) dz.style.display = 'none';
-    }
-    done++;
-    fill.style.width = `${(done / arr.length) * 100}%`;
+  if(!files||files.length===0)return;
+  const arr=Array.from(files).filter(f=>f.type.startsWith('image/'));
+  if(!arr.length)return;
+  const bar=document.getElementById('upload-bar');
+  const fill=document.getElementById('upload-bar-fill');
+  bar.style.display='block';
+  let done=0;
+  for(const file of arr){
+    const fd=new FormData(); fd.append('photos',file);
+    const res=await fetch('/albums/{{ album.id }}/upload',{method:'POST',body:fd});
+    const data=await res.json();
+    if(data.photos){ data.photos.forEach(p=>{ PHOTOS.push({id:p.id,url:p.url,caption:p.caption||null,date:p.created_at.slice(0,10)}); addPolaroidToPage(p,PHOTOS.length-1); }); }
+    done++; fill.style.width=`${(done/arr.length)*100}%`;
   }
-  showToast(`${arr.length} foto${arr.length > 1 ? 's' : ''} adicionada${arr.length > 1 ? 's' : ''} ✦`);
-  setTimeout(() => { bar.style.display = 'none'; fill.style.width = '0%'; }, 800);
+  // Remove página vazia se existir
+  const ep=document.getElementById('empty-page'); if(ep)ep.remove();
+  showToast(`${arr.length} foto${arr.length>1?'s':''} adicionada${arr.length>1?'s':''} 🌸`);
+  setTimeout(()=>{bar.style.display='none';fill.style.width='0%';},800);
 }
 
-function addCellToGrid(photo, idx) {
-  const grid = document.getElementById('album-grid');
-  const cell = document.createElement('div');
-  cell.className = 'photo-cell';
-  cell.id = 'cell-' + photo.id;
-  cell.innerHTML = `
-    <img src="${photo.url}" alt="" loading="lazy" onclick="openLightbox(${idx})" />
-    <div class="photo-cell-overlay" onclick="openLightbox(${idx})">
-      <div class="cell-actions" onclick="event.stopPropagation()">
-        <button class="cell-btn" onclick="openLightbox(${idx})">🔍 Ver</button>
-        <button class="cell-btn danger" onclick="deletePhoto('${photo.id}')">🗑</button>
-      </div>
-    </div>`;
-  grid.appendChild(cell);
+function addPolaroidToPage(photo,idx){
+  // Tenta adicionar na última página se tiver espaço (menos de 6), senão cria nova
+  const pages=document.querySelectorAll('.page:not(#empty-page)');
+  let targetGrid=null;
+  if(pages.length>0){
+    const lastPage=pages[pages.length-1];
+    const grid=lastPage.querySelector('.page-photos');
+    if(grid&&grid.children.length<6){ targetGrid=grid; }
+  }
+  if(!targetGrid){
+    // Cria nova página
+    const pageNum=pages.length+1;
+    const page=document.createElement('div');
+    page.className='page'; page.id='page-'+pageNum;
+    page.innerHTML=`<div class="page-header"><span class="page-date">${photo.created_at.slice(0,10)}</span><span class="page-num">página ${pageNum}</span></div><div class="page-photos" id="grid-new-${pageNum}"></div><div class="page-footer"><span class="page-footer-deco">· · · ♡ · · ·</span></div>`;
+    document.getElementById('album-pages').appendChild(page);
+    targetGrid=page.querySelector('.page-photos');
+  }
+  const pol=document.createElement('div');
+  pol.className='polaroid'; pol.id='pol-'+photo.id;
+  pol.onclick=()=>openLightbox(idx);
+  pol.innerHTML=`<img src="${photo.url}" alt="" loading="lazy"/><div class="polaroid-caption"><span class="polaroid-caption-empty">clique para legendar</span></div><button class="polaroid-delete" onclick="deletePhoto(event,'${photo.id}')">×</button>`;
+  targetGrid.appendChild(pol);
 }
 
-// ── Deletar foto ─────────────────────────────────────────
-async function deletePhoto(photoId) {
-  if (!confirm('Remover esta foto?')) return;
-  const res = await fetch(`/photos/${photoId}/delete`, { method: 'POST' });
-  const data = await res.json();
-  if (data.ok) {
-    document.getElementById('cell-' + photoId)?.remove();
-    const idx = PHOTOS.findIndex(p => p.id === photoId);
-    if (idx > -1) PHOTOS.splice(idx, 1);
-    if (document.getElementById('lightbox').classList.contains('open')) closeLightbox();
-    showToast('Foto removida');
+// ── Deletar ──────────────────────────────────────────────
+async function deletePhoto(e,id){
+  e.stopPropagation();
+  if(!confirm('Remover esta foto do álbum?'))return;
+  const res=await fetch(`/photos/${id}/delete`,{method:'POST'});
+  const data=await res.json();
+  if(data.ok){
+    document.getElementById('pol-'+id)?.remove();
+    const i=PHOTOS.findIndex(p=>p.id===id); if(i>-1)PHOTOS.splice(i,1);
+    if(document.getElementById('lightbox').classList.contains('open'))closeLightbox();
+    showToast('foto removida');
   }
 }
 
-// ── Drag & Drop global ────────────────────────────────────
-let dragCounter = 0;
-document.addEventListener('dragenter', () => { dragCounter++; document.getElementById('drop-overlay').classList.add('show'); });
-document.addEventListener('dragleave', () => { dragCounter--; if (dragCounter === 0) document.getElementById('drop-overlay').classList.remove('show'); });
-document.addEventListener('dragover', e => e.preventDefault());
-document.addEventListener('drop', e => {
-  e.preventDefault(); dragCounter = 0;
-  document.getElementById('drop-overlay').classList.remove('show');
-  uploadFiles(e.dataTransfer.files);
-});
+// ── Editar álbum ─────────────────────────────────────────
+async function saveAlbum(){
+  const name=document.getElementById('edit-name').value.trim();
+  const desc=document.getElementById('edit-desc').value.trim();
+  if(!name)return;
+  const res=await fetch('/albums/{{ album.id }}/edit',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,description:desc})});
+  const data=await res.json();
+  if(data.ok){
+    document.getElementById('cover-title').textContent=name;
+    document.getElementById('cover-sub').textContent=desc||'nosso álbum especial';
+    closeModal('modal-edit'); showToast('álbum atualizado 🌸');
+  }
+}
+
+// ── Modais ───────────────────────────────────────────────
+function openModal(id){document.getElementById(id).classList.add('open');}
+function closeModal(id){document.getElementById(id).classList.remove('open');}
+
+// ── Drag & drop global ───────────────────────────────────
+let dc=0;
+document.addEventListener('dragenter',()=>{dc++;document.getElementById('drop-overlay').classList.add('show');});
+document.addEventListener('dragleave',()=>{dc--;if(dc===0)document.getElementById('drop-overlay').classList.remove('show');});
+document.addEventListener('dragover',e=>e.preventDefault());
+document.addEventListener('drop',e=>{e.preventDefault();dc=0;document.getElementById('drop-overlay').classList.remove('show');uploadFiles(e.dataTransfer.files);});
 </script>
 {% endblock %}
