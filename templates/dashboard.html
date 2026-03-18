@@ -17,7 +17,7 @@ body { background:var(--aged); font-family:'Lato',sans-serif; color:var(--ink); 
 body::before { content:''; position:fixed; inset:0; z-index:0; pointer-events:none;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E"); opacity:.5; }
 
-/* Header */
+/* ── Header ── */
 .header { padding:18px 48px; display:flex; align-items:center; justify-content:space-between; background:rgba(242,235,217,0.95); backdrop-filter:blur(6px); border-bottom:1px solid var(--sepia); position:sticky; top:0; z-index:100; }
 .logo { font-family:'Homemade Apple',cursive; font-size:22px; color:var(--ink); }
 .header-right { display:flex; align-items:center; gap:16px; }
@@ -25,122 +25,50 @@ body::before { content:''; position:fixed; inset:0; z-index:0; pointer-events:no
 .btn-logout { background:none; border:1px solid var(--sepia); padding:6px 16px; font-size:11px; letter-spacing:1px; text-transform:uppercase; color:var(--faded); cursor:pointer; font-family:'Lato',sans-serif; transition:all 0.2s; text-decoration:none; display:inline-block; }
 .btn-logout:hover { background:var(--sepia); color:var(--ink); }
 
-.main { padding:40px 48px; position:relative; z-index:1; max-width:1100px; margin:0 auto; }
+.main { padding:40px 48px 0; position:relative; z-index:1; max-width:1100px; margin:0 auto; }
 
-/* Banner */
-.banner { text-align:center; margin-bottom:48px; }
+/* ── Banner ── */
+.banner { text-align:center; margin-bottom:40px; }
 .banner-eyebrow { font-size:10px; letter-spacing:3px; text-transform:uppercase; color:var(--faded); margin-bottom:10px; }
 .banner-title { font-family:'Homemade Apple',cursive; font-size:44px; color:var(--ink); line-height:1.3; }
 .banner-rule { width:80px; height:1px; background:var(--sepia); margin:14px auto; }
 .banner-sub { font-family:'Libre Baskerville',serif; font-size:14px; font-style:italic; color:var(--faded); }
 
-/* Grid de 2 colunas no topo */
-.top-grid { display:grid; grid-template-columns:1fr 1fr; gap:28px; margin-bottom:36px; }
-@media(max-width:780px){.top-grid{grid-template-columns:1fr;}}
-
-/* Seção genérica */
-.section-box {
-  background:var(--paper);
-  border-radius:2px;
-  padding:28px 32px;
-  position:relative;
-  box-shadow:0 2px 0 var(--sepia), 0 8px 32px var(--shadow);
-}
-.section-box::after { content:''; position:absolute; inset:0; pointer-events:none; border-radius:2px;
-  background:repeating-linear-gradient(to bottom,transparent 0px,transparent 31px,rgba(139,69,19,0.05) 31px,rgba(139,69,19,0.05) 32px); }
-
+/* ── Carta ── */
+.love-section { margin-bottom:48px; }
+.section-box { background:var(--paper); padding:28px 32px; position:relative; box-shadow:0 2px 0 var(--sepia),0 8px 32px var(--shadow); }
+.section-box::after { content:''; position:absolute; inset:0; pointer-events:none; background:repeating-linear-gradient(to bottom,transparent 0px,transparent 31px,rgba(139,69,19,0.05) 31px,rgba(139,69,19,0.05) 32px); }
 .section-stamp { display:inline-block; border:1px solid var(--sepia); padding:3px 10px; font-size:10px; letter-spacing:2px; text-transform:uppercase; color:var(--faded); margin-bottom:12px; position:relative; z-index:1; }
 .section-title { font-family:'Libre Baskerville',serif; font-size:20px; font-style:italic; color:var(--ink); margin-bottom:4px; position:relative; z-index:1; }
 .section-rule { border:none; border-top:1px dashed var(--sepia); margin:12px 0 16px; position:relative; z-index:1; }
-
-/* ── CARTA ── */
+.love-header-row { display:flex; align-items:flex-start; justify-content:space-between; }
 .love-text { font-family:'Libre Baskerville',serif; font-size:14px; line-height:2.2; color:var(--ink); white-space:pre-wrap; position:relative; z-index:1; min-height:40px; }
 .love-text.empty { color:rgba(59,47,30,0.3); font-style:italic; }
 .love-editor { display:none; position:relative; z-index:1; }
 .love-editor.open { display:block; }
-.love-textarea { width:100%; min-height:140px; border:none; border-bottom:1px solid var(--sepia); background:transparent; font-family:'Libre Baskerville',serif; font-size:14px; line-height:2.2; color:var(--ink); outline:none; resize:none; padding:4px 0; }
+.love-textarea { width:100%; min-height:120px; border:none; border-bottom:1px solid var(--sepia); background:transparent; font-family:'Libre Baskerville',serif; font-size:14px; line-height:2.2; color:var(--ink); outline:none; resize:none; padding:4px 0; }
 .love-textarea:focus { border-bottom-color:var(--rust); }
 .love-textarea::placeholder { color:rgba(59,47,30,0.25); font-style:italic; }
 .love-editor-actions { display:flex; gap:10px; justify-content:flex-end; margin-top:12px; }
-.btn-sm { padding:7px 18px; border-radius:1px; font-size:11px; letter-spacing:1px; text-transform:uppercase; cursor:pointer; font-family:'Lato',sans-serif; transition:all 0.2s; }
+.btn-sm { padding:7px 18px; font-size:11px; letter-spacing:1px; text-transform:uppercase; cursor:pointer; font-family:'Lato',sans-serif; transition:all 0.2s; }
 .btn-sm-outline { background:transparent; border:1px solid var(--sepia); color:var(--faded); }
 .btn-sm-solid { background:var(--ink); color:var(--paper); border:none; }
 .btn-sm-solid:hover { background:var(--dark); }
-.love-header-row { display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:0; }
 .love-signature { font-family:'Homemade Apple',cursive; font-size:16px; color:var(--faded); opacity:0.6; text-align:right; margin-top:16px; position:relative; z-index:1; }
 
-/* ── PLAYER DE MÚSICA ── */
-.player-wrap { position:relative; z-index:1; }
-
-/* Playlist */
-.playlist { list-style:none; margin-bottom:16px; max-height:180px; overflow-y:auto; }
-.playlist::-webkit-scrollbar { width:4px; }
-.playlist::-webkit-scrollbar-track { background:var(--aged); }
-.playlist::-webkit-scrollbar-thumb { background:var(--sepia); border-radius:2px; }
-.playlist li { display:flex; align-items:center; gap:10px; padding:8px 0; border-bottom:1px dashed rgba(196,168,130,0.3); cursor:pointer; transition:color 0.2s; }
-.playlist li:hover { color:var(--rust); }
-.playlist li.active { color:var(--rust); font-weight:400; }
-.track-num { font-size:11px; color:var(--sepia); width:18px; text-align:right; flex-shrink:0; font-family:'Libre Baskerville',serif; font-style:italic; }
-.track-title { flex:1; font-size:13px; font-family:'Libre Baskerville',serif; font-style:italic; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-.track-dur { font-size:11px; color:var(--faded); flex-shrink:0; }
-.track-del { background:none; border:none; color:var(--sepia); cursor:pointer; font-size:14px; opacity:0; transition:opacity 0.2s; padding:0 4px; }
-.playlist li:hover .track-del { opacity:1; }
-.playlist li.active .track-del { opacity:0.5; }
-
-.playlist-empty { font-family:'Libre Baskerville',serif; font-style:italic; font-size:13px; color:rgba(59,47,30,0.3); text-align:center; padding:24px 0; }
-
-/* Controles */
-.player-controls {
-  background:var(--aged);
-  border:1px solid var(--sepia);
-  border-radius:2px;
-  padding:14px 16px;
-  display:flex;
-  flex-direction:column;
-  gap:10px;
-}
-.player-now { font-family:'Libre Baskerville',serif; font-style:italic; font-size:13px; color:var(--rust); text-align:center; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-.player-progress { position:relative; height:3px; background:var(--sepia); border-radius:2px; cursor:pointer; opacity:0.6; }
-.player-progress-fill { height:100%; background:var(--ink); border-radius:2px; width:0%; transition:width 0.5s linear; }
-.player-btns { display:flex; align-items:center; justify-content:center; gap:20px; }
-.ctrl-btn { background:none; border:none; color:var(--ink); cursor:pointer; font-size:18px; transition:color 0.2s; padding:0; line-height:1; }
-.ctrl-btn:hover { color:var(--rust); }
-.ctrl-btn.play { font-size:26px; }
-.player-time { font-size:11px; color:var(--faded); text-align:center; letter-spacing:1px; }
-.player-upload { margin-top:12px; display:flex; gap:8px; }
-.player-upload input[type=text] { flex:1; padding:7px 10px; border:none; border-bottom:1px solid var(--sepia); background:transparent; font-family:'Libre Baskerville',serif; font-style:italic; font-size:13px; color:var(--ink); outline:none; }
-.player-upload input[type=text]::placeholder { color:rgba(59,47,30,0.3); }
-.player-upload label { background:var(--ink); color:var(--paper); padding:7px 14px; font-size:11px; letter-spacing:1px; text-transform:uppercase; cursor:pointer; font-family:'Lato',sans-serif; border-radius:1px; white-space:nowrap; display:flex; align-items:center; gap:6px; }
-.player-upload label:hover { background:var(--dark); }
-
-/* ── EVENTOS ── */
-.events-wrap { position:relative; z-index:1; }
-.events-list { display:flex; flex-direction:column; gap:12px; }
-.event-card { border-left:2px solid var(--sepia); padding:10px 14px; transition:border-color 0.2s; }
-.event-card:hover { border-left-color:var(--rust); }
-.event-date-badge { font-size:10px; letter-spacing:1.5px; text-transform:uppercase; color:var(--faded); margin-bottom:3px; }
-.event-name { font-family:'Libre Baskerville',serif; font-size:14px; color:var(--ink); margin-bottom:2px; line-height:1.4; }
-.event-place { font-size:12px; color:var(--faded); font-style:italic; }
-.event-tag { display:inline-block; font-size:10px; letter-spacing:1px; border:1px solid var(--sepia); padding:1px 7px; color:var(--faded); margin-top:5px; text-transform:uppercase; }
-.events-loading { font-family:'Libre Baskerville',serif; font-style:italic; font-size:13px; color:rgba(59,47,30,0.4); text-align:center; padding:24px 0; }
-.events-refresh { background:none; border:none; color:var(--faded); font-size:12px; cursor:pointer; font-family:'Lato',sans-serif; font-style:italic; margin-top:12px; display:block; position:relative; z-index:1; }
-.events-refresh:hover { color:var(--rust); }
-
-/* ── ÁLBUNS ── */
-.albums-section { margin-top:8px; }
-.albums-header { display:flex; align-items:baseline; justify-content:space-between; margin-bottom:24px; }
-.albums-title { font-family:'Libre Baskerville',serif; font-size:24px; font-style:italic; color:var(--ink); }
+/* ── Álbuns — DESTAQUE ── */
+.albums-section { margin-bottom:48px; }
+.albums-header { display:flex; align-items:baseline; justify-content:space-between; margin-bottom:28px; }
+.albums-title { font-family:'Libre Baskerville',serif; font-size:26px; font-style:italic; color:var(--ink); }
 .albums-count { font-size:12px; color:var(--faded); font-style:italic; }
 .albums-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(230px,1fr)); gap:24px; }
-
-/* Álbum estilo foto antiga */
 .album-card { background:var(--paper); position:relative; box-shadow:0 2px 0 var(--sepia),0 8px 28px var(--shadow); transition:transform 0.3s ease,box-shadow 0.3s; transform:rotate(var(--rot,0deg)); }
-.album-card:nth-child(odd) { --rot:-0.7deg; }
-.album-card:nth-child(even) { --rot:0.7deg; }
+.album-card:nth-child(odd){--rot:-0.7deg;}
+.album-card:nth-child(even){--rot:0.7deg;}
 .album-card:hover { transform:translateY(-6px) rotate(0deg); box-shadow:0 2px 0 var(--sepia),0 20px 40px var(--shadow); z-index:10; }
 .album-card-link { display:block; text-decoration:none; color:inherit; }
 .album-cover { width:100%; height:190px; object-fit:cover; display:block; filter:sepia(20%) contrast(0.95); }
-.album-cover-placeholder { width:100%; height:190px; background:linear-gradient(135deg,var(--aged),var(--paper)); display:flex; align-items:center; justify-content:center; font-size:44px; opacity:0.4; filter:grayscale(30%); }
+.album-cover-placeholder { width:100%; height:190px; background:linear-gradient(135deg,var(--aged),var(--paper)); display:flex; align-items:center; justify-content:center; font-size:44px; opacity:0.4; }
 .album-badge { position:absolute; top:10px; right:10px; background:var(--ink); color:var(--paper); font-size:10px; padding:2px 8px; letter-spacing:0.5px; }
 .album-info { padding:12px 14px 8px; }
 .album-name { font-family:'Libre Baskerville',serif; font-size:16px; font-style:italic; color:var(--ink); margin-bottom:2px; }
@@ -149,24 +77,93 @@ body::before { content:''; position:fixed; inset:0; z-index:0; pointer-events:no
 .album-action-btn { flex:1; padding:5px; border:1px solid var(--sepia); background:transparent; font-size:10px; letter-spacing:0.5px; color:var(--faded); cursor:pointer; font-family:'Lato',sans-serif; transition:all 0.2s; }
 .album-action-btn:hover { background:var(--aged); color:var(--ink); }
 .album-action-btn.danger:hover { background:#fde8e8; color:#8B1A1A; border-color:#f5c6c6; }
-.add-card { display:flex; align-items:center; justify-content:center; min-height:270px; background:transparent!important; border:1px dashed var(--sepia)!important; box-shadow:none!important; cursor:pointer; transform:none!important; }
+.add-card { display:flex; align-items:center; justify-content:center; min-height:268px; background:transparent!important; border:1px dashed var(--sepia)!important; box-shadow:none!important; cursor:pointer; transform:none!important; }
 .add-card:hover { background:rgba(196,168,130,0.1)!important; border-color:var(--rust)!important; }
 .add-card-inner { text-align:center; color:var(--faded); }
 .add-icon { font-size:28px; margin-bottom:8px; opacity:0.4; }
 .add-text { font-family:'Libre Baskerville',serif; font-size:15px; font-style:italic; }
-
 .empty-state { text-align:center; padding:60px 20px; }
-.empty-icon { font-size:56px; opacity:0.3; margin-bottom:14px; display:block; filter:grayscale(50%); }
+.empty-icon { font-size:56px; opacity:0.3; margin-bottom:14px; display:block; }
 .empty-title { font-family:'Libre Baskerville',serif; font-size:24px; font-style:italic; color:var(--ink); margin-bottom:8px; }
 .empty-sub { font-size:13px; color:var(--faded); line-height:1.8; font-style:italic; max-width:360px; margin:0 auto 24px; }
 
+/* ── FAB ── */
 .fab { position:fixed; bottom:28px; right:28px; background:var(--ink); color:var(--paper); border:none; padding:12px 24px; font-family:'Libre Baskerville',serif; font-size:13px; font-style:italic; cursor:pointer; box-shadow:0 6px 24px var(--shadow); transition:all 0.2s; z-index:50; letter-spacing:0.5px; }
 .fab:hover { background:var(--dark); transform:translateY(-1px); }
+
+/* ── RODAPÉ DISCRETO ── */
+.page-footer {
+  border-top: 1px solid var(--sepia);
+  margin-top: 16px;
+  background: rgba(224,213,190,0.5);
+  position: relative; z-index: 1;
+}
+
+/* Accordions do rodapé */
+.footer-accordion { border-bottom: 1px solid rgba(196,168,130,0.4); }
+.footer-accordion:last-child { border-bottom: none; }
+
+.accordion-trigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 48px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: 'Lato', sans-serif;
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--faded);
+  transition: color 0.2s;
+  text-align: left;
+}
+.accordion-trigger:hover { color: var(--ink); }
+.accordion-trigger .arrow { font-size: 10px; transition: transform 0.3s; opacity: 0.5; }
+.accordion-trigger.open .arrow { transform: rotate(180deg); }
+
+.accordion-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease;
+  padding: 0 48px;
+}
+.accordion-body.open {
+  max-height: 600px;
+  padding-bottom: 28px;
+}
+
+/* Player dentro do accordion */
+.player-url-row { display:flex; gap:8px; align-items:center; margin-bottom:10px; }
+.player-url-input { flex:1; padding:8px 0; border:none; border-bottom:1px solid var(--sepia); background:transparent; font-family:'Libre Baskerville',serif; font-style:italic; font-size:13px; color:var(--ink); outline:none; transition:border-color 0.2s; }
+.player-url-input:focus { border-bottom-color:var(--rust); }
+.player-url-input::placeholder { color:rgba(59,47,30,0.28); }
+.player-url-btn { background:var(--ink); color:var(--paper); border:none; padding:8px 16px; font-size:11px; letter-spacing:1px; text-transform:uppercase; cursor:pointer; font-family:'Lato',sans-serif; white-space:nowrap; flex-shrink:0; transition:background 0.2s; }
+.player-url-btn:hover { background:var(--dark); }
+.player-embed-area iframe { width:100%; border-radius:2px; display:block; margin-top:12px; }
+.player-empty-msg { font-family:'Libre Baskerville',serif; font-style:italic; font-size:13px; color:rgba(59,47,30,0.35); margin-bottom:12px; }
+.player-hint { font-size:11px; color:var(--faded); font-style:italic; line-height:1.7; margin-top:8px; }
+
+/* Eventos dentro do accordion */
+.events-list { display:flex; flex-direction:column; gap:10px; }
+.event-card { border-left:2px solid var(--sepia); padding:8px 14px; transition:border-color 0.2s; }
+.event-card:hover { border-left-color:var(--rust); }
+.event-date-badge { font-size:10px; letter-spacing:1.5px; text-transform:uppercase; color:var(--faded); margin-bottom:2px; }
+.event-name { font-family:'Libre Baskerville',serif; font-size:13px; color:var(--ink); line-height:1.4; }
+.event-place { font-size:11px; color:var(--faded); font-style:italic; }
+.event-tag { display:inline-block; font-size:10px; border:1px solid var(--sepia); padding:1px 6px; color:var(--faded); margin-top:3px; text-transform:uppercase; letter-spacing:0.5px; }
+.events-loading { font-family:'Libre Baskerville',serif; font-style:italic; font-size:13px; color:rgba(59,47,30,0.35); padding:12px 0; }
+.events-header-row { display:flex; align-items:center; justify-content:space-between; margin-bottom:16px; }
+.events-label { font-family:'Libre Baskerville',serif; font-size:15px; font-style:italic; color:var(--ink); }
+.events-refresh { background:none; border:1px solid var(--sepia); padding:5px 12px; font-size:10px; letter-spacing:1px; text-transform:uppercase; color:var(--faded); cursor:pointer; font-family:'Lato',sans-serif; transition:all 0.2s; }
+.events-refresh:hover { background:var(--sepia); color:var(--ink); }
 
 /* Modais */
 .modal-overlay { position:fixed; inset:0; background:rgba(28,20,13,0.6); display:none; align-items:center; justify-content:center; z-index:1000; backdrop-filter:blur(4px); }
 .modal-overlay.open { display:flex; }
-.modal { background:var(--paper); padding:40px 44px; width:440px; border-radius:2px; box-shadow:0 24px 64px var(--shadow); animation:slideUp 0.3s ease; position:relative; }
+.modal { background:var(--paper); padding:40px 44px; width:440px; box-shadow:0 24px 64px var(--shadow); animation:slideUp 0.3s ease; position:relative; }
 .modal::after { content:''; position:absolute; inset:0; pointer-events:none; background:repeating-linear-gradient(to bottom,transparent 0px,transparent 31px,rgba(139,69,19,0.04) 31px,rgba(139,69,19,0.04) 32px); }
 @keyframes slideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
 .modal-title { font-family:'Libre Baskerville',serif; font-size:22px; font-style:italic; color:var(--ink); margin-bottom:6px; position:relative; z-index:1; }
@@ -195,6 +192,7 @@ body::before { content:''; position:fixed; inset:0; z-index:0; pointer-events:no
 </header>
 
 <main class="main">
+
   <!-- Banner -->
   <div class="banner">
     <div class="banner-eyebrow">arquivo pessoal</div>
@@ -203,10 +201,8 @@ body::before { content:''; position:fixed; inset:0; z-index:0; pointer-events:no
     <p class="banner-sub">guardando o que não queremos esquecer</p>
   </div>
 
-  <!-- Grid superior: carta + player -->
-  <div class="top-grid">
-
-    <!-- Carta -->
+  <!-- Carta -->
+  <div class="love-section">
     <div class="section-box">
       <div style="position:relative;z-index:1">
         <div class="love-header-row">
@@ -221,7 +217,7 @@ body::before { content:''; position:fixed; inset:0; z-index:0; pointer-events:no
           {% if love_note %}
             <p class="love-text" id="love-text">{{ love_note }}</p>
           {% else %}
-            <p class="love-text empty" id="love-text">Clique em "editar" para escrever sobre nós — como nos conhecemos, o que esse cantinho representa, o que não queremos esquecer...</p>
+            <p class="love-text empty" id="love-text">Clique em "editar" para escrever sobre nós — como nos conhecemos, o que esse cantinho representa...</p>
           {% endif %}
         </div>
         <div class="love-editor" id="love-editor">
@@ -234,69 +230,16 @@ body::before { content:''; position:fixed; inset:0; z-index:0; pointer-events:no
         <div class="love-signature">só nós dois ♡</div>
       </div>
     </div>
-
-    <!-- Player -->
-    <div class="section-box">
-      <div class="player-wrap">
-        <div class="section-stamp">nossa trilha sonora</div>
-        <div class="section-title">o que toca por aqui</div>
-        <hr class="section-rule" />
-
-        <ul class="playlist" id="playlist">
-          <li class="playlist-empty" id="playlist-empty">nenhuma música ainda...</li>
-        </ul>
-
-        <!-- Controles -->
-        <div class="player-controls">
-          <div class="player-now" id="player-now">— silêncio —</div>
-          <div class="player-progress" id="progress-bar" onclick="seekTo(event)">
-            <div class="player-progress-fill" id="progress-fill"></div>
-          </div>
-          <div class="player-btns">
-            <button class="ctrl-btn" onclick="prevTrack()" title="anterior">◂◂</button>
-            <button class="ctrl-btn play" id="play-btn" onclick="togglePlay()">▶</button>
-            <button class="ctrl-btn" onclick="nextTrack()" title="próxima">▸▸</button>
-          </div>
-          <div class="player-time" id="player-time">0:00 / 0:00</div>
-        </div>
-
-        <!-- Upload -->
-        <div class="player-upload">
-          <input type="text" id="track-title" placeholder="nome da música (opcional)" />
-          <label>
-            ♪ adicionar
-            <input type="file" accept="audio/*" style="display:none" onchange="uploadTrack(this)" />
-          </label>
-        </div>
-      </div>
-    </div>
   </div>
 
-  <!-- Eventos em SP -->
-  <div class="section-box" style="margin-bottom:36px">
-    <div class="events-wrap">
-      <div style="display:flex;align-items:flex-start;justify-content:space-between">
-        <div>
-          <div class="section-stamp">São Paulo</div>
-          <div class="section-title">o que rola essa semana</div>
-        </div>
-        <button class="btn-sm btn-sm-outline" onclick="loadEvents()" style="margin-top:4px;flex-shrink:0">↻ atualizar</button>
-      </div>
-      <hr class="section-rule" />
-      <div class="events-list" id="events-list">
-        <div class="events-loading" id="events-loading">buscando eventos...</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Álbuns -->
+  <!-- ── ÁLBUNS — destaque ── -->
   <div class="albums-section">
     {% if albums|length == 0 %}
     <div class="empty-state">
       <span class="empty-icon">📷</span>
       <h2 class="empty-title">nenhum álbum ainda</h2>
       <p class="empty-sub">criem o primeiro álbum e comecem a guardar os momentos de vocês</p>
-      <button class="fab" style="position:relative;bottom:auto;right:auto;display:inline-block" onclick="openModal('modal-album')">+ novo álbum</button>
+      <button onclick="openModal('modal-album')" style="background:var(--ink);color:var(--paper);border:none;padding:12px 28px;font-family:'Libre Baskerville',serif;font-size:13px;font-style:italic;cursor:pointer;letter-spacing:0.5px;">+ novo álbum</button>
     </div>
     {% else %}
     <div class="albums-header">
@@ -330,7 +273,51 @@ body::before { content:''; position:fixed; inset:0; z-index:0; pointer-events:no
     </div>
     {% endif %}
   </div>
+
 </main>
+
+<!-- ── RODAPÉ: player + eventos em accordions discretos ── -->
+<footer class="page-footer">
+
+  <!-- Trilha sonora -->
+  <div class="footer-accordion">
+    <button class="accordion-trigger" onclick="toggleAccordion('player-body', this)">
+      <span>♪ nossa trilha sonora</span>
+      <span class="arrow">▾</span>
+    </button>
+    <div class="accordion-body" id="player-body">
+      <div class="player-url-row">
+        <input class="player-url-input" type="text" id="playlist-url-input"
+          placeholder="cole o link do Spotify ou YouTube Music..."
+          value="{{ playlist_url or '' }}" />
+        <button class="player-url-btn" onclick="applyPlaylist()">carregar</button>
+      </div>
+      <p class="player-hint">
+        Spotify: playlist → ··· → Compartilhar → Copiar link &nbsp;·&nbsp;
+        YouTube Music: playlist → Compartilhar → Copiar link
+      </p>
+      <div id="player-embed-area"></div>
+    </div>
+  </div>
+
+  <!-- Eventos SP -->
+  <div class="footer-accordion">
+    <button class="accordion-trigger" onclick="toggleAccordion('events-body', this)" id="events-trigger">
+      <span>◎ o que rola em São Paulo essa semana</span>
+      <span class="arrow">▾</span>
+    </button>
+    <div class="accordion-body" id="events-body">
+      <div class="events-header-row">
+        <span class="events-label">sugestões pra vocês</span>
+        <button class="events-refresh" onclick="loadEvents()">↻ atualizar</button>
+      </div>
+      <div class="events-list" id="events-list">
+        <div class="events-loading">abra para ver os eventos desta semana</div>
+      </div>
+    </div>
+  </div>
+
+</footer>
 
 {% if albums|length > 0 %}
 <button class="fab" onclick="openModal('modal-album')">+ novo álbum</button>
@@ -354,7 +341,7 @@ body::before { content:''; position:fixed; inset:0; z-index:0; pointer-events:no
   </div>
 </div>
 
-<!-- Modal editar álbum -->
+<!-- Modal renomear álbum -->
 <div class="modal-overlay" id="modal-edit" onclick="if(event.target===this)closeModal('modal-edit')">
   <div class="modal">
     <div class="modal-title">renomear álbum</div>
@@ -388,12 +375,25 @@ body::before { content:''; position:fixed; inset:0; z-index:0; pointer-events:no
 <div id="toast"></div>
 
 <script>
-// ── Toast ────────────────────────────────────────────────
 function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3000);}
 function openModal(id){document.getElementById(id).classList.add('open');}
 function closeModal(id){document.getElementById(id).classList.remove('open');}
 
-// ── Carta ────────────────────────────────────────────────
+// ── Accordion ─────────────────────────────────────────────
+let eventsLoaded = false;
+function toggleAccordion(bodyId, btn) {
+  const body = document.getElementById(bodyId);
+  const isOpen = body.classList.contains('open');
+  body.classList.toggle('open', !isOpen);
+  btn.classList.toggle('open', !isOpen);
+  // Carrega eventos só na primeira abertura
+  if (bodyId === 'events-body' && !isOpen && !eventsLoaded) {
+    eventsLoaded = true;
+    loadEvents();
+  }
+}
+
+// ── Carta ─────────────────────────────────────────────────
 function openEditor(){
   const isEmpty=document.getElementById('love-text').classList.contains('empty');
   document.getElementById('love-textarea').value=isEmpty?'':document.getElementById('love-text').textContent;
@@ -419,7 +419,72 @@ async function saveNote(){
   }
 }
 
-// ── Álbuns ───────────────────────────────────────────────
+// ── Player ────────────────────────────────────────────────
+function parseEmbedUrl(raw){
+  const url=raw.trim();
+  const spotifyMatch=url.match(/open\.spotify\.com\/(playlist|album|track|artist)\/([a-zA-Z0-9]+)/);
+  if(spotifyMatch) return {embedUrl:`https://open.spotify.com/embed/${spotifyMatch[1]}/${spotifyMatch[2]}?utm_source=generator&theme=0`,height:spotifyMatch[1]==='track'?152:352};
+  const ytListMatch=url.match(/[?&]list=([a-zA-Z0-9_-]+)/);
+  if(ytListMatch) return {embedUrl:`https://www.youtube.com/embed/videoseries?list=${ytListMatch[1]}`,height:200};
+  const ytVideoMatch=url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/))([a-zA-Z0-9_-]{11})/);
+  if(ytVideoMatch) return {embedUrl:`https://www.youtube.com/embed/${ytVideoMatch[1]}`,height:200};
+  return null;
+}
+function renderEmbed(info){
+  const area=document.getElementById('player-embed-area');
+  if(!info){area.innerHTML='';return;}
+  area.innerHTML=`<iframe src="${info.embedUrl}" height="${info.height}" frameborder="0" allowtransparency="true" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>`;
+}
+async function applyPlaylist(){
+  const raw=document.getElementById('playlist-url-input').value.trim();
+  if(!raw)return;
+  const info=parseEmbedUrl(raw);
+  renderEmbed(info);
+  if(info){
+    await fetch('/settings/playlist',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({url:raw})});
+    showToast('playlist salva');
+  } else {
+    showToast('link não reconhecido');
+  }
+}
+// Renderiza a playlist salva silenciosamente (sem abrir o accordion)
+(function(){
+  const saved=document.getElementById('playlist-url-input').value.trim();
+  if(saved) renderEmbed(parseEmbedUrl(saved));
+})();
+
+// ── Eventos ───────────────────────────────────────────────
+async function loadEvents(){
+  const list=document.getElementById('events-list');
+  list.innerHTML='<div class="events-loading">buscando...</div>';
+  try{
+    const today=new Date().toISOString().slice(0,10);
+    const res=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        model:'claude-sonnet-4-20250514',
+        max_tokens:1000,
+        tools:[{type:'web_search_20250305',name:'web_search'}],
+        messages:[{role:'user',content:`Hoje é ${today}. Busque eventos culturais, shows, exposições, peças de teatro e passeios em São Paulo nessa semana. Retorne SOMENTE JSON válido sem texto antes ou depois: {"events":[{"name":"nome","date":"data","place":"local","type":"show|exposição|teatro|festival|outros"}]} com no máximo 6 eventos para um casal jovem.`}]
+      })
+    });
+    const data=await res.json();
+    const tb=data.content&&data.content.find(b=>b.type==='text');
+    if(!tb)throw new Error();
+    const parsed=JSON.parse(tb.text.replace(/```json|```/g,'').trim());
+    renderEvents(parsed.events||[]);
+  }catch{
+    list.innerHTML='<div class="events-loading">não foi possível carregar. tente novamente.</div>';
+  }
+}
+function renderEvents(events){
+  const list=document.getElementById('events-list');
+  if(!events.length){list.innerHTML='<div class="events-loading">nenhum evento encontrado.</div>';return;}
+  list.innerHTML=events.map(e=>`<div class="event-card"><div class="event-date-badge">${e.date}</div><div class="event-name">${e.name}</div><div class="event-place">${e.place}</div><span class="event-tag">${e.type}</span></div>`).join('');
+}
+
+// ── Álbuns ────────────────────────────────────────────────
 function openEditAlbum(id,name,desc){document.getElementById('edit-id').value=id;document.getElementById('edit-name').value=name;document.getElementById('edit-desc').value=desc;openModal('modal-edit');}
 async function saveEdit(){
   const id=document.getElementById('edit-id').value;
@@ -431,140 +496,5 @@ async function saveEdit(){
   if(data.ok){document.getElementById('album-name-'+id).textContent=name;document.getElementById('album-desc-'+id).textContent=desc?desc+' · ':'';closeModal('modal-edit');showToast('álbum renomeado');}
 }
 function deleteAlbum(id){document.getElementById('delete-form').action=`/albums/${id}/delete`;openModal('modal-delete');}
-
-// ── Player ───────────────────────────────────────────────
-let tracks=[], currentIdx=-1;
-const audio=new Audio();
-
-function fmtTime(s){const m=Math.floor(s/60);const ss=String(Math.floor(s%60)).padStart(2,'0');return`${m}:${ss}`;}
-
-audio.addEventListener('timeupdate',()=>{
-  if(!audio.duration)return;
-  const pct=(audio.currentTime/audio.duration)*100;
-  document.getElementById('progress-fill').style.width=pct+'%';
-  document.getElementById('player-time').textContent=`${fmtTime(audio.currentTime)} / ${fmtTime(audio.duration)}`;
-});
-audio.addEventListener('ended',()=>nextTrack());
-
-async function loadTracks(){
-  const res=await fetch('/music');
-  const data=await res.json();
-  tracks=data.tracks||[];
-  renderPlaylist();
-}
-
-function renderPlaylist(){
-  const ul=document.getElementById('playlist');
-  const empty=document.getElementById('playlist-empty');
-  ul.innerHTML='';
-  if(tracks.length===0){ul.appendChild(empty);return;}
-  tracks.forEach((t,i)=>{
-    const li=document.createElement('li');
-    li.id='track-li-'+t.id;
-    if(i===currentIdx)li.classList.add('active');
-    li.innerHTML=`<span class="track-num">${i+1}</span><span class="track-title" onclick="playTrack(${i})">${t.title}</span><span class="track-dur">${t.duration?fmtTime(t.duration):''}</span><button class="track-del" onclick="deleteTrack(event,'${t.id}')" title="remover">×</button>`;
-    ul.appendChild(li);
-  });
-}
-
-function playTrack(idx){
-  currentIdx=idx;
-  const t=tracks[idx];
-  audio.src=t.url;
-  audio.play();
-  document.getElementById('play-btn').textContent='⏸';
-  document.getElementById('player-now').textContent=t.title;
-  renderPlaylist();
-}
-
-function togglePlay(){
-  if(tracks.length===0)return;
-  if(currentIdx===-1)return playTrack(0);
-  if(audio.paused){audio.play();document.getElementById('play-btn').textContent='⏸';}
-  else{audio.pause();document.getElementById('play-btn').textContent='▶';}
-}
-
-function prevTrack(){if(tracks.length===0)return;playTrack((currentIdx-1+tracks.length)%tracks.length);}
-function nextTrack(){if(tracks.length===0)return;playTrack((currentIdx+1)%tracks.length);}
-
-function seekTo(e){
-  if(!audio.duration)return;
-  const bar=document.getElementById('progress-bar');
-  const rect=bar.getBoundingClientRect();
-  const pct=(e.clientX-rect.left)/rect.width;
-  audio.currentTime=pct*audio.duration;
-}
-
-async function uploadTrack(input){
-  const file=input.files[0];
-  if(!file)return;
-  const title=document.getElementById('track-title').value.trim();
-  const fd=new FormData();
-  fd.append('track',file);
-  if(title)fd.append('title',title);
-  showToast('enviando música...');
-  const res=await fetch('/music/upload',{method:'POST',body:fd});
-  const data=await res.json();
-  if(data.track){tracks.push(data.track);renderPlaylist();document.getElementById('track-title').value='';input.value='';showToast('música adicionada');}
-}
-
-async function deleteTrack(e,id){
-  e.stopPropagation();
-  const res=await fetch(`/music/${id}/delete`,{method:'POST'});
-  const data=await res.json();
-  if(data.ok){
-    const idx=tracks.findIndex(t=>t.id===id);
-    if(idx===currentIdx){audio.pause();audio.src='';currentIdx=-1;document.getElementById('play-btn').textContent='▶';document.getElementById('player-now').textContent='— silêncio —';}
-    tracks.splice(idx,1);
-    if(currentIdx>idx)currentIdx--;
-    renderPlaylist();showToast('música removida');
-  }
-}
-
-// ── Eventos em SP ────────────────────────────────────────
-async function loadEvents(){
-  const list=document.getElementById('events-list');
-  list.innerHTML='<div class="events-loading">buscando eventos em São Paulo...</div>';
-
-  try {
-    const today=new Date().toISOString().slice(0,10);
-    const res=await fetch('https://api.anthropic.com/v1/messages',{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({
-        model:'claude-sonnet-4-20250514',
-        max_tokens:1000,
-        tools:[{type:'web_search_20250305',name:'web_search'}],
-        messages:[{role:'user',content:`Hoje é ${today}. Busque eventos culturais, shows, exposições, peças de teatro e passeios interessantes acontecendo em São Paulo nessa semana. Retorne SOMENTE um JSON válido, sem nenhum texto antes ou depois, no formato: {"events":[{"name":"nome do evento","date":"data ou período","place":"local","type":"show|exposição|teatro|festival|outros","description":"frase curta"}]} com no máximo 6 eventos variados e interessantes para um casal jovem.`}]
-      })
-    });
-    const data=await res.json();
-    // extrai o texto da resposta
-    const textBlock=data.content&&data.content.find(b=>b.type==='text');
-    if(!textBlock)throw new Error('sem resposta');
-    const clean=textBlock.text.replace(/```json|```/g,'').trim();
-    const parsed=JSON.parse(clean);
-    renderEvents(parsed.events||[]);
-  } catch(err) {
-    list.innerHTML='<div class="events-loading">não foi possível carregar os eventos agora. tente novamente.</div>';
-  }
-}
-
-function renderEvents(events){
-  const list=document.getElementById('events-list');
-  if(!events.length){list.innerHTML='<div class="events-loading">nenhum evento encontrado.</div>';return;}
-  list.innerHTML=events.map(e=>`
-    <div class="event-card">
-      <div class="event-date-badge">${e.date}</div>
-      <div class="event-name">${e.name}</div>
-      <div class="event-place">${e.place}</div>
-      <span class="event-tag">${e.type}</span>
-    </div>
-  `).join('');
-}
-
-// Inicia
-loadTracks();
-loadEvents();
 </script>
 {% endblock %}

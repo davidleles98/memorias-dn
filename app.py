@@ -6,7 +6,6 @@ from extensions import login_manager
 from routes.auth import auth_bp
 from routes.albums import albums_bp
 from routes.photos import photos_bp
-from routes.music import music_bp
 
 load_dotenv()
 
@@ -18,7 +17,6 @@ def create_app():
     app.register_blueprint(auth_bp)
     app.register_blueprint(albums_bp)
     app.register_blueprint(photos_bp)
-    app.register_blueprint(music_bp)
     return app
 
 app = create_app()
