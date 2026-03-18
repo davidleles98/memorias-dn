@@ -165,9 +165,6 @@ body::before { content:''; position:fixed; inset:0; z-index:0; pointer-events:no
   <div class="album-pages" id="album-pages">
     {% if photos|length == 0 %}
     <div class="page" id="empty-page">
-      <div class="page-header" style="padding-left:32px">
-        <span class="page-date">esperando por vocês... 🌸</span>
-      </div>
       <label class="drop-zone" style="position:relative;z-index:1">
         <div class="drop-icon">📸</div>
         <div class="drop-title">adicionem a primeira foto</div>
@@ -181,10 +178,6 @@ body::before { content:''; position:fixed; inset:0; z-index:0; pointer-events:no
         {% set page_photos = photos[page_start:page_start+page_size] %}
         {% set page_num = loop.index %}
         <div class="page" id="page-{{ page_num }}">
-          <div class="page-header">
-            <span class="page-date">{{ page_photos[0].created_at[:10] }}</span>
-            <span class="page-num">página {{ page_num }}</span>
-          </div>
           {% set n = page_photos|length %}
           {% if n == 1 %}{% set cols="cols-1" %}{% elif n <= 2 %}{% set cols="cols-2" %}{% elif n <= 4 %}{% set cols="cols-2" %}{% else %}{% set cols="" %}{% endif %}
           <div class="page-photos {{ cols }}">
