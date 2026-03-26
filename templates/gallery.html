@@ -13,25 +13,22 @@ body::before { content:''; position:fixed; inset:0; z-index:0; pointer-events:no
 .btn-logout { background:none; border:1px solid var(--sepia); padding:6px 14px; font-size:11px; letter-spacing:1px; text-transform:uppercase; color:var(--faded); cursor:pointer; font-family:'Lato',sans-serif; text-decoration:none; display:inline-block; transition:all 0.2s; }
 .btn-logout:hover { background:var(--sepia); color:var(--ink); }
 
-/* Álbum */
 .album-wrap { position:relative; z-index:1; padding:28px 20px 64px; max-width:960px; margin:0 auto; }
 
 /* Capa */
-.album-cover-page {
-  background:var(--ink); border-radius:2px 10px 10px 2px; padding:36px 44px 28px;
-  margin-bottom:6px; position:relative; overflow:hidden;
-  box-shadow:-3px 0 0 #5a3820,-7px 0 0 #2a1a0e,0 14px 40px rgba(28,20,13,0.5);
-}
+.album-cover-page { background:var(--ink); border-radius:2px 10px 10px 2px; padding:36px 44px 28px; margin-bottom:6px; position:relative; overflow:hidden; box-shadow:-3px 0 0 #5a3820,-7px 0 0 #2a1a0e,0 14px 40px rgba(28,20,13,0.5); }
 .album-cover-page::before { content:''; position:absolute; left:0; top:0; bottom:0; width:4px; background:repeating-linear-gradient(to bottom,rgba(255,255,255,0.12) 0px,rgba(255,255,255,0.12) 12px,transparent 12px,transparent 22px); }
 .cover-eyebrow { font-size:10px; letter-spacing:3px; text-transform:uppercase; color:rgba(196,168,130,0.5); margin-bottom:10px; display:block; }
 .cover-title { font-family:'Homemade Apple',cursive; font-size:36px; color:rgba(242,235,217,0.95); line-height:1.3; }
 .cover-sub { font-family:'Libre Baskerville',serif; font-size:13px; font-style:italic; color:rgba(196,168,130,0.6); margin-top:8px; }
 .cover-meta { font-size:11px; color:rgba(196,168,130,0.4); margin-top:14px; letter-spacing:0.5px; }
-.cover-actions { position:absolute; top:18px; right:20px; display:flex; gap:8px; z-index:10; }
+.cover-actions { position:absolute; top:18px; right:20px; display:flex; gap:8px; z-index:10; flex-wrap:wrap; justify-content:flex-end; }
 .cover-btn { background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.15); color:rgba(255,255,255,0.65); padding:6px 14px; font-size:11px; letter-spacing:0.5px; cursor:pointer; font-family:'Lato',sans-serif; transition:all 0.2s; text-decoration:none; display:inline-block; }
 .cover-btn:hover { background:rgba(255,255,255,0.15); color:white; }
 .cover-btn.rust { background:var(--rust); border-color:var(--rust); color:white; }
 .cover-btn.rust:hover { background:#a0521a; }
+/* Badge de visibilidade na capa */
+.cover-vis-badge { display:inline-block; font-size:10px; letter-spacing:1.5px; text-transform:uppercase; color:rgba(196,168,130,0.5); border:1px solid rgba(196,168,130,0.2); padding:2px 8px; margin-top:10px; }
 
 /* Páginas */
 .album-pages { display:flex; flex-direction:column; }
@@ -39,21 +36,16 @@ body::before { content:''; position:fixed; inset:0; z-index:0; pointer-events:no
 .page::before { content:''; position:absolute; inset:0; pointer-events:none; background:repeating-linear-gradient(to bottom,transparent 0px,transparent 31px,rgba(139,69,19,0.05) 31px,rgba(139,69,19,0.05) 32px); }
 .page::after { content:''; position:absolute; left:48px; top:0; bottom:0; width:1px; background:rgba(196,168,130,0.12); }
 .page:last-child { border-radius:0 0 6px 10px; box-shadow:0 6px 28px var(--shadow); }
-
-/* Grid sem datas */
 .page-photos { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; padding-left:28px; position:relative; z-index:1; }
-.page-photos.cols-1 { grid-template-columns:1fr; max-width:360px; }
-.page-photos.cols-2 { grid-template-columns:repeat(2,1fr); }
+.page-photos.cols-1{grid-template-columns:1fr;max-width:360px;}
+.page-photos.cols-2{grid-template-columns:repeat(2,1fr);}
 .page-num-label { text-align:right; padding-right:4px; margin-bottom:10px; font-family:'Libre Baskerville',serif; font-style:italic; font-size:11px; color:rgba(122,106,82,0.35); position:relative; z-index:1; }
 .page-footer { text-align:center; margin-top:18px; padding-left:28px; position:relative; z-index:1; }
 .page-deco { font-size:13px; color:rgba(196,168,130,0.25); letter-spacing:10px; }
 
-/* Polaroid estilo antigo */
+/* Polaroid */
 .polaroid { background:white; padding:7px 7px 28px; box-shadow:0 2px 8px rgba(59,47,30,0.18); cursor:pointer; transition:transform 0.3s ease,box-shadow 0.3s; position:relative; transform:rotate(var(--tilt,0deg)); }
-.polaroid:nth-child(3n+1){--tilt:-1.3deg;}
-.polaroid:nth-child(3n+2){--tilt:1.2deg;}
-.polaroid:nth-child(3n+3){--tilt:-0.5deg;}
-.polaroid:nth-child(4n+1){--tilt:0.9deg;}
+.polaroid:nth-child(3n+1){--tilt:-1.3deg;}.polaroid:nth-child(3n+2){--tilt:1.2deg;}.polaroid:nth-child(3n+3){--tilt:-0.5deg;}.polaroid:nth-child(4n+1){--tilt:0.9deg;}
 .polaroid:hover { transform:translateY(-5px) rotate(0deg) scale(1.03); box-shadow:0 10px 28px rgba(59,47,30,0.25); z-index:20; }
 .polaroid img { width:100%; aspect-ratio:1/1; object-fit:cover; display:block; filter:sepia(15%) contrast(0.93) brightness(0.98); }
 .polaroid-caption { position:absolute; bottom:0; left:0; right:0; height:28px; display:flex; align-items:center; justify-content:center; padding:0 5px; }
@@ -104,7 +96,7 @@ body::before { content:''; position:fixed; inset:0; z-index:0; pointer-events:no
 /* Modais */
 .modal-overlay { position:fixed; inset:0; background:rgba(28,20,13,0.6); display:none; align-items:center; justify-content:center; z-index:3000; backdrop-filter:blur(4px); }
 .modal-overlay.open { display:flex; }
-.modal { background:var(--paper); padding:36px 40px; width:420px; box-shadow:0 20px 56px var(--shadow); animation:slideUp 0.3s ease; position:relative; }
+.modal { background:var(--paper); padding:36px 40px; width:440px; box-shadow:0 20px 56px var(--shadow); animation:slideUp 0.3s ease; position:relative; max-height:90vh; overflow-y:auto; }
 .modal::after { content:''; position:absolute; inset:0; pointer-events:none; background:repeating-linear-gradient(to bottom,transparent 0px,transparent 31px,rgba(139,69,19,0.04) 31px,rgba(139,69,19,0.04) 32px); }
 @keyframes slideUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
 .modal-title { font-family:'Libre Baskerville',serif; font-size:20px; font-style:italic; color:var(--ink); margin-bottom:6px; position:relative; z-index:1; }
@@ -118,7 +110,17 @@ body::before { content:''; position:fixed; inset:0; z-index:0; pointer-events:no
 .btn-confirm { padding:8px 20px; background:var(--ink); color:var(--paper); border:none; cursor:pointer; font-family:'Libre Baskerville',serif; font-size:14px; font-style:italic; }
 .btn-confirm:hover { background:var(--dark); }
 
-#toast { position:fixed; bottom:26px; left:50%; transform:translateX(-50%) translateY(14px); background:var(--ink); color:var(--paper); padding:10px 22px; font-family:'Libre Baskerville',serif; font-size:13px; font-style:italic; opacity:0; transition:all 0.3s; pointer-events:none; z-index:9999; box-shadow:0 4px 18px rgba(0,0,0,0.3); letter-spacing:0.5px; }
+/* Lista de membros no modal */
+.members-list { display:flex; flex-direction:column; gap:8px; max-height:240px; overflow-y:auto; position:relative; z-index:1; margin-bottom:16px; }
+.member-item { display:flex; align-items:center; gap:10px; padding:8px 0; border-bottom:1px dashed rgba(196,168,130,0.25); cursor:pointer; transition:color 0.2s; }
+.member-item:last-child { border-bottom:none; }
+.member-item:hover { color:var(--rust); }
+.member-check { width:16px; height:16px; border:1px solid var(--sepia); display:flex; align-items:center; justify-content:center; font-size:10px; flex-shrink:0; transition:all 0.2s; }
+.member-item.checked .member-check { background:var(--ink); border-color:var(--ink); color:white; }
+.member-name { font-family:'Libre Baskerville',serif; font-size:13px; font-style:italic; }
+.member-email { font-size:11px; color:var(--faded); }
+
+#toast { position:fixed; bottom:26px; left:50%; transform:translateX(-50%) translateY(14px); background:var(--ink); color:var(--paper); padding:10px 22px; font-family:'Libre Baskerville',serif; font-size:13px; font-style:italic; opacity:0; transition:all 0.3s; pointer-events:none; z-index:9999; box-shadow:0 4px 18px rgba(0,0,0,0.3); }
 #toast.show { transform:translateX(-50%) translateY(0); opacity:1; }
 {% endblock %}
 
@@ -139,12 +141,18 @@ body::before { content:''; position:fixed; inset:0; z-index:0; pointer-events:no
         <input id="file-input" type="file" multiple accept="image/*" style="display:none" onchange="uploadFiles(this.files)" />
       </label>
       <button class="cover-btn" onclick="openModal('modal-edit')">editar</button>
+      {% if album.visibility == 'limited' %}
+      <button class="cover-btn" onclick="openMembersModal()">🔒 membros</button>
+      {% endif %}
       <a href="/dashboard" class="cover-btn">← voltar</a>
     </div>
     <span class="cover-eyebrow">arquivo pessoal</span>
     <div class="cover-title" id="cover-title">{{ album.name }}</div>
     <p class="cover-sub" id="cover-sub">{% if album.description %}{{ album.description }}{% else %}nosso álbum{% endif %}</p>
     <p class="cover-meta">{{ photos|length }} foto{{ 's' if photos|length != 1 }} · {{ album.created_at[:10] }}</p>
+    {% if album.visibility == 'limited' %}
+    <div class="cover-vis-badge">🔒 restrito</div>
+    {% endif %}
   </div>
 
   <div class="upload-bar" id="upload-bar"><div class="upload-bar-fill" id="upload-bar-fill" style="width:0%"></div></div>
@@ -233,6 +241,21 @@ body::before { content:''; position:fixed; inset:0; z-index:0; pointer-events:no
   </div>
 </div>
 
+<!-- Modal membros (só álbuns restritos) -->
+<div class="modal-overlay" id="modal-members" onclick="if(event.target===this)closeModal('modal-members')">
+  <div class="modal">
+    <div class="modal-title">quem pode ver</div>
+    <p class="modal-sub">selecione quais pessoas têm acesso a este álbum restrito.</p>
+    <div class="members-list" id="members-list">
+      <div style="font-family:'Libre Baskerville',serif;font-style:italic;font-size:13px;color:rgba(59,47,30,0.35);padding:8px 0">carregando...</div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeModal('modal-members')">cancelar</button>
+      <button class="btn-confirm" onclick="saveMembers()">salvar</button>
+    </div>
+  </div>
+</div>
+
 <div id="toast"></div>
 
 <script>
@@ -244,16 +267,17 @@ const PHOTOS=[
   {% endfor %}
 ];
 let lbIdx=0,editing=false;
+let allUsers=[],selectedMemberIds=new Set();
 
 function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3000);}
 function openModal(id){document.getElementById(id).classList.add('open');}
 function closeModal(id){document.getElementById(id).classList.remove('open');}
 
+// ── Lightbox ──────────────────────────────────────────────
 function openLightbox(idx){lbIdx=idx;renderLb();document.getElementById('lightbox').classList.add('open');}
 function closeLightbox(){if(editing)cancelEdit();document.getElementById('lightbox').classList.remove('open');}
 function handleLbClick(e){if(e.target===document.getElementById('lightbox'))closeLightbox();}
 function lbNav(e,dir){e.stopPropagation();if(editing)cancelEdit();lbIdx=(lbIdx+dir+PHOTOS.length)%PHOTOS.length;renderLb();}
-
 function renderLb(){
   const p=PHOTOS[lbIdx];
   document.getElementById('lb-img').src=p.url;
@@ -266,7 +290,6 @@ function renderLb(){
   if(p.url===COVER_URL){cb.textContent='★ esta é a capa';cb.classList.add('active-cover');}
   else{cb.textContent='★ definir como capa';cb.classList.remove('active-cover');}
 }
-
 document.addEventListener('keydown',e=>{
   if(!document.getElementById('lightbox').classList.contains('open'))return;
   if(editing)return;
@@ -275,6 +298,7 @@ document.addEventListener('keydown',e=>{
   if(e.key==='Escape')closeLightbox();
 });
 
+// ── Legenda ───────────────────────────────────────────────
 function startEdit(){editing=true;document.getElementById('lb-caption-input').value=PHOTOS[lbIdx].caption||'';document.getElementById('lb-caption-display').style.display='none';document.getElementById('lb-edit-row').style.display='flex';document.getElementById('lb-caption-input').focus();}
 function cancelEdit(){editing=false;document.getElementById('lb-caption-display').style.display='inline-block';document.getElementById('lb-edit-row').style.display='none';}
 async function saveCaption(){
@@ -290,6 +314,7 @@ async function saveCaption(){
   }
 }
 
+// ── Capa ──────────────────────────────────────────────────
 async function setCover(e,url){e.stopPropagation();await _doSetCover(url);}
 async function setCoverFromLb(){const p=PHOTOS[lbIdx];if(p.url===COVER_URL)return;await _doSetCover(p.url);renderLb();}
 async function _doSetCover(url){
@@ -298,9 +323,11 @@ async function _doSetCover(url){
   if(data.ok){document.querySelectorAll('.polaroid.is-cover').forEach(p=>p.classList.remove('is-cover'));const pol=document.querySelector(`.polaroid[data-url="${url}"]`);if(pol)pol.classList.add('is-cover');COVER_URL=url;showToast('capa atualizada');}
 }
 
+// ── Deletar ───────────────────────────────────────────────
 async function deletePhoto(e,id){e.stopPropagation();if(!confirm('Remover esta foto?'))return;const res=await fetch(`/photos/${id}/delete`,{method:'POST'});const data=await res.json();if(data.ok){document.getElementById('pol-'+id)?.remove();const i=PHOTOS.findIndex(p=>p.id===id);if(i>-1)PHOTOS.splice(i,1);if(document.getElementById('lightbox').classList.contains('open'))closeLightbox();showToast('foto removida');}}
 async function deleteFromLb(){const p=PHOTOS[lbIdx];if(!confirm('Remover esta foto?'))return;const res=await fetch(`/photos/${p.id}/delete`,{method:'POST'});const data=await res.json();if(data.ok){document.getElementById('pol-'+p.id)?.remove();PHOTOS.splice(lbIdx,1);closeLightbox();showToast('foto removida');}}
 
+// ── Upload ────────────────────────────────────────────────
 async function uploadFiles(files){
   if(!files||files.length===0)return;
   const arr=Array.from(files).filter(f=>f.type.startsWith('image/'));
@@ -319,7 +346,6 @@ async function uploadFiles(files){
   showToast(`${arr.length} foto${arr.length>1?'s':''} adicionada${arr.length>1?'s':''}`);
   setTimeout(()=>{bar.style.display='none';fill.style.width='0%';},800);
 }
-
 function addPolaroidToPage(photo,idx){
   const pages=document.querySelectorAll('.page:not(#empty-page)');
   let targetGrid=null;
@@ -330,15 +356,49 @@ function addPolaroidToPage(photo,idx){
   targetGrid.appendChild(pol);
 }
 
+// ── Editar álbum ──────────────────────────────────────────
 async function saveAlbum(){
   const name=document.getElementById('edit-name').value.trim();
   const desc=document.getElementById('edit-desc').value.trim();
   if(!name)return;
-  const res=await fetch(`/albums/${ALBUM_ID}/edit`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,description:desc})});
+  const res=await fetch(`/albums/${ALBUM_ID}/edit`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,description:desc,visibility:'{{ album.visibility }}'})});
   const data=await res.json();
   if(data.ok){document.getElementById('cover-title').textContent=name;document.getElementById('cover-sub').textContent=desc||'nosso álbum';closeModal('modal-edit');showToast('álbum atualizado');}
 }
 
+// ── Membros ───────────────────────────────────────────────
+async function openMembersModal(){
+  openModal('modal-members');
+  const res=await fetch(`/albums/${ALBUM_ID}/members`);
+  const data=await res.json();
+  allUsers=data.all_users||[];
+  selectedMemberIds=new Set(data.member_ids||[]);
+  renderMembers();
+}
+function renderMembers(){
+  const list=document.getElementById('members-list');
+  if(!allUsers.length){list.innerHTML='<div style="font-family:\'Libre Baskerville\',serif;font-style:italic;font-size:13px;color:rgba(59,47,30,0.35)">nenhum usuário cadastrado ainda</div>';return;}
+  list.innerHTML=allUsers.map(u=>`
+    <div class="member-item ${selectedMemberIds.has(u.id)?'checked':''}" onclick="toggleMember('${u.id}',this)">
+      <div class="member-check">${selectedMemberIds.has(u.id)?'✓':''}</div>
+      <div>
+        <div class="member-name">${u.display_name||u.email}</div>
+        <div class="member-email">${u.email}</div>
+      </div>
+    </div>
+  `).join('');
+}
+function toggleMember(id,el){
+  if(selectedMemberIds.has(id)){selectedMemberIds.delete(id);el.classList.remove('checked');el.querySelector('.member-check').textContent='';}
+  else{selectedMemberIds.add(id);el.classList.add('checked');el.querySelector('.member-check').textContent='✓';}
+}
+async function saveMembers(){
+  const res=await fetch(`/albums/${ALBUM_ID}/members`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({user_ids:[...selectedMemberIds]})});
+  const data=await res.json();
+  if(data.ok){closeModal('modal-members');showToast('membros atualizados');}
+}
+
+// ── Drag & Drop ───────────────────────────────────────────
 let dc=0;
 document.addEventListener('dragenter',()=>{dc++;document.getElementById('drop-overlay').classList.add('show');});
 document.addEventListener('dragleave',()=>{dc--;if(dc===0)document.getElementById('drop-overlay').classList.remove('show');});

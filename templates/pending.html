@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}aguardando aprovação — nosso cantinho{% endblock %}
+
+{% block extra_style %}
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;1,400&family=Homemade+Apple&display=swap');
+:root { --paper:#F2EBD9; --aged:#E0D5BE; --ink:#3B2F1E; --faded:#7A6A52; --rust:#8B4513; --sepia:#C4A882; --shadow:rgba(59,47,30,0.15); }
+body { background:var(--aged); font-family:'Lato',sans-serif; min-height:100vh; display:flex; align-items:center; justify-content:center; }
+.card { background:var(--paper); max-width:420px; width:100%; margin:20px; padding:48px 44px; box-shadow:0 2px 0 var(--sepia),0 12px 40px var(--shadow); text-align:center; position:relative; }
+.card::after { content:''; position:absolute; inset:0; pointer-events:none; background:repeating-linear-gradient(to bottom,transparent 0px,transparent 31px,rgba(139,69,19,0.05) 31px,rgba(139,69,19,0.05) 32px); }
+.stamp { display:inline-block; border:1px solid var(--sepia); padding:4px 12px; font-size:10px; letter-spacing:2px; text-transform:uppercase; color:var(--faded); margin-bottom:20px; position:relative; z-index:1; }
+.icon { font-size:48px; margin-bottom:16px; opacity:0.5; display:block; }
+.title { font-family:'Homemade Apple',cursive; font-size:26px; color:var(--ink); margin-bottom:12px; position:relative; z-index:1; }
+.msg { font-family:'Libre Baskerville',serif; font-size:14px; font-style:italic; color:var(--faded); line-height:1.9; margin-bottom:28px; position:relative; z-index:1; }
+.email { font-size:12px; color:var(--faded); margin-bottom:28px; position:relative; z-index:1; }
+.email strong { color:var(--ink); }
+.btn-logout { background:none; border:1px solid var(--sepia); padding:8px 20px; font-size:11px; letter-spacing:1px; text-transform:uppercase; color:var(--faded); cursor:pointer; font-family:'Lato',sans-serif; text-decoration:none; display:inline-block; transition:all 0.2s; position:relative; z-index:1; }
+.btn-logout:hover { background:var(--sepia); color:var(--ink); }
+{% endblock %}
+
+{% block content %}
+<div class="card">
+  <div class="stamp">nosso cantinho</div>
+  <span class="icon">🕰️</span>
+  <h1 class="title">aguardando aprovação</h1>
+  <p class="msg">
+    Sua conta foi criada com sucesso!<br>
+    Assim que alguém do cantinho aprovar seu acesso,<br>
+    você conseguirá entrar.
+  </p>
+  <p class="email">cadastrado como <strong>{{ user.email }}</strong></p>
+  <a href="/logout" class="btn-logout">sair</a>
+</div>
+{% endblock %}

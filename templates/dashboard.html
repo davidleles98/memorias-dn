@@ -3,43 +3,31 @@
 
 {% block extra_style %}
 @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400&family=Homemade+Apple&display=swap');
-:root {
-  --paper:  #F2EBD9;
-  --aged:   #E0D5BE;
-  --ink:    #3B2F1E;
-  --faded:  #7A6A52;
-  --rust:   #8B4513;
-  --sepia:  #C4A882;
-  --dark:   #1C140D;
-  --shadow: rgba(59,47,30,0.15);
-}
+:root { --paper:#F2EBD9; --aged:#E0D5BE; --ink:#3B2F1E; --faded:#7A6A52; --rust:#8B4513; --sepia:#C4A882; --dark:#1C140D; --shadow:rgba(59,47,30,0.15); }
 body { background:var(--aged); font-family:'Lato',sans-serif; color:var(--ink); }
-body::before { content:''; position:fixed; inset:0; z-index:0; pointer-events:none;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E"); opacity:.5; }
+body::before { content:''; position:fixed; inset:0; z-index:0; pointer-events:none; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E"); opacity:.5; }
 
-/* ── Header ── */
 .header { padding:18px 48px; display:flex; align-items:center; justify-content:space-between; background:rgba(242,235,217,0.95); backdrop-filter:blur(6px); border-bottom:1px solid var(--sepia); position:sticky; top:0; z-index:100; }
 .logo { font-family:'Homemade Apple',cursive; font-size:22px; color:var(--ink); }
-.header-right { display:flex; align-items:center; gap:16px; }
+.header-right { display:flex; align-items:center; gap:14px; }
 .header-user { font-family:'Libre Baskerville',serif; font-size:12px; font-style:italic; color:var(--faded); }
-.btn-logout { background:none; border:1px solid var(--sepia); padding:6px 16px; font-size:11px; letter-spacing:1px; text-transform:uppercase; color:var(--faded); cursor:pointer; font-family:'Lato',sans-serif; transition:all 0.2s; text-decoration:none; display:inline-block; }
-.btn-logout:hover { background:var(--sepia); color:var(--ink); }
+.btn-header { background:none; border:1px solid var(--sepia); padding:6px 14px; font-size:11px; letter-spacing:1px; text-transform:uppercase; color:var(--faded); cursor:pointer; font-family:'Lato',sans-serif; transition:all 0.2s; text-decoration:none; display:inline-block; }
+.btn-header:hover { background:var(--sepia); color:var(--ink); }
 
 .main { padding:40px 48px 0; position:relative; z-index:1; max-width:1100px; margin:0 auto; }
 
-/* ── Banner ── */
 .banner { text-align:center; margin-bottom:40px; }
 .banner-eyebrow { font-size:10px; letter-spacing:3px; text-transform:uppercase; color:var(--faded); margin-bottom:10px; }
 .banner-title { font-family:'Homemade Apple',cursive; font-size:44px; color:var(--ink); line-height:1.3; }
 .banner-rule { width:80px; height:1px; background:var(--sepia); margin:14px auto; }
 .banner-sub { font-family:'Libre Baskerville',serif; font-size:14px; font-style:italic; color:var(--faded); }
 
-/* ── Carta ── */
+/* Carta */
 .love-section { margin-bottom:48px; }
 .section-box { background:var(--paper); padding:28px 32px; position:relative; box-shadow:0 2px 0 var(--sepia),0 8px 32px var(--shadow); }
 .section-box::after { content:''; position:absolute; inset:0; pointer-events:none; background:repeating-linear-gradient(to bottom,transparent 0px,transparent 31px,rgba(139,69,19,0.05) 31px,rgba(139,69,19,0.05) 32px); }
 .section-stamp { display:inline-block; border:1px solid var(--sepia); padding:3px 10px; font-size:10px; letter-spacing:2px; text-transform:uppercase; color:var(--faded); margin-bottom:12px; position:relative; z-index:1; }
-.section-title { font-family:'Libre Baskerville',serif; font-size:20px; font-style:italic; color:var(--ink); margin-bottom:4px; position:relative; z-index:1; }
+.section-title { font-family:'Libre Baskerville',serif; font-size:20px; font-style:italic; color:var(--ink); position:relative; z-index:1; }
 .section-rule { border:none; border-top:1px dashed var(--sepia); margin:12px 0 16px; position:relative; z-index:1; }
 .love-header-row { display:flex; align-items:flex-start; justify-content:space-between; }
 .love-text { font-family:'Libre Baskerville',serif; font-size:14px; line-height:2.2; color:var(--ink); white-space:pre-wrap; position:relative; z-index:1; min-height:40px; }
@@ -56,20 +44,23 @@ body::before { content:''; position:fixed; inset:0; z-index:0; pointer-events:no
 .btn-sm-solid:hover { background:var(--dark); }
 .love-signature { font-family:'Homemade Apple',cursive; font-size:16px; color:var(--faded); opacity:0.6; text-align:right; margin-top:16px; position:relative; z-index:1; }
 
-/* ── Álbuns — DESTAQUE ── */
+/* Álbuns */
 .albums-section { margin-bottom:48px; }
 .albums-header { display:flex; align-items:baseline; justify-content:space-between; margin-bottom:28px; }
 .albums-title { font-family:'Libre Baskerville',serif; font-size:26px; font-style:italic; color:var(--ink); }
 .albums-count { font-size:12px; color:var(--faded); font-style:italic; }
 .albums-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(230px,1fr)); gap:24px; }
 .album-card { background:var(--paper); position:relative; box-shadow:0 2px 0 var(--sepia),0 8px 28px var(--shadow); transition:transform 0.3s ease,box-shadow 0.3s; transform:rotate(var(--rot,0deg)); }
-.album-card:nth-child(odd){--rot:-0.7deg;}
-.album-card:nth-child(even){--rot:0.7deg;}
+.album-card:nth-child(odd){--rot:-0.7deg;}.album-card:nth-child(even){--rot:0.7deg;}
 .album-card:hover { transform:translateY(-6px) rotate(0deg); box-shadow:0 2px 0 var(--sepia),0 20px 40px var(--shadow); z-index:10; }
 .album-card-link { display:block; text-decoration:none; color:inherit; }
 .album-cover { width:100%; height:190px; object-fit:cover; display:block; filter:sepia(20%) contrast(0.95); }
 .album-cover-placeholder { width:100%; height:190px; background:linear-gradient(135deg,var(--aged),var(--paper)); display:flex; align-items:center; justify-content:center; font-size:44px; opacity:0.4; }
 .album-badge { position:absolute; top:10px; right:10px; background:var(--ink); color:var(--paper); font-size:10px; padding:2px 8px; letter-spacing:0.5px; }
+/* Badge de visibilidade */
+.album-visibility { position:absolute; top:10px; left:10px; font-size:10px; padding:2px 8px; letter-spacing:0.5px; }
+.album-visibility.limited { background:var(--rust); color:white; }
+.album-visibility.public { display:none; }
 .album-info { padding:12px 14px 8px; }
 .album-name { font-family:'Libre Baskerville',serif; font-size:16px; font-style:italic; color:var(--ink); margin-bottom:2px; }
 .album-meta { font-size:11px; color:var(--faded); }
@@ -86,74 +77,42 @@ body::before { content:''; position:fixed; inset:0; z-index:0; pointer-events:no
 .empty-icon { font-size:56px; opacity:0.3; margin-bottom:14px; display:block; }
 .empty-title { font-family:'Libre Baskerville',serif; font-size:24px; font-style:italic; color:var(--ink); margin-bottom:8px; }
 .empty-sub { font-size:13px; color:var(--faded); line-height:1.8; font-style:italic; max-width:360px; margin:0 auto 24px; }
-
-/* ── FAB ── */
 .fab { position:fixed; bottom:28px; right:28px; background:var(--ink); color:var(--paper); border:none; padding:12px 24px; font-family:'Libre Baskerville',serif; font-size:13px; font-style:italic; cursor:pointer; box-shadow:0 6px 24px var(--shadow); transition:all 0.2s; z-index:50; letter-spacing:0.5px; }
 .fab:hover { background:var(--dark); transform:translateY(-1px); }
 
-/* ── RODAPÉ DISCRETO ── */
-.page-footer {
-  border-top: 1px solid var(--sepia);
-  margin-top: 16px;
-  background: rgba(224,213,190,0.5);
-  position: relative; z-index: 1;
-}
+/* Visibilidade selector */
+.visibility-row { display:flex; gap:12px; margin-bottom:18px; }
+.vis-option { flex:1; border:1px solid var(--sepia); padding:10px 12px; cursor:pointer; display:flex; align-items:center; gap:8px; transition:all 0.2s; background:transparent; font-family:'Lato',sans-serif; font-size:12px; color:var(--faded); text-align:left; }
+.vis-option:hover { border-color:var(--rust); color:var(--ink); }
+.vis-option.selected { border-color:var(--ink); background:var(--aged); color:var(--ink); }
+.vis-option .vis-icon { font-size:16px; }
+.vis-option .vis-label { font-weight:400; letter-spacing:0.5px; }
+.vis-option .vis-desc { font-size:10px; color:var(--faded); display:block; margin-top:1px; }
 
-/* Accordions do rodapé */
-.footer-accordion { border-bottom: 1px solid rgba(196,168,130,0.4); }
-.footer-accordion:last-child { border-bottom: none; }
-
-.accordion-trigger {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 14px 48px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-family: 'Lato', sans-serif;
-  font-size: 11px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: var(--faded);
-  transition: color 0.2s;
-  text-align: left;
-}
-.accordion-trigger:hover { color: var(--ink); }
-.accordion-trigger .arrow { font-size: 10px; transition: transform 0.3s; opacity: 0.5; }
-.accordion-trigger.open .arrow { transform: rotate(180deg); }
-
-.accordion-body {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.4s ease;
-  padding: 0 48px;
-}
-.accordion-body.open {
-  max-height: 600px;
-  padding-bottom: 28px;
-}
-
-/* Player dentro do accordion */
+/* Rodapé */
+.page-footer { border-top:1px solid var(--sepia); margin-top:16px; background:rgba(224,213,190,0.5); position:relative; z-index:1; }
+.footer-accordion { border-bottom:1px solid rgba(196,168,130,0.4); }
+.footer-accordion:last-child { border-bottom:none; }
+.accordion-trigger { width:100%; display:flex; align-items:center; justify-content:space-between; padding:14px 48px; background:none; border:none; cursor:pointer; font-family:'Lato',sans-serif; font-size:11px; letter-spacing:2px; text-transform:uppercase; color:var(--faded); transition:color 0.2s; text-align:left; }
+.accordion-trigger:hover { color:var(--ink); }
+.accordion-trigger .arrow { font-size:10px; transition:transform 0.3s; opacity:0.5; }
+.accordion-trigger.open .arrow { transform:rotate(180deg); }
+.accordion-body { max-height:0; overflow:hidden; transition:max-height 0.4s ease; padding:0 48px; }
+.accordion-body.open { max-height:600px; padding-bottom:28px; }
 .player-url-row { display:flex; gap:8px; align-items:center; margin-bottom:10px; }
-.player-url-input { flex:1; padding:8px 0; border:none; border-bottom:1px solid var(--sepia); background:transparent; font-family:'Libre Baskerville',serif; font-style:italic; font-size:13px; color:var(--ink); outline:none; transition:border-color 0.2s; }
-.player-url-input:focus { border-bottom-color:var(--rust); }
+.player-url-input { flex:1; padding:8px 0; border:none; border-bottom:1px solid var(--sepia); background:transparent; font-family:'Libre Baskerville',serif; font-style:italic; font-size:13px; color:var(--ink); outline:none; }
 .player-url-input::placeholder { color:rgba(59,47,30,0.28); }
-.player-url-btn { background:var(--ink); color:var(--paper); border:none; padding:8px 16px; font-size:11px; letter-spacing:1px; text-transform:uppercase; cursor:pointer; font-family:'Lato',sans-serif; white-space:nowrap; flex-shrink:0; transition:background 0.2s; }
+.player-url-btn { background:var(--ink); color:var(--paper); border:none; padding:8px 16px; font-size:11px; letter-spacing:1px; text-transform:uppercase; cursor:pointer; font-family:'Lato',sans-serif; white-space:nowrap; }
 .player-url-btn:hover { background:var(--dark); }
 .player-embed-area iframe { width:100%; border-radius:2px; display:block; margin-top:12px; }
-.player-empty-msg { font-family:'Libre Baskerville',serif; font-style:italic; font-size:13px; color:rgba(59,47,30,0.35); margin-bottom:12px; }
 .player-hint { font-size:11px; color:var(--faded); font-style:italic; line-height:1.7; margin-top:8px; }
-
-/* Eventos dentro do accordion */
 .events-list { display:flex; flex-direction:column; gap:10px; }
 .event-card { border-left:2px solid var(--sepia); padding:8px 14px; transition:border-color 0.2s; }
 .event-card:hover { border-left-color:var(--rust); }
 .event-date-badge { font-size:10px; letter-spacing:1.5px; text-transform:uppercase; color:var(--faded); margin-bottom:2px; }
 .event-name { font-family:'Libre Baskerville',serif; font-size:13px; color:var(--ink); line-height:1.4; }
 .event-place { font-size:11px; color:var(--faded); font-style:italic; }
-.event-tag { display:inline-block; font-size:10px; border:1px solid var(--sepia); padding:1px 6px; color:var(--faded); margin-top:3px; text-transform:uppercase; letter-spacing:0.5px; }
+.event-tag { display:inline-block; font-size:10px; border:1px solid var(--sepia); padding:1px 6px; color:var(--faded); margin-top:3px; text-transform:uppercase; }
 .events-loading { font-family:'Libre Baskerville',serif; font-style:italic; font-size:13px; color:rgba(59,47,30,0.35); padding:12px 0; }
 .events-header-row { display:flex; align-items:center; justify-content:space-between; margin-bottom:16px; }
 .events-label { font-family:'Libre Baskerville',serif; font-size:15px; font-style:italic; color:var(--ink); }
@@ -163,7 +122,7 @@ body::before { content:''; position:fixed; inset:0; z-index:0; pointer-events:no
 /* Modais */
 .modal-overlay { position:fixed; inset:0; background:rgba(28,20,13,0.6); display:none; align-items:center; justify-content:center; z-index:1000; backdrop-filter:blur(4px); }
 .modal-overlay.open { display:flex; }
-.modal { background:var(--paper); padding:40px 44px; width:440px; box-shadow:0 24px 64px var(--shadow); animation:slideUp 0.3s ease; position:relative; }
+.modal { background:var(--paper); padding:40px 44px; width:460px; box-shadow:0 24px 64px var(--shadow); animation:slideUp 0.3s ease; position:relative; }
 .modal::after { content:''; position:absolute; inset:0; pointer-events:none; background:repeating-linear-gradient(to bottom,transparent 0px,transparent 31px,rgba(139,69,19,0.04) 31px,rgba(139,69,19,0.04) 32px); }
 @keyframes slideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
 .modal-title { font-family:'Libre Baskerville',serif; font-size:22px; font-style:italic; color:var(--ink); margin-bottom:6px; position:relative; z-index:1; }
@@ -178,7 +137,7 @@ body::before { content:''; position:fixed; inset:0; z-index:0; pointer-events:no
 .btn-confirm:hover { background:var(--dark); }
 .btn-danger { background:#8B1A1A!important; }
 
-#toast { position:fixed; bottom:28px; left:50%; transform:translateX(-50%) translateY(16px); background:var(--ink); color:var(--paper); padding:10px 24px; font-family:'Libre Baskerville',serif; font-size:13px; font-style:italic; opacity:0; transition:all 0.3s; pointer-events:none; z-index:9999; box-shadow:0 4px 20px rgba(0,0,0,0.3); letter-spacing:0.5px; }
+#toast { position:fixed; bottom:28px; left:50%; transform:translateX(-50%) translateY(16px); background:var(--ink); color:var(--paper); padding:10px 24px; font-family:'Libre Baskerville',serif; font-size:13px; font-style:italic; opacity:0; transition:all 0.3s; pointer-events:none; z-index:9999; box-shadow:0 4px 20px rgba(0,0,0,0.3); }
 #toast.show { transform:translateX(-50%) translateY(0); opacity:1; }
 {% endblock %}
 
@@ -187,13 +146,14 @@ body::before { content:''; position:fixed; inset:0; z-index:0; pointer-events:no
   <div class="logo">nosso cantinho</div>
   <div class="header-right">
     <span class="header-user">{{ user.name }}</span>
-    <a href="/logout" class="btn-logout">sair</a>
+    {% if user.is_admin %}
+    <a href="/admin" class="btn-header">administração</a>
+    {% endif %}
+    <a href="/logout" class="btn-header">sair</a>
   </div>
 </header>
 
 <main class="main">
-
-  <!-- Banner -->
   <div class="banner">
     <div class="banner-eyebrow">arquivo pessoal</div>
     <div class="banner-title">só nós dois</div>
@@ -217,7 +177,7 @@ body::before { content:''; position:fixed; inset:0; z-index:0; pointer-events:no
           {% if love_note %}
             <p class="love-text" id="love-text">{{ love_note }}</p>
           {% else %}
-            <p class="love-text empty" id="love-text">Clique em "editar" para escrever sobre nós — como nos conhecemos, o que esse cantinho representa...</p>
+            <p class="love-text empty" id="love-text">Clique em "editar" para escrever sobre nós...</p>
           {% endif %}
         </div>
         <div class="love-editor" id="love-editor">
@@ -232,14 +192,14 @@ body::before { content:''; position:fixed; inset:0; z-index:0; pointer-events:no
     </div>
   </div>
 
-  <!-- ── ÁLBUNS — destaque ── -->
+  <!-- Álbuns -->
   <div class="albums-section">
     {% if albums|length == 0 %}
     <div class="empty-state">
       <span class="empty-icon">📷</span>
       <h2 class="empty-title">nenhum álbum ainda</h2>
       <p class="empty-sub">criem o primeiro álbum e comecem a guardar os momentos de vocês</p>
-      <button onclick="openModal('modal-album')" style="background:var(--ink);color:var(--paper);border:none;padding:12px 28px;font-family:'Libre Baskerville',serif;font-size:13px;font-style:italic;cursor:pointer;letter-spacing:0.5px;">+ novo álbum</button>
+      <button onclick="openModal('modal-album')" style="background:var(--ink);color:var(--paper);border:none;padding:12px 28px;font-family:'Libre Baskerville',serif;font-size:13px;font-style:italic;cursor:pointer;">+ novo álbum</button>
     </div>
     {% else %}
     <div class="albums-header">
@@ -256,13 +216,14 @@ body::before { content:''; position:fixed; inset:0; z-index:0; pointer-events:no
             <div class="album-cover-placeholder">📷</div>
           {% endif %}
           {% if album.photo_count > 0 %}<div class="album-badge">{{ album.photo_count }}</div>{% endif %}
+          <div class="album-visibility {{ album.visibility }}">{% if album.visibility == 'limited' %}restrito{% endif %}</div>
           <div class="album-info">
             <div class="album-name" id="album-name-{{ album.id }}">{{ album.name }}</div>
             <div class="album-meta"><span id="album-desc-{{ album.id }}">{% if album.description %}{{ album.description }} · {% endif %}</span>{{ album.created_at[:10] }}</div>
           </div>
         </a>
         <div class="album-actions">
-          <button class="album-action-btn" onclick="openEditAlbum('{{ album.id }}','{{ album.name }}','{{ album.description or '' }}')">renomear</button>
+          <button class="album-action-btn" onclick="openEditAlbum('{{ album.id }}','{{ album.name }}','{{ album.description or '' }}','{{ album.visibility }}')">renomear</button>
           <button class="album-action-btn danger" onclick="deleteAlbum('{{ album.id }}')">excluir</button>
         </div>
       </div>
@@ -273,55 +234,40 @@ body::before { content:''; position:fixed; inset:0; z-index:0; pointer-events:no
     </div>
     {% endif %}
   </div>
-
 </main>
 
-<!-- ── RODAPÉ: player + eventos em accordions discretos ── -->
-<footer class="page-footer">
+{% if albums|length > 0 %}
+<button class="fab" onclick="openModal('modal-album')">+ novo álbum</button>
+{% endif %}
 
-  <!-- Trilha sonora -->
+<!-- Rodapé discreto -->
+<footer class="page-footer">
   <div class="footer-accordion">
-    <button class="accordion-trigger" onclick="toggleAccordion('player-body', this)">
-      <span>♪ nossa trilha sonora</span>
-      <span class="arrow">▾</span>
+    <button class="accordion-trigger" onclick="toggleAccordion('player-body',this)">
+      <span>♪ nossa trilha sonora</span><span class="arrow">▾</span>
     </button>
     <div class="accordion-body" id="player-body">
       <div class="player-url-row">
-        <input class="player-url-input" type="text" id="playlist-url-input"
-          placeholder="cole o link do Spotify ou YouTube Music..."
-          value="{{ playlist_url or '' }}" />
+        <input class="player-url-input" type="text" id="playlist-url-input" placeholder="cole o link do Spotify ou YouTube Music..." value="{{ playlist_url or '' }}" />
         <button class="player-url-btn" onclick="applyPlaylist()">carregar</button>
       </div>
-      <p class="player-hint">
-        Spotify: playlist → ··· → Compartilhar → Copiar link &nbsp;·&nbsp;
-        YouTube Music: playlist → Compartilhar → Copiar link
-      </p>
+      <p class="player-hint">Spotify: playlist → ··· → Compartilhar → Copiar link &nbsp;·&nbsp; YouTube Music: playlist → Compartilhar → Copiar link</p>
       <div id="player-embed-area"></div>
     </div>
   </div>
-
-  <!-- Eventos SP -->
   <div class="footer-accordion">
-    <button class="accordion-trigger" onclick="toggleAccordion('events-body', this)" id="events-trigger">
-      <span>◎ o que rola em São Paulo essa semana</span>
-      <span class="arrow">▾</span>
+    <button class="accordion-trigger" onclick="toggleAccordion('events-body',this)">
+      <span>◎ o que rola em São Paulo essa semana</span><span class="arrow">▾</span>
     </button>
     <div class="accordion-body" id="events-body">
       <div class="events-header-row">
         <span class="events-label">sugestões pra vocês</span>
         <button class="events-refresh" onclick="loadEvents()">↻ atualizar</button>
       </div>
-      <div class="events-list" id="events-list">
-        <div class="events-loading">abra para ver os eventos desta semana</div>
-      </div>
+      <div class="events-list" id="events-list"><div class="events-loading">abra para ver os eventos</div></div>
     </div>
   </div>
-
 </footer>
-
-{% if albums|length > 0 %}
-<button class="fab" onclick="openModal('modal-album')">+ novo álbum</button>
-{% endif %}
 
 <!-- Modal novo álbum -->
 <div class="modal-overlay" id="modal-album" onclick="if(event.target===this)closeModal('modal-album')">
@@ -333,6 +279,18 @@ body::before { content:''; position:fixed; inset:0; z-index:0; pointer-events:no
       <input class="form-input" name="name" placeholder="nossa primeira viagem, natal 2024..." required />
       <label class="form-label">descrição (opcional)</label>
       <textarea class="form-textarea" name="description" placeholder="uma frase sobre esse momento..."></textarea>
+      <label class="form-label">visibilidade</label>
+      <div class="visibility-row" id="create-vis-row">
+        <button type="button" class="vis-option selected" onclick="selectVis('public',this)">
+          <span class="vis-icon">🌿</span>
+          <span><span class="vis-label">público</span><span class="vis-desc">todos do cantinho veem</span></span>
+        </button>
+        <button type="button" class="vis-option" onclick="selectVis('limited',this)">
+          <span class="vis-icon">🔒</span>
+          <span><span class="vis-label">restrito</span><span class="vis-desc">só quem você escolher</span></span>
+        </button>
+      </div>
+      <input type="hidden" name="visibility" id="create-vis-value" value="public" />
       <div class="modal-actions">
         <button type="button" class="btn-cancel" onclick="closeModal('modal-album')">cancelar</button>
         <button type="submit" class="btn-confirm">criar</button>
@@ -341,16 +299,27 @@ body::before { content:''; position:fixed; inset:0; z-index:0; pointer-events:no
   </div>
 </div>
 
-<!-- Modal renomear álbum -->
+<!-- Modal editar álbum -->
 <div class="modal-overlay" id="modal-edit" onclick="if(event.target===this)closeModal('modal-edit')">
   <div class="modal">
-    <div class="modal-title">renomear álbum</div>
-    <p class="modal-sub">edite o nome e a descrição.</p>
+    <div class="modal-title">editar álbum</div>
+    <p class="modal-sub">edite o nome, descrição e visibilidade.</p>
     <input type="hidden" id="edit-id" />
     <label class="form-label">nome</label>
     <input class="form-input" id="edit-name" />
     <label class="form-label">descrição (opcional)</label>
     <textarea class="form-textarea" id="edit-desc"></textarea>
+    <label class="form-label">visibilidade</label>
+    <div class="visibility-row" id="edit-vis-row">
+      <button type="button" class="vis-option" onclick="selectEditVis('public',this)">
+        <span class="vis-icon">🌿</span>
+        <span><span class="vis-label">público</span><span class="vis-desc">todos do cantinho veem</span></span>
+      </button>
+      <button type="button" class="vis-option" onclick="selectEditVis('limited',this)">
+        <span class="vis-icon">🔒</span>
+        <span><span class="vis-label">restrito</span><span class="vis-desc">só quem você escolher</span></span>
+      </button>
+    </div>
     <div class="modal-actions">
       <button class="btn-cancel" onclick="closeModal('modal-edit')">cancelar</button>
       <button class="btn-confirm" onclick="saveEdit()">salvar</button>
@@ -379,122 +348,63 @@ function showToast(msg){const t=document.getElementById('toast');t.textContent=m
 function openModal(id){document.getElementById(id).classList.add('open');}
 function closeModal(id){document.getElementById(id).classList.remove('open');}
 
-// ── Accordion ─────────────────────────────────────────────
-let eventsLoaded = false;
-function toggleAccordion(bodyId, btn) {
-  const body = document.getElementById(bodyId);
-  const isOpen = body.classList.contains('open');
-  body.classList.toggle('open', !isOpen);
-  btn.classList.toggle('open', !isOpen);
-  // Carrega eventos só na primeira abertura
-  if (bodyId === 'events-body' && !isOpen && !eventsLoaded) {
-    eventsLoaded = true;
-    loadEvents();
-  }
+// Visibilidade
+function selectVis(val, btn) {
+  document.querySelectorAll('#create-vis-row .vis-option').forEach(b=>b.classList.remove('selected'));
+  btn.classList.add('selected');
+  document.getElementById('create-vis-value').value=val;
+}
+let editVisValue='public';
+function selectEditVis(val, btn) {
+  document.querySelectorAll('#edit-vis-row .vis-option').forEach(b=>b.classList.remove('selected'));
+  btn.classList.add('selected');
+  editVisValue=val;
 }
 
-// ── Carta ─────────────────────────────────────────────────
-function openEditor(){
-  const isEmpty=document.getElementById('love-text').classList.contains('empty');
-  document.getElementById('love-textarea').value=isEmpty?'':document.getElementById('love-text').textContent;
-  document.getElementById('love-display').style.display='none';
-  document.getElementById('love-editor').classList.add('open');
-  document.getElementById('btn-edit-note').style.display='none';
-  document.getElementById('love-textarea').focus();
-}
-function closeEditor(){
-  document.getElementById('love-editor').classList.remove('open');
-  document.getElementById('love-display').style.display='block';
-  document.getElementById('btn-edit-note').style.display='inline-block';
-}
-async function saveNote(){
-  const text=document.getElementById('love-textarea').value.trim();
-  const res=await fetch('/settings/love-note',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({text})});
-  const data=await res.json();
-  if(data.ok){
-    const el=document.getElementById('love-text');
-    if(text){el.textContent=text;el.classList.remove('empty');}
-    else{el.textContent='Clique em "editar" para escrever sobre nós...';el.classList.add('empty');}
-    closeEditor();showToast('guardado');
-  }
-}
+// Carta
+function openEditor(){const isEmpty=document.getElementById('love-text').classList.contains('empty');document.getElementById('love-textarea').value=isEmpty?'':document.getElementById('love-text').textContent;document.getElementById('love-display').style.display='none';document.getElementById('love-editor').classList.add('open');document.getElementById('btn-edit-note').style.display='none';document.getElementById('love-textarea').focus();}
+function closeEditor(){document.getElementById('love-editor').classList.remove('open');document.getElementById('love-display').style.display='block';document.getElementById('btn-edit-note').style.display='inline-block';}
+async function saveNote(){const text=document.getElementById('love-textarea').value.trim();const res=await fetch('/settings/love-note',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({text})});const data=await res.json();if(data.ok){const el=document.getElementById('love-text');if(text){el.textContent=text;el.classList.remove('empty');}else{el.textContent='Clique em "editar" para escrever sobre nós...';el.classList.add('empty');}closeEditor();showToast('guardado');}}
 
-// ── Player ────────────────────────────────────────────────
-function parseEmbedUrl(raw){
-  const url=raw.trim();
-  const spotifyMatch=url.match(/open\.spotify\.com\/(playlist|album|track|artist)\/([a-zA-Z0-9]+)/);
-  if(spotifyMatch) return {embedUrl:`https://open.spotify.com/embed/${spotifyMatch[1]}/${spotifyMatch[2]}?utm_source=generator&theme=0`,height:spotifyMatch[1]==='track'?152:352};
-  const ytListMatch=url.match(/[?&]list=([a-zA-Z0-9_-]+)/);
-  if(ytListMatch) return {embedUrl:`https://www.youtube.com/embed/videoseries?list=${ytListMatch[1]}`,height:200};
-  const ytVideoMatch=url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/))([a-zA-Z0-9_-]{11})/);
-  if(ytVideoMatch) return {embedUrl:`https://www.youtube.com/embed/${ytVideoMatch[1]}`,height:200};
-  return null;
+// Álbuns
+function openEditAlbum(id,name,desc,vis){
+  document.getElementById('edit-id').value=id;
+  document.getElementById('edit-name').value=name;
+  document.getElementById('edit-desc').value=desc;
+  editVisValue=vis||'public';
+  document.querySelectorAll('#edit-vis-row .vis-option').forEach((b,i)=>{b.classList.toggle('selected',(i===0&&editVisValue==='public')||(i===1&&editVisValue==='limited'));});
+  openModal('modal-edit');
 }
-function renderEmbed(info){
-  const area=document.getElementById('player-embed-area');
-  if(!info){area.innerHTML='';return;}
-  area.innerHTML=`<iframe src="${info.embedUrl}" height="${info.height}" frameborder="0" allowtransparency="true" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>`;
-}
-async function applyPlaylist(){
-  const raw=document.getElementById('playlist-url-input').value.trim();
-  if(!raw)return;
-  const info=parseEmbedUrl(raw);
-  renderEmbed(info);
-  if(info){
-    await fetch('/settings/playlist',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({url:raw})});
-    showToast('playlist salva');
-  } else {
-    showToast('link não reconhecido');
-  }
-}
-// Renderiza a playlist salva silenciosamente (sem abrir o accordion)
-(function(){
-  const saved=document.getElementById('playlist-url-input').value.trim();
-  if(saved) renderEmbed(parseEmbedUrl(saved));
-})();
-
-// ── Eventos ───────────────────────────────────────────────
-async function loadEvents(){
-  const list=document.getElementById('events-list');
-  list.innerHTML='<div class="events-loading">buscando...</div>';
-  try{
-    const today=new Date().toISOString().slice(0,10);
-    const res=await fetch('https://api.anthropic.com/v1/messages',{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({
-        model:'claude-sonnet-4-20250514',
-        max_tokens:1000,
-        tools:[{type:'web_search_20250305',name:'web_search'}],
-        messages:[{role:'user',content:`Hoje é ${today}. Busque eventos culturais, shows, exposições, peças de teatro e passeios em São Paulo nessa semana. Retorne SOMENTE JSON válido sem texto antes ou depois: {"events":[{"name":"nome","date":"data","place":"local","type":"show|exposição|teatro|festival|outros"}]} com no máximo 6 eventos para um casal jovem.`}]
-      })
-    });
-    const data=await res.json();
-    const tb=data.content&&data.content.find(b=>b.type==='text');
-    if(!tb)throw new Error();
-    const parsed=JSON.parse(tb.text.replace(/```json|```/g,'').trim());
-    renderEvents(parsed.events||[]);
-  }catch{
-    list.innerHTML='<div class="events-loading">não foi possível carregar. tente novamente.</div>';
-  }
-}
-function renderEvents(events){
-  const list=document.getElementById('events-list');
-  if(!events.length){list.innerHTML='<div class="events-loading">nenhum evento encontrado.</div>';return;}
-  list.innerHTML=events.map(e=>`<div class="event-card"><div class="event-date-badge">${e.date}</div><div class="event-name">${e.name}</div><div class="event-place">${e.place}</div><span class="event-tag">${e.type}</span></div>`).join('');
-}
-
-// ── Álbuns ────────────────────────────────────────────────
-function openEditAlbum(id,name,desc){document.getElementById('edit-id').value=id;document.getElementById('edit-name').value=name;document.getElementById('edit-desc').value=desc;openModal('modal-edit');}
 async function saveEdit(){
   const id=document.getElementById('edit-id').value;
   const name=document.getElementById('edit-name').value.trim();
   const desc=document.getElementById('edit-desc').value.trim();
   if(!name)return;
-  const res=await fetch(`/albums/${id}/edit`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,description:desc})});
+  const res=await fetch(`/albums/${id}/edit`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,description:desc,visibility:editVisValue})});
   const data=await res.json();
-  if(data.ok){document.getElementById('album-name-'+id).textContent=name;document.getElementById('album-desc-'+id).textContent=desc?desc+' · ':'';closeModal('modal-edit');showToast('álbum renomeado');}
+  if(data.ok){
+    document.getElementById('album-name-'+id).textContent=name;
+    document.getElementById('album-desc-'+id).textContent=desc?desc+' · ':'';
+    // Atualiza badge de visibilidade
+    const badge=document.querySelector(`#album-card-${id} .album-visibility`);
+    if(badge){badge.className='album-visibility '+data.visibility;badge.textContent=data.visibility==='limited'?'restrito':'';}
+    closeModal('modal-edit');showToast('álbum atualizado');
+  }
 }
 function deleteAlbum(id){document.getElementById('delete-form').action=`/albums/${id}/delete`;openModal('modal-delete');}
+
+// Accordion
+let eventsLoaded=false;
+function toggleAccordion(bodyId,btn){const body=document.getElementById(bodyId);const isOpen=body.classList.contains('open');body.classList.toggle('open',!isOpen);btn.classList.toggle('open',!isOpen);if(bodyId==='events-body'&&!isOpen&&!eventsLoaded){eventsLoaded=true;loadEvents();}}
+
+// Player
+function parseEmbedUrl(raw){const url=raw.trim();const sm=url.match(/open\.spotify\.com\/(playlist|album|track|artist)\/([a-zA-Z0-9]+)/);if(sm)return{embedUrl:`https://open.spotify.com/embed/${sm[1]}/${sm[2]}?utm_source=generator&theme=0`,height:sm[1]==='track'?152:352};const yl=url.match(/[?&]list=([a-zA-Z0-9_-]+)/);if(yl)return{embedUrl:`https://www.youtube.com/embed/videoseries?list=${yl[1]}`,height:200};const yv=url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/))([a-zA-Z0-9_-]{11})/);if(yv)return{embedUrl:`https://www.youtube.com/embed/${yv[1]}`,height:200};return null;}
+function renderEmbed(info){const a=document.getElementById('player-embed-area');if(!info){a.innerHTML='';return;}a.innerHTML=`<iframe src="${info.embedUrl}" height="${info.height}" frameborder="0" allowtransparency="true" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>`;}
+async function applyPlaylist(){const raw=document.getElementById('playlist-url-input').value.trim();if(!raw)return;const info=parseEmbedUrl(raw);renderEmbed(info);if(info){await fetch('/settings/playlist',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({url:raw})});showToast('playlist salva');}else{showToast('link não reconhecido');}}
+(function(){const s=document.getElementById('playlist-url-input').value.trim();if(s)renderEmbed(parseEmbedUrl(s));})();
+
+// Eventos
+async function loadEvents(){const list=document.getElementById('events-list');list.innerHTML='<div class="events-loading">buscando...</div>';try{const today=new Date().toISOString().slice(0,10);const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,tools:[{type:'web_search_20250305',name:'web_search'}],messages:[{role:'user',content:`Hoje é ${today}. Busque eventos em São Paulo nessa semana. Retorne SOMENTE JSON: {"events":[{"name":"nome","date":"data","place":"local","type":"show|exposição|teatro|festival|outros"}]} com no máximo 6 eventos para um casal jovem.`}]})});const data=await res.json();const tb=data.content&&data.content.find(b=>b.type==='text');if(!tb)throw new Error();const parsed=JSON.parse(tb.text.replace(/```json|```/g,'').trim());renderEvents(parsed.events||[]);}catch{list.innerHTML='<div class="events-loading">não foi possível carregar. tente novamente.</div>';}}
+function renderEvents(events){const list=document.getElementById('events-list');if(!events.length){list.innerHTML='<div class="events-loading">nenhum evento encontrado.</div>';return;}list.innerHTML=events.map(e=>`<div class="event-card"><div class="event-date-badge">${e.date}</div><div class="event-name">${e.name}</div><div class="event-place">${e.place}</div><span class="event-tag">${e.type}</span></div>`).join('');}
 </script>
 {% endblock %}

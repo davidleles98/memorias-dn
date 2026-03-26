@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+{% block title %}administração — nosso cantinho{% endblock %}
+
+{% block extra_style %}
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;1,400&family=Lato:wght@300;400&family=Homemade+Apple&display=swap');
+:root { --paper:#F2EBD9; --aged:#E0D5BE; --ink:#3B2F1E; --faded:#7A6A52; --rust:#8B4513; --sepia:#C4A882; --dark:#1C140D; --shadow:rgba(59,47,30,0.15); }
+body { background:var(--aged); font-family:'Lato',sans-serif; color:var(--ink); }
+.header { padding:18px 48px; display:flex; align-items:center; justify-content:space-between; background:rgba(242,235,217,0.95); border-bottom:1px solid var(--sepia); position:sticky; top:0; z-index:100; }
+.logo { font-family:'Homemade Apple',cursive; font-size:22px; color:var(--ink); text-decoration:none; }
+.header-right { display:flex; gap:14px; align-items:center; }
+.btn-sm { padding:6px 16px; font-size:11px; letter-spacing:1px; text-transform:uppercase; cursor:pointer; font-family:'Lato',sans-serif; transition:all 0.2s; text-decoration:none; display:inline-block; border:1px solid var(--sepia); color:var(--faded); background:none; }
+.btn-sm:hover { background:var(--sepia); color:var(--ink); }
+.main { padding:40px 48px; max-width:800px; margin:0 auto; position:relative; z-index:1; }
+.page-title { font-family:'Libre Baskerville',serif; font-size:28px; font-style:italic; color:var(--ink); margin-bottom:32px; }
+.section-box { background:var(--paper); padding:28px 32px; margin-bottom:24px; box-shadow:0 2px 0 var(--sepia),0 8px 28px var(--shadow); position:relative; }
+.section-box::after { content:''; position:absolute; inset:0; pointer-events:none; background:repeating-linear-gradient(to bottom,transparent 0px,transparent 31px,rgba(139,69,19,0.05) 31px,rgba(139,69,19,0.05) 32px); }
+.section-label { font-size:10px; letter-spacing:2px; text-transform:uppercase; color:var(--faded); margin-bottom:16px; display:block; position:relative; z-index:1; }
+.user-row { display:flex; align-items:center; justify-content:space-between; padding:12px 0; border-bottom:1px dashed rgba(196,168,130,0.3); position:relative; z-index:1; }
+.user-row:last-child { border-bottom:none; }
+.user-info { display:flex; flex-direction:column; gap:2px; }
+.user-name { font-family:'Libre Baskerville',serif; font-size:14px; color:var(--ink); }
+.user-email { font-size:12px; color:var(--faded); font-style:italic; }
+.user-date { font-size:11px; color:rgba(122,106,82,0.5); }
+.btn-approve { background:var(--ink); color:var(--paper); border:none; padding:7px 18px; font-size:11px; letter-spacing:1px; text-transform:uppercase; cursor:pointer; font-family:'Lato',sans-serif; transition:background 0.2s; }
+.btn-approve:hover { background:var(--dark); }
+.btn-revoke { background:none; border:1px solid rgba(196,168,130,0.5); color:var(--faded); padding:7px 18px; font-size:11px; letter-spacing:1px; text-transform:uppercase; cursor:pointer; font-family:'Lato',sans-serif; transition:all 0.2s; }
+.btn-revoke:hover { background:#fde8e8; color:#8B1A1A; border-color:#f5c6c6; }
+.empty-msg { font-family:'Libre Baskerville',serif; font-style:italic; font-size:13px; color:rgba(59,47,30,0.35); padding:12px 0; position:relative; z-index:1; }
+.badge-admin { font-size:10px; border:1px solid var(--sepia); padding:1px 6px; color:var(--faded); text-transform:uppercase; letter-spacing:0.5px; margin-left:6px; }
+#toast { position:fixed; bottom:28px; left:50%; transform:translateX(-50%) translateY(16px); background:var(--ink); color:var(--paper); padding:10px 24px; font-family:'Libre Baskerville',serif; font-size:13px; font-style:italic; opacity:0; transition:all 0.3s; pointer-events:none; z-index:9999; }
+#toast.show { transform:translateX(-50%) translateY(0); opacity:1; }
+{% endblock %}
+
+{% block content %}
+<header class="header">
+  <a href="/dashboard" class="logo">nosso cantinho</a>
+  <div class="header-right">
+    <a href="/dashboard" class="btn-sm">← voltar</a>
+    <a href="/logout" class="btn-sm">sair</a>
+  </div>
+</header>
+
+<main class="main">
+  <h1 class="page-title">administração</h1>
+
+  <!-- Aguardando aprovação -->
+  <div class="section-box">
+    <span class="section-label">aguardando aprovação ({{ pending|length }})</span>
+    {% if pending %}
+      {% for p in pending %}
+      <div class="user-row" id="pending-{{ p.id }}">
+        <div class="user-info">
+          <span class="user-name">{{ p.display_name or '—' }}</span>
+          <span class="user-email">{{ p.email }}</span>
+          <span class="user-date">cadastrou em {{ p.created_at[:10] }}</span>
+        </div>
+        <button class="btn-approve" onclick="approveUser('{{ p.id }}')">aprovar</button>
+      </div>
+      {% endfor %}
+    {% else %}
+      <p class="empty-msg">nenhum usuário aguardando aprovação</p>
+    {% endif %}
+  </div>
+
+  <!-- Usuários aprovados -->
+  <div class="section-box">
+    <span class="section-label">usuários com acesso ({{ approved|length }})</span>
+    {% if approved %}
+      {% for p in approved %}
+      <div class="user-row" id="approved-{{ p.id }}">
+        <div class="user-info">
+          <span class="user-name">
+            {{ p.display_name or '—' }}
+            {% if p.is_admin %}<span class="badge-admin">admin</span>{% endif %}
+          </span>
+          <span class="user-email">{{ p.email }}</span>
+        </div>
+        {% if not p.is_admin %}
+        <button class="btn-revoke" onclick="revokeUser('{{ p.id }}')">revogar</button>
+        {% endif %}
+      </div>
+      {% endfor %}
+    {% else %}
+      <p class="empty-msg">nenhum usuário aprovado ainda</p>
+    {% endif %}
+  </div>
+</main>
+
+<div id="toast"></div>
+
+<script>
+function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3000);}
+
+async function approveUser(id) {
+  const res = await fetch(`/admin/approve/${id}`, {method:'POST'});
+  const data = await res.json();
+  if (data.ok) {
+    document.getElementById('pending-'+id)?.remove();
+    showToast('usuário aprovado');
+  }
+}
+
+async function revokeUser(id) {
+  if (!confirm('Revogar acesso deste usuário?')) return;
+  const res = await fetch(`/admin/revoke/${id}`, {method:'POST'});
+  const data = await res.json();
+  if (data.ok) {
+    document.getElementById('approved-'+id)?.remove();
+    showToast('acesso revogado');
+  }
+}
+</script>
+{% endblock %}
